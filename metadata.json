@@ -1,0 +1,6 @@
+{
+  "name": "Golden Legacy Real Estate",
+  "description": "Legacy of Trust. Future of Luxury. Dubai's most prestigious luxury real estate platform.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
