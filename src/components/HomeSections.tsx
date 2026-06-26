@@ -167,14 +167,14 @@ export default function HomeSections({
           </div>
 
           {/* STICKY SEARCH BOX BAR */}
-          <div className="mt-6 lg:mt-16 bg-white text-zinc-900 px-[20px] py-[18px] lg:p-4 shadow-xl shadow-black/5 border border-[#ECECEC] max-w-5xl mx-auto rounded-[20px] lg:rounded-xl w-full">
+          <div className="mt-6 lg:mt-16 bg-transparent lg:bg-white text-white lg:text-zinc-900 px-[20px] py-[18px] lg:p-4 shadow-none lg:shadow-xl lg:shadow-black/5 border border-white/20 lg:border-[#ECECEC] max-w-5xl mx-auto rounded-[20px] lg:rounded-xl w-full backdrop-blur-md lg:backdrop-blur-none">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 lg:gap-4">
-              <div className="px-1 lg:px-4 py-2 border-b lg:border-b-0 lg:border-r border-zinc-100 lg:border-[#ECECEC] last:border-0 text-left flex flex-col justify-center min-h-[56px] lg:min-h-0">
+              <div className="px-1 lg:px-4 py-2 border-b lg:border-b-0 lg:border-r border-white/20 lg:border-[#ECECEC] last:border-0 text-left flex flex-col justify-center min-h-[56px] lg:min-h-0">
                 <label className="block text-[11px] lg:text-[9px] uppercase tracking-[0.1em] lg:tracking-widest font-bold text-[#C89B3C] mb-1">Location</label>
                 <select
                   value={searchCommunity}
                   onChange={(e) => setSearchCommunity(e.target.value)}
-                  className="w-full bg-transparent border-0 text-[17px] lg:text-xs font-medium focus:outline-none appearance-none p-0 cursor-pointer text-zinc-900 h-6"
+                  className="w-full bg-transparent border-0 text-[17px] lg:text-xs font-medium focus:outline-none appearance-none p-0 cursor-pointer text-white lg:text-zinc-900 h-6 [&>option]:text-zinc-900"
                 >
                   <option value="All">All Communities</option>
                   <option value="Palm Jumeirah">Palm Jumeirah</option>
@@ -185,12 +185,12 @@ export default function HomeSections({
                 </select>
               </div>
 
-              <div className="px-1 lg:px-4 py-2 border-b lg:border-b-0 lg:border-r border-zinc-100 lg:border-[#ECECEC] last:border-0 text-left flex flex-col justify-center min-h-[56px] lg:min-h-0">
+              <div className="px-1 lg:px-4 py-2 border-b lg:border-b-0 lg:border-r border-white/20 lg:border-[#ECECEC] last:border-0 text-left flex flex-col justify-center min-h-[56px] lg:min-h-0">
                 <label className="block text-[11px] lg:text-[9px] uppercase tracking-[0.1em] lg:tracking-widest font-bold text-[#C89B3C] mb-1">Property Type</label>
                 <select
                   value={searchType}
                   onChange={(e) => setSearchType(e.target.value)}
-                  className="w-full bg-transparent border-0 text-[17px] lg:text-xs font-medium focus:outline-none appearance-none p-0 cursor-pointer text-zinc-900 h-6"
+                  className="w-full bg-transparent border-0 text-[17px] lg:text-xs font-medium focus:outline-none appearance-none p-0 cursor-pointer text-white lg:text-zinc-900 h-6 [&>option]:text-zinc-900"
                 >
                   <option value="All">All Structures</option>
                   <option value="Villa">Villa</option>
@@ -199,12 +199,12 @@ export default function HomeSections({
                 </select>
               </div>
 
-              <div className="px-1 lg:px-4 py-2 border-b lg:border-b-0 lg:border-r border-zinc-100 lg:border-[#ECECEC] last:border-0 text-left flex flex-col justify-center min-h-[56px] lg:min-h-0">
+              <div className="px-1 lg:px-4 py-2 border-b lg:border-b-0 lg:border-r border-white/20 lg:border-[#ECECEC] last:border-0 text-left flex flex-col justify-center min-h-[56px] lg:min-h-0">
                 <label className="block text-[11px] lg:text-[9px] uppercase tracking-[0.1em] lg:tracking-widest font-bold text-[#C89B3C] mb-1">Bedrooms</label>
                 <select
                   value={searchBeds}
                   onChange={(e) => setSearchBeds(e.target.value)}
-                  className="w-full bg-transparent border-0 text-[17px] lg:text-xs font-medium focus:outline-none appearance-none p-0 cursor-pointer text-zinc-900 h-6"
+                  className="w-full bg-transparent border-0 text-[17px] lg:text-xs font-medium focus:outline-none appearance-none p-0 cursor-pointer text-white lg:text-zinc-900 h-6 [&>option]:text-zinc-900"
                 >
                   <option value="All">Any Size</option>
                   <option value="2">2 Bedrooms</option>
@@ -214,12 +214,12 @@ export default function HomeSections({
                 </select>
               </div>
 
-              <div className="px-1 lg:px-4 py-2 border-b lg:border-b-0 lg:border-r border-zinc-100 lg:border-[#ECECEC] last:border-0 text-left flex flex-col justify-center min-h-[56px] lg:min-h-0">
+              <div className="px-1 lg:px-4 py-2 border-b lg:border-b-0 lg:border-r border-white/20 lg:border-[#ECECEC] last:border-0 text-left flex flex-col justify-center min-h-[56px] lg:min-h-0">
                 <label className="block text-[11px] lg:text-[9px] uppercase tracking-[0.1em] lg:tracking-widest font-bold text-[#C89B3C] mb-1">Budget Ceiling</label>
                 <select
                   value={searchBudget}
                   onChange={(e) => setSearchBudget(e.target.value)}
-                  className="w-full bg-transparent border-0 text-[17px] lg:text-xs font-medium focus:outline-none appearance-none p-0 cursor-pointer text-zinc-900 h-6"
+                  className="w-full bg-transparent border-0 text-[17px] lg:text-xs font-medium focus:outline-none appearance-none p-0 cursor-pointer text-white lg:text-zinc-900 h-6 [&>option]:text-zinc-900"
                 >
                   <option value="All">No Ceiling</option>
                   <option value="5M">Under AED 5M</option>
@@ -232,7 +232,7 @@ export default function HomeSections({
               <div className="flex items-center justify-center p-1 mt-1 lg:mt-0">
                 <button
                   onClick={handleSearchSubmit}
-                  className="w-full h-[54px] lg:h-full bg-[#1A1A1A] text-white px-8 py-3 uppercase text-xs tracking-widest font-bold flex items-center justify-center space-x-2 rounded-[16px] lg:rounded-lg hover:bg-[#C89B3C] transition-colors cursor-pointer shadow-sm"
+                  className="w-full h-[54px] lg:h-full bg-[#1A1A1A] lg:bg-[#1A1A1A] text-white px-8 py-3 uppercase text-xs tracking-widest font-bold flex items-center justify-center space-x-2 rounded-[16px] lg:rounded-lg hover:bg-[#C89B3C] lg:hover:bg-[#C89B3C] transition-colors cursor-pointer shadow-none lg:shadow-sm"
                 >
                   <Search className="w-4 h-4" />
                   <span>Search</span>
