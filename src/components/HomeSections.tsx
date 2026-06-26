@@ -492,9 +492,9 @@ export default function HomeSections({
                     src={ceoImg} 
                     alt="Mr. Arvind Pal - CEO of Golden Legacy Real Estate" 
                     referrerPolicy="no-referrer"
-                    className="object-cover w-full h-full object-top grayscale contrast-110 hover:grayscale-0 transition-all duration-1000 ease-out"
+                    className="object-cover w-full h-full object-top transition-all duration-1000 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent pointer-events-none"></div>
                   
                   {/* Floating badge inside image */}
                   <div className="absolute bottom-4 left-4 right-4 p-3 bg-zinc-950/95 border border-gold/15 backdrop-blur-md text-center">
