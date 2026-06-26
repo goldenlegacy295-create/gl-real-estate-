@@ -153,13 +153,13 @@ export default function HomeSections({
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6 lg:mt-8 w-full px-4 sm:px-0 max-w-[340px] sm:max-w-none mx-auto">
               <button
                 onClick={() => navigate('/search')}
-                className="w-full sm:w-auto h-[54px] lg:h-auto bg-[#C89B3C] text-white px-10 text-[16px] lg:text-sm uppercase tracking-widest font-semibold hover:bg-[#9F7725] transition-all duration-300 cursor-pointer shadow-lg shadow-[#C89B3C]/10 rounded-[16px] lg:rounded-md flex items-center justify-center"
+                className="w-full sm:w-auto h-[54px] lg:h-auto lg:py-4 bg-[#C89B3C] text-white px-10 text-[16px] lg:text-sm uppercase tracking-widest font-semibold hover:bg-[#9F7725] transition-all duration-300 cursor-pointer shadow-lg shadow-[#C89B3C]/10 rounded-[16px] lg:rounded-md flex items-center justify-center"
               >
                 Explore Properties
               </button>
               <button
                 onClick={onOpenConsultation}
-                className="w-full sm:w-auto h-[54px] lg:h-auto bg-transparent border border-white/60 text-white px-10 text-[16px] lg:text-sm uppercase tracking-widest font-semibold hover:bg-white hover:text-zinc-950 transition-all duration-300 cursor-pointer rounded-[16px] lg:rounded-md flex items-center justify-center"
+                className="w-full sm:w-auto h-[54px] lg:h-auto lg:py-4 bg-transparent border border-white/60 text-white px-10 text-[16px] lg:text-sm uppercase tracking-widest font-semibold hover:bg-white hover:text-zinc-950 transition-all duration-300 cursor-pointer rounded-[16px] lg:rounded-md flex items-center justify-center"
               >
                 Book Consultation
               </button>
