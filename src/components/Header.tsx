@@ -54,7 +54,7 @@ export default function Header({ onOpenConsultation }: HeaderProps) {
           : 'bg-zinc-950/80 backdrop-blur-md border-b border-white/5 py-4'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-center lg:justify-between">
         {/* LOGO */}
         <Link
           to="/"
@@ -111,58 +111,6 @@ export default function Header({ onOpenConsultation }: HeaderProps) {
             className="px-5 py-2 bg-emerald-600 text-white hover:bg-emerald-500 transition-all duration-300 font-sans text-[10px] uppercase tracking-[0.15em] font-bold flex items-center gap-2"
           >
             <MessageSquare className="w-3.5 h-3.5 fill-white/10" />
-            <span>Book Consultation</span>
-          </button>
-        </div>
-
-        {/* MOBILE MENU TOGGLE */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden text-white p-1.5 focus:outline-none focus:ring-1 focus:ring-gold z-50 relative"
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-
-      {/* MOBILE NAV FULL SCREEN */}
-      <div 
-        className={`lg:hidden fixed inset-0 w-full h-[100dvh] bg-zinc-950 flex flex-col justify-between pt-28 pb-8 px-6 transition-transform duration-500 ease-in-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
-        <div className="flex-1 overflow-y-auto no-scrollbar">
-          <nav className="flex flex-col space-y-6 pb-8">
-            {navItems.map((item) => (
-              <Link
-                key={`mobile-${item.id}`}
-                to={item.path}
-                onClick={() => setIsOpen(false)}
-                className={`text-2xl uppercase tracking-[0.15em] font-medium font-display ${
-                  currentView === item.id || (currentView === '' && item.id === 'home') ? 'text-[#C89B3C]' : 'text-zinc-200'
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-        <div className="pt-6 mt-auto border-t border-zinc-900 flex flex-col gap-4 shrink-0">
-          <a
-            href="tel:+971501112233"
-            className="flex items-center gap-3 text-sm text-white justify-center py-4 bg-zinc-900 border border-zinc-800 rounded-lg h-14"
-          >
-            <Phone className="w-4 h-4 text-[#C89B3C]" />
-            <span className="font-semibold tracking-widest">+971 50 111 2233</span>
-          </a>
-          <button
-            onClick={() => {
-              setIsOpen(false);
-              onOpenConsultation();
-            }}
-            className="bg-emerald-600 hover:bg-emerald-500 text-white text-center py-4 text-sm uppercase tracking-widest font-bold flex items-center justify-center gap-2 rounded-lg h-14 shadow-lg shadow-emerald-600/20"
-          >
-            <MessageSquare className="w-5 h-5" />
             <span>Book Consultation</span>
           </button>
         </div>
