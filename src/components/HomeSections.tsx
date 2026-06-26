@@ -115,7 +115,7 @@ export default function HomeSections({
     <div className="bg-white">
       
       {/* SECTION 1: LUXURY HERO */}
-      <section className="relative h-[85vh] lg:min-h-screen flex items-center justify-center bg-zinc-950 text-white overflow-hidden py-32 border-b border-[#C89B3C]/20">
+      <section className="relative min-h-0 lg:min-h-screen flex flex-col lg:flex-row items-center justify-center bg-zinc-950 text-white overflow-hidden pt-[112px] pb-12 lg:py-32 border-b border-[#C89B3C]/20">
         
         {/* Business Bay Cinematic Video Background */}
         <div className="absolute inset-0 z-0">
@@ -138,28 +138,28 @@ export default function HomeSections({
           <div className="absolute inset-0 bg-zinc-950/50 z-10 pointer-events-none"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 lg:px-6 relative z-10 w-full text-center flex flex-col items-center justify-center pt-10 lg:pt-0">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 relative z-10 w-full text-center flex flex-col items-center justify-center">
           {/* HERO HEADING CENTERED */}
-          <div className="max-w-4xl mx-auto space-y-4 lg:space-y-6 drop-shadow-2xl">
-            <span className="text-[10px] lg:text-xs uppercase tracking-[0.3em] font-semibold text-[#C89B3C] block">Legacy of Trust. Future of Luxury.</span>
-            <h1 className="font-display text-[2.5rem] leading-[1.1] md:text-7xl font-normal tracking-tight text-white px-2">
+          <div className="max-w-4xl mx-auto drop-shadow-2xl flex flex-col items-center">
+            <span className="text-[10px] lg:text-xs uppercase tracking-[0.3em] font-semibold text-[#C89B3C] block mb-4 lg:mb-6">Legacy of Trust. Future of Luxury.</span>
+            <h1 className="font-display text-[42px] leading-[1.1] md:text-7xl font-normal tracking-tight text-white w-[90%] mx-auto">
               Your Legacy Starts <br className="hidden md:block" />
               With The <span className="italic text-[#C89B3C] font-light">Right Property</span>
             </h1>
-            <p className="max-w-2xl mx-auto text-zinc-300 font-sans text-sm md:text-base leading-relaxed font-light hidden sm:block">
+            <p className="max-w-2xl mx-auto text-zinc-300 font-sans text-sm md:text-base leading-relaxed font-light hidden sm:block mt-6">
               Discover Dubai's most prestigious properties with trusted family advisors, institutional-grade analytics, and exclusive off-market allocations.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2 lg:pt-4 w-full px-4 sm:px-0">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6 lg:mt-8 w-full px-4 sm:px-0 max-w-[340px] sm:max-w-none mx-auto">
               <button
                 onClick={() => navigate('/search')}
-                className="w-full sm:w-auto bg-[#C89B3C] text-white px-10 py-4 text-xs lg:text-sm uppercase tracking-widest font-semibold hover:bg-[#9F7725] transition-all duration-300 cursor-pointer shadow-lg shadow-[#C89B3C]/10 rounded-md"
+                className="w-full sm:w-auto h-[54px] lg:h-auto bg-[#C89B3C] text-white px-10 text-[16px] lg:text-sm uppercase tracking-widest font-semibold hover:bg-[#9F7725] transition-all duration-300 cursor-pointer shadow-lg shadow-[#C89B3C]/10 rounded-[16px] lg:rounded-md flex items-center justify-center"
               >
                 Explore Properties
               </button>
               <button
                 onClick={onOpenConsultation}
-                className="w-full sm:w-auto bg-transparent border border-white/60 text-white px-10 py-4 text-xs lg:text-sm uppercase tracking-widest font-semibold hover:bg-white hover:text-zinc-950 transition-all duration-300 cursor-pointer rounded-md"
+                className="w-full sm:w-auto h-[54px] lg:h-auto bg-transparent border border-white/60 text-white px-10 text-[16px] lg:text-sm uppercase tracking-widest font-semibold hover:bg-white hover:text-zinc-950 transition-all duration-300 cursor-pointer rounded-[16px] lg:rounded-md flex items-center justify-center"
               >
                 Book Consultation
               </button>
@@ -167,14 +167,14 @@ export default function HomeSections({
           </div>
 
           {/* STICKY SEARCH BOX BAR */}
-          <div className="mt-8 lg:mt-16 bg-white text-zinc-900 p-2 lg:p-4 shadow-xl border border-[#ECECEC] max-w-5xl mx-auto rounded-xl w-full">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 lg:gap-4">
-              <div className="px-4 py-3 lg:py-2 border-b lg:border-b-0 lg:border-r border-[#ECECEC] last:border-0 text-left">
-                <label className="block text-[10px] lg:text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] mb-1.5">Location</label>
+          <div className="mt-6 lg:mt-16 bg-white text-zinc-900 px-[20px] py-[18px] lg:p-4 shadow-xl shadow-black/5 border border-[#ECECEC] max-w-5xl mx-auto rounded-[20px] lg:rounded-xl w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 lg:gap-4">
+              <div className="px-1 lg:px-4 py-2 border-b lg:border-b-0 lg:border-r border-zinc-100 lg:border-[#ECECEC] last:border-0 text-left flex flex-col justify-center min-h-[56px] lg:min-h-0">
+                <label className="block text-[11px] lg:text-[9px] uppercase tracking-[0.1em] lg:tracking-widest font-bold text-[#C89B3C] mb-1">Location</label>
                 <select
                   value={searchCommunity}
                   onChange={(e) => setSearchCommunity(e.target.value)}
-                  className="w-full bg-transparent border-0 text-sm lg:text-xs font-semibold focus:outline-none appearance-none p-0 cursor-pointer text-[#1A1A1A] h-6"
+                  className="w-full bg-transparent border-0 text-[17px] lg:text-xs font-medium focus:outline-none appearance-none p-0 cursor-pointer text-zinc-900 h-6"
                 >
                   <option value="All">All Communities</option>
                   <option value="Palm Jumeirah">Palm Jumeirah</option>
@@ -185,12 +185,12 @@ export default function HomeSections({
                 </select>
               </div>
 
-              <div className="px-4 py-3 lg:py-2 border-b lg:border-b-0 lg:border-r border-[#ECECEC] last:border-0 text-left">
-                <label className="block text-[10px] lg:text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] mb-1.5">Property Type</label>
+              <div className="px-1 lg:px-4 py-2 border-b lg:border-b-0 lg:border-r border-zinc-100 lg:border-[#ECECEC] last:border-0 text-left flex flex-col justify-center min-h-[56px] lg:min-h-0">
+                <label className="block text-[11px] lg:text-[9px] uppercase tracking-[0.1em] lg:tracking-widest font-bold text-[#C89B3C] mb-1">Property Type</label>
                 <select
                   value={searchType}
                   onChange={(e) => setSearchType(e.target.value)}
-                  className="w-full bg-transparent border-0 text-sm lg:text-xs font-semibold focus:outline-none appearance-none p-0 cursor-pointer text-[#1A1A1A] h-6"
+                  className="w-full bg-transparent border-0 text-[17px] lg:text-xs font-medium focus:outline-none appearance-none p-0 cursor-pointer text-zinc-900 h-6"
                 >
                   <option value="All">All Structures</option>
                   <option value="Villa">Villa</option>
@@ -199,12 +199,12 @@ export default function HomeSections({
                 </select>
               </div>
 
-              <div className="px-4 py-3 lg:py-2 border-b lg:border-b-0 lg:border-r border-[#ECECEC] last:border-0 text-left">
-                <label className="block text-[10px] lg:text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] mb-1.5">Bedrooms</label>
+              <div className="px-1 lg:px-4 py-2 border-b lg:border-b-0 lg:border-r border-zinc-100 lg:border-[#ECECEC] last:border-0 text-left flex flex-col justify-center min-h-[56px] lg:min-h-0">
+                <label className="block text-[11px] lg:text-[9px] uppercase tracking-[0.1em] lg:tracking-widest font-bold text-[#C89B3C] mb-1">Bedrooms</label>
                 <select
                   value={searchBeds}
                   onChange={(e) => setSearchBeds(e.target.value)}
-                  className="w-full bg-transparent border-0 text-sm lg:text-xs font-semibold focus:outline-none appearance-none p-0 cursor-pointer text-[#1A1A1A] h-6"
+                  className="w-full bg-transparent border-0 text-[17px] lg:text-xs font-medium focus:outline-none appearance-none p-0 cursor-pointer text-zinc-900 h-6"
                 >
                   <option value="All">Any Size</option>
                   <option value="2">2 Bedrooms</option>
@@ -214,12 +214,12 @@ export default function HomeSections({
                 </select>
               </div>
 
-              <div className="px-4 py-3 lg:py-2 border-b lg:border-b-0 lg:border-r border-[#ECECEC] last:border-0 text-left">
-                <label className="block text-[10px] lg:text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] mb-1.5">Budget Ceiling</label>
+              <div className="px-1 lg:px-4 py-2 border-b lg:border-b-0 lg:border-r border-zinc-100 lg:border-[#ECECEC] last:border-0 text-left flex flex-col justify-center min-h-[56px] lg:min-h-0">
+                <label className="block text-[11px] lg:text-[9px] uppercase tracking-[0.1em] lg:tracking-widest font-bold text-[#C89B3C] mb-1">Budget Ceiling</label>
                 <select
                   value={searchBudget}
                   onChange={(e) => setSearchBudget(e.target.value)}
-                  className="w-full bg-transparent border-0 text-sm lg:text-xs font-semibold focus:outline-none appearance-none p-0 cursor-pointer text-[#1A1A1A] h-6"
+                  className="w-full bg-transparent border-0 text-[17px] lg:text-xs font-medium focus:outline-none appearance-none p-0 cursor-pointer text-zinc-900 h-6"
                 >
                   <option value="All">No Ceiling</option>
                   <option value="5M">Under AED 5M</option>
@@ -229,10 +229,10 @@ export default function HomeSections({
                 </select>
               </div>
 
-              <div className="flex items-center justify-center p-1 mt-2 lg:mt-0">
+              <div className="flex items-center justify-center p-1 mt-1 lg:mt-0">
                 <button
                   onClick={handleSearchSubmit}
-                  className="w-full h-12 lg:h-full bg-[#1A1A1A] text-white px-8 py-3 uppercase text-xs tracking-widest font-bold flex items-center justify-center space-x-2 rounded-lg hover:bg-[#C89B3C] transition-colors cursor-pointer"
+                  className="w-full h-[54px] lg:h-full bg-[#1A1A1A] text-white px-8 py-3 uppercase text-xs tracking-widest font-bold flex items-center justify-center space-x-2 rounded-[16px] lg:rounded-lg hover:bg-[#C89B3C] transition-colors cursor-pointer shadow-sm"
                 >
                   <Search className="w-4 h-4" />
                   <span>Search</span>
