@@ -120,13 +120,13 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
             
             {/* SEARCH INPUT */}
             <div className="md:col-span-3 relative">
-              <Search className="absolute left-3.5 top-3.5 w-4 h-4 text-zinc-400" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
               <input
                 type="text"
                 placeholder="Search by development, frond, developer..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-white border border-zinc-200 focus:border-gold py-3 pl-10 pr-4 text-xs font-medium focus:outline-none placeholder-zinc-400"
+                className="w-full h-[48px] bg-white border border-zinc-200 focus:border-gold py-3 pl-10 pr-4 text-xs lg:text-sm font-medium focus:outline-none placeholder-zinc-400"
               />
             </div>
 
@@ -135,7 +135,7 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
               <select
                 value={selectedCommunity}
                 onChange={(e) => setSelectedCommunity(e.target.value)}
-                className="w-full bg-white border border-zinc-200 focus:border-gold py-3 px-4 text-xs font-medium focus:outline-none appearance-none cursor-pointer"
+                className="w-full h-[48px] bg-white border border-zinc-200 focus:border-gold py-3 px-4 text-xs lg:text-sm font-medium focus:outline-none appearance-none cursor-pointer"
               >
                 <option value="All">All Locations / Palm / Marina</option>
                 {communities.filter(c => c !== 'All').map(c => (
@@ -149,7 +149,7 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
-                className="w-full bg-white border border-zinc-200 focus:border-gold py-3 px-4 text-xs font-medium focus:outline-none appearance-none cursor-pointer"
+                className="w-full h-[48px] bg-white border border-zinc-200 focus:border-gold py-3 px-4 text-xs lg:text-sm font-medium focus:outline-none appearance-none cursor-pointer"
               >
                 <option value="All">All Structures</option>
                 {propertyTypes.filter(t => t !== 'All').map(t => (
@@ -163,7 +163,7 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
               <select
                 value={selectedCompletion}
                 onChange={(e) => setSelectedCompletion(e.target.value as any)}
-                className="w-full bg-white border border-zinc-200 focus:border-gold py-3 px-4 text-xs font-medium focus:outline-none appearance-none cursor-pointer"
+                className="w-full h-[48px] bg-white border border-zinc-200 focus:border-gold py-3 px-4 text-xs lg:text-sm font-medium focus:outline-none appearance-none cursor-pointer"
               >
                 <option value="All">All Completion</option>
                 <option value="Ready">Ready</option>
@@ -175,7 +175,7 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
             <div className="md:col-span-2">
               <button
                 onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-                className={`w-full py-3 px-4 text-xs font-sans font-bold uppercase tracking-widest border transition-all flex items-center justify-center gap-2 ${
+                className={`w-full h-[48px] py-3 px-4 text-xs font-sans font-bold uppercase tracking-widest border transition-all flex items-center justify-center gap-2 ${
                   showAdvancedFilters || minRoi > 0
                     ? 'bg-gold text-white border-gold'
                     : 'bg-white border-zinc-200 text-zinc-700 hover:border-gold'
@@ -240,7 +240,7 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
                   <select
                     value={selectedBeds}
                     onChange={(e) => setSelectedBeds(e.target.value)}
-                    className="w-full bg-white border border-zinc-200 py-2.5 px-3 text-xs font-medium focus:outline-none"
+                    className="w-full h-[48px] bg-white border border-zinc-200 py-2.5 px-3 text-xs lg:text-sm font-medium focus:outline-none"
                   >
                     <option value="All">Any Beds</option>
                     <option value="2">2 Beds</option>
@@ -335,11 +335,11 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
                       </span>
                       <h3
                         onClick={() => onSelectProperty(prop)}
-                        className="font-display text-lg text-zinc-900 font-semibold group-hover:text-gold transition-colors duration-300 cursor-pointer line-clamp-1 mb-2"
+                        className="font-display text-lg text-zinc-900 font-semibold group-hover:text-gold transition-colors duration-300 cursor-pointer lg:line-clamp-1 mb-2"
                       >
                         {prop.title}
                       </h3>
-                      <p className="text-[11px] text-zinc-500 line-clamp-2 mb-4 font-sans leading-relaxed">
+                      <p className="text-[11px] text-zinc-500 lg:line-clamp-2 mb-4 font-sans leading-relaxed">
                         {prop.description}
                       </p>
                     </div>
@@ -358,7 +358,7 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
                       </div>
 
                       {/* PRICE AND CTA ROW */}
-                      <div className="flex justify-between items-center">
+                      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 lg:gap-0">
                         <div>
                           <span className="text-[9px] uppercase tracking-wider font-bold text-zinc-400 block">Acquisition Value</span>
                           <span className="font-mono text-sm font-bold text-zinc-900">
@@ -366,25 +366,25 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
                           </span>
                         </div>
                         
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 w-full lg:w-auto">
                           {/* COMPARE CHECKBOX ICON */}
                           <button
                             onClick={() => toggleCompare(prop.id)}
-                            className={`p-2 border transition-all ${
+                            className={`p-3 lg:p-2 border transition-all shrink-0 ${
                               isComparing 
                                 ? 'bg-gold/10 border-gold text-gold' 
                                 : 'border-zinc-200 text-zinc-400 hover:text-gold hover:border-gold'
                             }`}
                             title="Compare properties"
                           >
-                            <Shuffle className="w-3.5 h-3.5" />
+                            <Shuffle className="w-4 h-4 lg:w-3.5 lg:h-3.5" />
                           </button>
 
                           <button
                             onClick={() => onSelectProperty(prop)}
-                            className="bg-zinc-950 hover:bg-gold text-white text-xs uppercase tracking-widest px-4 py-2 font-sans font-semibold transition-all duration-500"
+                            className="bg-zinc-950 hover:bg-gold text-white text-xs uppercase tracking-widest px-4 py-3 lg:py-2 font-sans font-semibold transition-all duration-500 flex-1 lg:flex-none text-center h-[48px] lg:h-auto flex items-center justify-center"
                           >
-                            Details
+                            View Details
                           </button>
                         </div>
                       </div>

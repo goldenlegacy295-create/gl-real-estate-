@@ -1,4 +1,5 @@
 import { useState, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, DollarSign, ArrowRight, Award, ShieldCheck, Mail, Phone, ExternalLink, HelpCircle, CheckCircle, Download, Send, Bookmark } from 'lucide-react';
 import { Property, Developer, Community, Agent, Blog, FAQ } from '../types';
 import heroVideo from '../../assets/videos/hero.mp4';
@@ -11,7 +12,6 @@ interface HomeSectionsProps {
   agents: Agent[];
   blogs: Blog[];
   faqs: FAQ[];
-  setView: (view: string) => void;
   onSelectProperty: (property: Property) => void;
   onOpenConsultation: () => void;
   onSelectDeveloper?: (developerName: string) => void;
@@ -24,11 +24,11 @@ export default function HomeSections({
   agents,
   blogs,
   faqs,
-  setView,
   onSelectProperty,
   onOpenConsultation,
   onSelectDeveloper
 }: HomeSectionsProps) {
+  const navigate = useNavigate();
   const [activeDevId, setActiveDevId] = useState('emaar');
   // Sticky search state
   const [searchCommunity, setSearchCommunity] = useState('All');
@@ -53,7 +53,7 @@ export default function HomeSections({
   const [videoLoaded, setVideoLoaded] = useState(false);
 
   const handleSearchSubmit = () => {
-    setView('search');
+    navigate('/search');
     // Scroll search section to view automatically
     setTimeout(() => {
       window.scrollTo({ top: 300, behavior: 'smooth' });
@@ -115,7 +115,7 @@ export default function HomeSections({
     <div className="bg-white">
       
       {/* SECTION 1: LUXURY HERO */}
-      <section className="relative min-h-screen flex items-center justify-center bg-zinc-950 text-white overflow-hidden py-32 border-b border-[#C89B3C]/20">
+      <section className="relative h-[85vh] lg:min-h-screen flex items-center justify-center bg-zinc-950 text-white overflow-hidden py-32 border-b border-[#C89B3C]/20">
         
         {/* Business Bay Cinematic Video Background */}
         <div className="absolute inset-0 z-0">
@@ -138,28 +138,28 @@ export default function HomeSections({
           <div className="absolute inset-0 bg-zinc-950/50 z-10 pointer-events-none"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10 w-full text-center flex flex-col items-center justify-center">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 relative z-10 w-full text-center flex flex-col items-center justify-center pt-10 lg:pt-0">
           {/* HERO HEADING CENTERED */}
-          <div className="max-w-4xl mx-auto space-y-6 drop-shadow-2xl">
-            <span className="text-xs uppercase tracking-[0.3em] font-semibold text-[#C89B3C] block">Legacy of Trust. Future of Luxury.</span>
-            <h1 className="font-display text-4xl md:text-7xl font-normal leading-tight tracking-tight text-white">
+          <div className="max-w-4xl mx-auto space-y-4 lg:space-y-6 drop-shadow-2xl">
+            <span className="text-[10px] lg:text-xs uppercase tracking-[0.3em] font-semibold text-[#C89B3C] block">Legacy of Trust. Future of Luxury.</span>
+            <h1 className="font-display text-[2.5rem] leading-[1.1] md:text-7xl font-normal tracking-tight text-white px-2">
               Your Legacy Starts <br className="hidden md:block" />
               With The <span className="italic text-[#C89B3C] font-light">Right Property</span>
             </h1>
-            <p className="max-w-2xl mx-auto text-zinc-300 font-sans text-sm md:text-base leading-relaxed font-light">
+            <p className="max-w-2xl mx-auto text-zinc-300 font-sans text-sm md:text-base leading-relaxed font-light hidden sm:block">
               Discover Dubai's most prestigious properties with trusted family advisors, institutional-grade analytics, and exclusive off-market allocations.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2 lg:pt-4 w-full px-4 sm:px-0">
               <button
-                onClick={() => setView('search')}
-                className="bg-[#C89B3C] text-white px-10 py-4 text-sm uppercase tracking-widest font-semibold hover:bg-[#9F7725] transition-all duration-300 cursor-pointer shadow-lg shadow-[#C89B3C]/10"
+                onClick={() => navigate('/search')}
+                className="w-full sm:w-auto bg-[#C89B3C] text-white px-10 py-4 text-xs lg:text-sm uppercase tracking-widest font-semibold hover:bg-[#9F7725] transition-all duration-300 cursor-pointer shadow-lg shadow-[#C89B3C]/10 rounded-md"
               >
                 Explore Properties
               </button>
               <button
                 onClick={onOpenConsultation}
-                className="bg-transparent border border-white/60 text-white px-10 py-4 text-sm uppercase tracking-widest font-semibold hover:bg-white hover:text-zinc-950 transition-all duration-300 cursor-pointer"
+                className="w-full sm:w-auto bg-transparent border border-white/60 text-white px-10 py-4 text-xs lg:text-sm uppercase tracking-widest font-semibold hover:bg-white hover:text-zinc-950 transition-all duration-300 cursor-pointer rounded-md"
               >
                 Book Consultation
               </button>
@@ -167,14 +167,14 @@ export default function HomeSections({
           </div>
 
           {/* STICKY SEARCH BOX BAR */}
-          <div className="mt-16 bg-white text-zinc-900 p-4 shadow-xl border border-[#ECECEC] max-w-5xl mx-auto rounded-xl">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
-              <div className="px-4 py-2 border-r border-[#ECECEC] last:border-r-0">
-                <label className="block text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] mb-1.5">Location</label>
+          <div className="mt-8 lg:mt-16 bg-white text-zinc-900 p-2 lg:p-4 shadow-xl border border-[#ECECEC] max-w-5xl mx-auto rounded-xl w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 lg:gap-4">
+              <div className="px-4 py-3 lg:py-2 border-b lg:border-b-0 lg:border-r border-[#ECECEC] last:border-0 text-left">
+                <label className="block text-[10px] lg:text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] mb-1.5">Location</label>
                 <select
                   value={searchCommunity}
                   onChange={(e) => setSearchCommunity(e.target.value)}
-                  className="w-full bg-transparent border-0 text-xs font-semibold focus:outline-none appearance-none p-0 cursor-pointer text-[#1A1A1A]"
+                  className="w-full bg-transparent border-0 text-sm lg:text-xs font-semibold focus:outline-none appearance-none p-0 cursor-pointer text-[#1A1A1A] h-6"
                 >
                   <option value="All">All Communities</option>
                   <option value="Palm Jumeirah">Palm Jumeirah</option>
@@ -185,12 +185,12 @@ export default function HomeSections({
                 </select>
               </div>
 
-              <div className="px-4 py-2 border-r border-[#ECECEC] last:border-r-0">
-                <label className="block text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] mb-1.5">Property Type</label>
+              <div className="px-4 py-3 lg:py-2 border-b lg:border-b-0 lg:border-r border-[#ECECEC] last:border-0 text-left">
+                <label className="block text-[10px] lg:text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] mb-1.5">Property Type</label>
                 <select
                   value={searchType}
                   onChange={(e) => setSearchType(e.target.value)}
-                  className="w-full bg-transparent border-0 text-xs font-semibold focus:outline-none appearance-none p-0 cursor-pointer text-[#1A1A1A]"
+                  className="w-full bg-transparent border-0 text-sm lg:text-xs font-semibold focus:outline-none appearance-none p-0 cursor-pointer text-[#1A1A1A] h-6"
                 >
                   <option value="All">All Structures</option>
                   <option value="Villa">Villa</option>
@@ -199,12 +199,12 @@ export default function HomeSections({
                 </select>
               </div>
 
-              <div className="px-4 py-2 border-r border-[#ECECEC] last:border-r-0">
-                <label className="block text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] mb-1.5">Bedrooms</label>
+              <div className="px-4 py-3 lg:py-2 border-b lg:border-b-0 lg:border-r border-[#ECECEC] last:border-0 text-left">
+                <label className="block text-[10px] lg:text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] mb-1.5">Bedrooms</label>
                 <select
                   value={searchBeds}
                   onChange={(e) => setSearchBeds(e.target.value)}
-                  className="w-full bg-transparent border-0 text-xs font-semibold focus:outline-none appearance-none p-0 cursor-pointer text-[#1A1A1A]"
+                  className="w-full bg-transparent border-0 text-sm lg:text-xs font-semibold focus:outline-none appearance-none p-0 cursor-pointer text-[#1A1A1A] h-6"
                 >
                   <option value="All">Any Size</option>
                   <option value="2">2 Bedrooms</option>
@@ -214,12 +214,12 @@ export default function HomeSections({
                 </select>
               </div>
 
-              <div className="px-4 py-2 border-r border-[#ECECEC] last:border-r-0">
-                <label className="block text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] mb-1.5">Budget Ceiling</label>
+              <div className="px-4 py-3 lg:py-2 border-b lg:border-b-0 lg:border-r border-[#ECECEC] last:border-0 text-left">
+                <label className="block text-[10px] lg:text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] mb-1.5">Budget Ceiling</label>
                 <select
                   value={searchBudget}
                   onChange={(e) => setSearchBudget(e.target.value)}
-                  className="w-full bg-transparent border-0 text-xs font-semibold focus:outline-none appearance-none p-0 cursor-pointer text-[#1A1A1A]"
+                  className="w-full bg-transparent border-0 text-sm lg:text-xs font-semibold focus:outline-none appearance-none p-0 cursor-pointer text-[#1A1A1A] h-6"
                 >
                   <option value="All">No Ceiling</option>
                   <option value="5M">Under AED 5M</option>
@@ -229,10 +229,10 @@ export default function HomeSections({
                 </select>
               </div>
 
-              <div className="flex items-center justify-center p-1">
+              <div className="flex items-center justify-center p-1 mt-2 lg:mt-0">
                 <button
                   onClick={handleSearchSubmit}
-                  className="w-full h-full bg-[#1A1A1A] text-white px-8 py-3 uppercase text-xs tracking-widest font-bold flex items-center justify-center space-x-2 rounded-lg hover:bg-[#C89B3C] transition-colors cursor-pointer"
+                  className="w-full h-12 lg:h-full bg-[#1A1A1A] text-white px-8 py-3 uppercase text-xs tracking-widest font-bold flex items-center justify-center space-x-2 rounded-lg hover:bg-[#C89B3C] transition-colors cursor-pointer"
                 >
                   <Search className="w-4 h-4" />
                   <span>Search</span>
@@ -341,7 +341,7 @@ export default function HomeSections({
               </h2>
             </div>
             <button
-              onClick={() => setView('search')}
+              onClick={() => navigate('/search')}
               className="text-xs uppercase tracking-widest font-bold text-zinc-900 hover:text-gold transition-colors flex items-center gap-2 mt-4 md:mt-0 gsap-reveal-right"
             >
               <span>View All Inventories</span>
@@ -584,7 +584,7 @@ export default function HomeSections({
                 key={comm.id}
                 className="relative h-96 group overflow-hidden cursor-pointer gsap-stagger-item"
                 style={{ borderRadius: '18px' }}
-                onClick={() => setView('search')}
+                onClick={() => navigate('/search')}
               >
                 <img
                   src={comm.image}
@@ -998,10 +998,9 @@ export default function HomeSections({
             <div className="space-y-4">
               <span className="text-[10px] uppercase tracking-widest text-zinc-400 font-bold block">Exclusive Portfolios</span>
               <ul className="space-y-2 text-xs text-zinc-500 font-sans">
-                <li><button onClick={() => setView('search')} className="hover:text-gold transition-colors">Freehold Buy & Search</button></li>
-                <li><button onClick={() => setView('visa')} className="hover:text-gold transition-colors">10-Year Golden Visa Portal</button></li>
-                <li><button onClick={() => setView('calculator')} className="hover:text-gold transition-colors">Investment ROI Calculator</button></li>
-                <li><button onClick={() => setView('ai-chat')} className="hover:text-gold transition-colors">Legacy AI Advisor Concierge</button></li>
+                <li><button onClick={() => navigate('/search')} className="hover:text-gold transition-colors">Freehold Buy & Search</button></li>
+                <li><button onClick={() => navigate('/visa')} className="hover:text-gold transition-colors">10-Year Golden Visa Portal</button></li>
+                <li><button onClick={() => navigate('/calculator')} className="hover:text-gold transition-colors">Investment ROI Calculator</button></li>
               </ul>
             </div>
 

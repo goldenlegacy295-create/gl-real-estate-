@@ -433,7 +433,7 @@ export default function PropertyDetail({ property, onBack, onToggleWishlist, wis
                 </div>
               )}
 
-              <form onSubmit={(e) => handleLeadSubmit(e, 'Viewing')} className="space-y-4 text-xs font-sans">
+              <form id="inquiry-form" onSubmit={(e) => handleLeadSubmit(e, 'Viewing')} className="space-y-4 text-xs font-sans">
                 <div>
                   <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-2">Full Name</label>
                   <input
@@ -507,6 +507,24 @@ export default function PropertyDetail({ property, onBack, onToggleWishlist, wis
 
           </div>
 
+        </div>
+
+        {/* MOBILE STICKY CTA */}
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 p-4 bg-white/95 backdrop-blur-md border-t border-zinc-200 z-50 flex gap-3 pb-safe shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
+          <button
+            onClick={(e) => handleLeadSubmit(e, 'Brochure')}
+            className="flex-1 bg-transparent border border-zinc-950 text-zinc-950 hover:bg-zinc-50 py-3.5 text-[10px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-1.5 rounded-lg"
+          >
+            <FileText className="w-3.5 h-3.5" /> Brochure
+          </button>
+          <button
+            onClick={() => {
+              document.getElementById('inquiry-form')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="flex-1 bg-zinc-950 hover:bg-gold text-white hover:text-zinc-950 py-3.5 text-[10px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-1.5 rounded-lg"
+          >
+            <Calendar className="w-3.5 h-3.5" /> Book Viewing
+          </button>
         </div>
 
       </div>

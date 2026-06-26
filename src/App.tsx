@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useParams, useNavigate, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import HomeSections from './components/HomeSections';
 import PropertySearch from './components/PropertySearch';
@@ -18,6 +18,25 @@ gsap.registerPlugin(ScrollTrigger);
 import { PROPERTIES, DEVELOPERS, COMMUNITIES, AGENTS, BLOGS, FAQS } from './data';
 import { Property, Lead } from './types';
 import { Phone, Calendar, Mail, X, Send, Award, ArrowUp, MessageSquare } from 'lucide-react';
+
+function PropertyDetailWrapper({ properties, wishlist, onToggleWishlist }: { properties: Property[], wishlist: string[], onToggleWishlist: (id: string) => void }) {
+  const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  const property = properties.find(p => p.slug === slug);
+
+  if (!property) {
+    return <NotFound />;
+  }
+
+  return (
+    <PropertyDetail
+      property={property}
+      onBack={() => navigate(-1)}
+      onToggleWishlist={onToggleWishlist}
+      wishlist={wishlist}
+    />
+  );
+}
 
 export default function App() {
   const [currentView, setView] = useState<string>('home');
@@ -249,16 +268,11 @@ export default function App() {
           } />
 
           <Route path="/property/:slug" element={
-            selectedProperty ? (
-              <PropertyDetail
-                property={selectedProperty}
-                onBack={() => { window.location.href = '/search'; }}
-                onToggleWishlist={handleToggleWishlist}
-                wishlist={wishlist}
-              />
-            ) : (
-              <div className="pt-32 pb-20 text-center text-zinc-500">Select a property from search. (SEO injection works here)</div>
-            )
+            <PropertyDetailWrapper 
+              properties={properties}
+              wishlist={wishlist}
+              onToggleWishlist={handleToggleWishlist}
+            />
           } />
 
           <Route path="/visa" element={<GoldenVisaPortal />} />
