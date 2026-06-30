@@ -257,7 +257,6 @@ export default function App() {
               agents={AGENTS}
               blogs={BLOGS}
               faqs={FAQS}
-              setView={(v) => { /* Dummy */ }}
               onSelectProperty={handleSelectProperty}
               onOpenConsultation={() => setConsultationOpen(true)}
               onSelectDeveloper={(devName) => {
@@ -354,7 +353,6 @@ export default function App() {
                 agents={AGENTS}
                 blogs={BLOGS}
                 faqs={FAQS}
-                setView={(v) => {}}
                 onSelectProperty={handleSelectProperty}
                 onOpenConsultation={() => setConsultationOpen(true)}
                 onSelectDeveloper={(devName) => {}}

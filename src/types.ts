@@ -6,8 +6,10 @@ export interface Property {
   location: string;
   community: string;
   developer: string;
-  type: 'Villa' | 'Apartment' | 'Penthouse' | 'Commercial';
+  type: 'Villa' | 'Apartment' | 'Penthouse' | 'Commercial' | 'Townhouse';
   subType?: string; // Office, Retail, Hotel, Warehouse
+  status?: 'For Sale' | 'Rent' | 'Off Plan' | 'Off-Plan' | 'Ready';
+  isNewLaunch?: boolean;
   beds: number;
   baths: number;
   sqft: number;
@@ -37,6 +39,18 @@ export interface Property {
   goldenVisaEligible?: boolean;
   seoTitle?: string;
   seoDescription?: string;
+  videoUrl?: string;
+  virtualTour360Url?: string;
+  furnishing?: string;
+  ownershipType?: string;
+  yearBuilt?: number;
+  serviceCharges?: string;
+  referenceNumber?: string;
+  parking?: number;
+  floorNumber?: string;
+  agentId?: string;
+  paymentPlanMilestones?: { milestone: string; percentage: number }[];
+  brochureUrl?: string;
 }
 
 export interface Developer {

@@ -386,6 +386,22 @@ export const PROPERTIES: Property[] = [
     beds: 3,
     baths: 3,
     sqft: 1850,
+    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Placeholder
+    virtualTour360Url: 'https://my.matterport.com/show/?m=J4V1Bw2b1p1', // Placeholder
+    furnishing: 'Fully Furnished by Armani/Casa',
+    ownershipType: 'Freehold',
+    yearBuilt: 2029,
+    serviceCharges: 'AED 35 per sq.ft',
+    referenceNumber: 'GL-BAZ-001',
+    parking: 2,
+    floorNumber: 'Level 85',
+    agentId: 'agent-1',
+    paymentPlanMilestones: [
+      { milestone: 'Down Payment', percentage: 20 },
+      { milestone: 'During Construction', percentage: 40 },
+      { milestone: 'On Handover (2029)', percentage: 40 }
+    ],
+    brochureUrl: '#',
     image: '/photos/inventory/burj-azizi-main.jpeg',
     images: [
       '/photos/inventory/burj-azizi-main.jpeg',

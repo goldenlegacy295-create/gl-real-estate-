@@ -1,8 +1,16 @@
 import { useState, useEffect, FormEvent } from 'react';
-import { ArrowLeft, Phone, Calendar, Share2, Compass, MapPin, Award, CheckCircle, FileText, Send, Sparkles } from 'lucide-react';
+import { 
+  ArrowLeft, Phone, Calendar, Share2, Compass, MapPin, Award, CheckCircle, 
+  FileText, Send, Sparkles, Heart, ChevronLeft, ChevronRight, X, Play, 
+  Building, Expand, Maximize2, Download, Facebook, Twitter, Linkedin, 
+  MessageSquare, Car, Key, Ruler, Layers, Shield, Bed, Bath, Hash, Info, Home
+} from 'lucide-react';
 import { useCurrency } from '../contexts/CurrencyContext';
 import { generatePropertySchema, injectSchema } from '../utils/seo';
 import { Property } from '../types';
+import { AGENTS, PROPERTIES } from '../data';
+import { useNavigate } from 'react-router-dom';
+
 interface PropertyDetailProps {
   property: Property;
   onBack: () => void;
@@ -10,29 +18,50 @@ interface PropertyDetailProps {
   wishlist: string[];
 }
 
+// Icon mapper for amenities
+const getAmenityIcon = (amenity: string) => {
+  const am = amenity.toLowerCase();
+  if (am.includes('pool')) return <Compass className="w-5 h-5" />;
+  if (am.includes('gym') || am.includes('fitness')) return <Award className="w-5 h-5" />;
+  if (am.includes('park') || am.includes('garden')) return <MapPin className="w-5 h-5" />;
+  if (am.includes('smart')) return <Home className="w-5 h-5" />;
+  if (am.includes('security') || am.includes('cctv')) return <Shield className="w-5 h-5" />;
+  if (am.includes('concierge') || am.includes('valet')) return <Key className="w-5 h-5" />;
+  return <CheckCircle className="w-5 h-5" />;
+};
+
 export default function PropertyDetail({ property, onBack, onToggleWishlist, wishlist }: PropertyDetailProps) {
   const { convertPrice } = useCurrency();
+  const navigate = useNavigate();
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  
+  // Fullscreen Lightbox
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   // Form lead captures
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState(`Requesting priority dossier for the ${property.title}.`);
+  const [preferredDate, setPreferredDate] = useState('');
+  const [preferredTime, setPreferredTime] = useState('Morning');
   const [success, setSuccess] = useState('');
 
   // Local mortgage calculator
   const [term, setTerm] = useState(20);
   const [interest, setInterest] = useState(4.5);
-  const [downPayment, setDownPayment] = useState(property.price * 0.25);
+  const [downPayment, setDownPayment] = useState(property.price > 0 ? property.price * 0.25 : 0);
   const [monthlyPayment, setMonthlyPayment] = useState(0);
+
+  const images = property.images && property.images.length > 0 ? property.images : [property.image];
+  const agent = property.agentId ? AGENTS.find(a => a.id === property.agentId) : AGENTS[0];
+  const similarProperties = PROPERTIES.filter(p => p.id !== property.id && (p.community === property.community || p.type === property.type)).slice(0, 3);
 
   useEffect(() => {
     setIsWishlisted(wishlist.includes(property.id));
     injectSchema(generatePropertySchema(property), `property-schema-${property.id}`);
     
-    // Cleanup function to remove script on unmount
     return () => {
       const script = document.getElementById(`property-schema-${property.id}`);
       if (script) script.remove();
@@ -53,34 +82,41 @@ export default function PropertyDetail({ property, onBack, onToggleWishlist, wis
     setMonthlyPayment(payment);
   }, [property.price, downPayment, term, interest]);
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
-    alert("Dossier Link successfully copied to clipboard. Securely share with your advisors.");
+  const handleShare = (platform: string) => {
+    const url = window.location.href;
+    const text = `Check out this luxury property: ${property.title} in Dubai.`;
+    if (platform === 'copy') {
+      navigator.clipboard.writeText(url);
+      alert("Dossier Link successfully copied to clipboard.");
+    } else if (platform === 'whatsapp') {
+      window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`);
+    } else if (platform === 'facebook') {
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
+    } else if (platform === 'twitter') {
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`);
+    } else if (platform === 'linkedin') {
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`);
+    }
   };
 
   const handleLeadSubmit = async (e: FormEvent, leadType: string) => {
     e.preventDefault();
     if (!name || !email) return;
-
     try {
       const res = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name,
-          email,
-          phone,
-          message: `${message} (Inquiry Type: ${leadType})`,
+          name, email, phone, 
+          message: `${message} (Inquiry Type: ${leadType}, Date: ${preferredDate}, Time: ${preferredTime})`,
           propertyId: property.id,
           type: leadType
         })
       });
       const data = await res.json();
       if (data.success) {
-        setSuccess(`Success! Your priority ${leadType} reservation is catalogued. Our Senior Advisor Elena Rostova will call you within 15 minutes.`);
-        setName('');
-        setEmail('');
-        setPhone('');
+        setSuccess(`Success! Your priority ${leadType} reservation is catalogued. Our senior advisor will call you shortly.`);
+        setName(''); setEmail(''); setPhone('');
         setTimeout(() => setSuccess(''), 6000);
       }
     } catch (err) {
@@ -88,184 +124,275 @@ export default function PropertyDetail({ property, onBack, onToggleWishlist, wis
     }
   };
 
-  // Safe image array fallback
-  const images = property.images && property.images.length > 0 ? property.images : [property.image];
-
   return (
-    <div className="bg-[#FAF8F4] min-h-screen pt-28 pb-24 px-6">
-      <div className="max-w-7xl mx-auto">
-        
-        {/* BACK BUTTON ROW */}
-        <div className="flex justify-between items-center mb-8">
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 text-xs font-sans font-bold uppercase tracking-widest text-zinc-700 hover:text-gold transition-colors focus:outline-none"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Return to Portfolio</span>
+    <div className="bg-[#FAF8F4] min-h-screen pt-28 pb-24 font-sans relative">
+      
+      {/* FULLSCREEN LIGHTBOX GALLERY */}
+      {lightboxOpen && (
+        <div className="fixed inset-0 z-[100] bg-zinc-950/95 backdrop-blur-xl flex flex-col items-center justify-center animate-in fade-in duration-300">
+          <button onClick={() => setLightboxOpen(false)} className="absolute top-6 right-6 text-white/50 hover:text-white bg-white/10 p-2 rounded-full transition-all">
+            <X className="w-6 h-6" />
           </button>
-
-          <div className="flex gap-3">
-            <button
-              onClick={handleShare}
-              className="w-10 h-10 border border-zinc-200 rounded-full bg-white flex items-center justify-center hover:border-gold hover:text-gold transition-all duration-300"
-              title="Share secure dossier link"
+          
+          <div className="w-full max-w-7xl px-4 flex items-center justify-between">
+            <button 
+              onClick={() => setActiveImageIdx(prev => prev === 0 ? images.length - 1 : prev - 1)}
+              className="text-white/50 hover:text-white bg-white/5 hover:bg-white/10 p-4 rounded-full transition-all"
             >
-              <Share2 className="w-4 h-4 text-zinc-700" />
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+            <div className="relative w-full max-w-5xl aspect-[16/9] mx-4">
+              <img src={images[activeImageIdx]} alt="Fullscreen Gallery" className="object-contain w-full h-full" />
+              <div className="absolute bottom-4 right-4 bg-zinc-950/80 text-white text-xs px-3 py-1 rounded-full font-mono">
+                {activeImageIdx + 1} / {images.length}
+              </div>
+            </div>
+            <button 
+              onClick={() => setActiveImageIdx(prev => prev === images.length - 1 ? 0 : prev + 1)}
+              className="text-white/50 hover:text-white bg-white/5 hover:bg-white/10 p-4 rounded-full transition-all"
+            >
+              <ChevronRight className="w-8 h-8" />
             </button>
           </div>
+          
+          <div className="flex gap-2 mt-8 overflow-x-auto max-w-3xl px-4 snap-x snap-mandatory hide-scrollbar">
+            {images.map((imgUrl, tIdx) => (
+              <img 
+                key={tIdx} src={imgUrl} alt="Thumb" 
+                onClick={() => setActiveImageIdx(tIdx)}
+                className={`w-24 h-16 object-cover cursor-pointer rounded border-2 transition-all snap-center ${activeImageIdx === tIdx ? 'border-[#C89B3C]' : 'border-transparent opacity-50 hover:opacity-100'}`}
+              />
+            ))}
+          </div>
         </div>
+      )}
 
-        {/* PROPERTY HEADER */}
-        <div className="mb-10">
-          <span className="text-xs uppercase tracking-[0.25em] font-semibold text-gold block mb-2">
-            {property.developer} Portfolio • {property.community}
-          </span>
-          <h1 className="font-display text-3xl md:text-5xl text-zinc-950 font-normal tracking-tight mb-4">
-            {property.title}
-          </h1>
-          <div className="flex flex-col md:flex-row md:items-center gap-6 text-xs text-zinc-500 font-semibold font-sans">
-            <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4 text-gold" /> {property.location}</span>
-            <span>{property.beds} Bedrooms</span>
-            <span>{property.baths} Bathrooms</span>
-            <span>{property.sqft.toLocaleString()} Sq. Ft.</span>
-            <span className="font-mono text-emerald-600 bg-emerald-50 px-2 py-0.5">{property.roi}% Net ROI</span>
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-6">
+        
+        {/* BACK & ACTIONS ROW */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+          <button onClick={onBack} className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-zinc-500 hover:text-[#C89B3C] transition-colors">
+            <ArrowLeft className="w-3.5 h-3.5" /> Return to Portfolio
+          </button>
+          <div className="flex items-center gap-2">
+            <button onClick={() => onToggleWishlist(property.id)} className={`flex items-center gap-2 px-4 py-2 border rounded hover:border-[#C89B3C] transition-all text-xs font-bold uppercase tracking-wider ${isWishlisted ? 'border-[#C89B3C] bg-[#C89B3C]/5 text-[#C89B3C]' : 'border-zinc-200 text-zinc-600'}`}>
+              <Heart className={`w-3.5 h-3.5 ${isWishlisted ? 'fill-current' : ''}`} /> {isWishlisted ? 'Saved' : 'Save'}
+            </button>
+            <div className="flex gap-1 border border-zinc-200 rounded p-1 bg-white">
+              <button onClick={() => handleShare('whatsapp')} className="p-1.5 text-zinc-400 hover:text-emerald-500 transition-colors"><MessageSquare className="w-4 h-4" /></button>
+              <button onClick={() => handleShare('facebook')} className="p-1.5 text-zinc-400 hover:text-blue-600 transition-colors"><Facebook className="w-4 h-4" /></button>
+              <button onClick={() => handleShare('copy')} className="p-1.5 text-zinc-400 hover:text-[#C89B3C] transition-colors"><Share2 className="w-4 h-4" /></button>
+            </div>
           </div>
         </div>
 
-        {/* MAIN LAYOUT */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          
-          {/* GALERY AND DETAIL TEXTS (7 cols) */}
-          <div className="lg:col-span-7 space-y-8">
-            
-            {/* LARGE IMAGE AND PREVIEW THUMBS */}
-            <div className="space-y-4">
-              <div className="aspect-[16/10] bg-zinc-100 overflow-hidden relative">
-                <img
-                  src={images[activeImageIdx]}
-                  alt={property.title}
-                  referrerPolicy="no-referrer"
-                  className="object-cover w-full h-full transition-all duration-500"
-                />
+        {/* HERO TITLE & KEY METRICS */}
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-2 mb-3">
+            <span className="bg-zinc-900 text-white text-[9px] uppercase tracking-widest font-bold px-3 py-1">{property.status || (property.completionYear === 'Ready' ? 'Ready to Move' : 'Off-Plan')}</span>
+            <span className="bg-[#C89B3C]/10 border border-[#C89B3C]/20 text-[#C89B3C] text-[9px] uppercase tracking-widest font-bold px-3 py-1">{property.type}</span>
+            {property.goldenVisaEligible && <span className="bg-emerald-50 border border-emerald-100 text-emerald-600 text-[9px] uppercase tracking-widest font-bold px-3 py-1 flex items-center gap-1"><Award className="w-3 h-3" /> Golden Visa</span>}
+          </div>
+          <h1 className="font-display text-3xl md:text-5xl lg:text-6xl text-zinc-950 font-normal tracking-tight mb-4">
+            {property.title}
+          </h1>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-zinc-500 font-medium">
+            <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4 text-[#C89B3C]" /> {property.community}, {property.location}</span>
+            <span className="flex items-center gap-1.5"><Building className="w-4 h-4 text-[#C89B3C]" /> {property.developer}</span>
+            <span className="font-mono text-zinc-900 font-bold bg-white border border-zinc-200 px-3 py-1 rounded">
+              {property.price > 0 ? convertPrice(property.price).formatted : 'Price on Application'}
+            </span>
+          </div>
+        </div>
+
+        {/* HERO GALLERY GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mb-12 h-[400px] md:h-[550px] rounded-xl overflow-hidden group">
+          <div className="md:col-span-3 relative h-full bg-zinc-100 cursor-pointer overflow-hidden" onClick={() => { setActiveImageIdx(0); setLightboxOpen(true); }}>
+            <img loading="lazy" src={images[0]} alt={property.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+            <div className="absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
+              <span className="bg-white/90 backdrop-blur text-zinc-900 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest flex items-center gap-2"><Maximize2 className="w-4 h-4" /> Expand Gallery</span>
+            </div>
+          </div>
+          <div className="hidden md:flex flex-col gap-2 h-full">
+            {images.slice(1, 3).map((img, idx) => (
+              <div key={idx} className="relative h-1/2 bg-zinc-100 cursor-pointer overflow-hidden" onClick={() => { setActiveImageIdx(idx + 1); setLightboxOpen(true); }}>
+                <img loading="lazy" src={img} alt="Thumbnail" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                {idx === 1 && images.length > 3 && (
+                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center hover:bg-black/40 transition-colors">
+                    <span className="text-white font-display text-xl font-medium">+{images.length - 3}</span>
+                  </div>
+                )}
               </div>
+            ))}
+          </div>
+        </div>
 
-              {/* THUMBS */}
-              {images.length > 1 && (
-                <div className="grid grid-cols-4 gap-3">
-                  {images.map((imgUrl, tIdx) => (
-                    <button
-                      key={tIdx}
-                      onClick={() => setActiveImageIdx(tIdx)}
-                      className={`aspect-[4/3] relative overflow-hidden focus:outline-none border-2 transition-all ${
-                        activeImageIdx === tIdx ? 'border-gold' : 'border-transparent opacity-60 hover:opacity-100'
-                      }`}
-                    >
-                      <img
-                        src={imgUrl}
-                        alt="Preview"
-                        referrerPolicy="no-referrer"
-                        className="object-cover w-full h-full"
-                      />
-                    </button>
-                  ))}
-                </div>
-              )}
+        {/* MAIN LAYOUT: CONTENT + STICKY SIDEBAR */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative items-start">
+          
+          {/* CONTENT COLUMN (8 cols) */}
+          <div className="lg:col-span-8 space-y-12">
+            
+            {/* PROPERTY OVERVIEW GRID */}
+            <div className="bg-white border border-zinc-100 p-8 shadow-sm rounded-xl">
+              <h3 className="font-display text-2xl text-zinc-900 font-semibold mb-6 flex items-center gap-3"><Info className="w-5 h-5 text-[#C89B3C]" /> Property Overview</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                <div><span className="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Type</span><span className="font-semibold text-zinc-900">{property.type}</span></div>
+                {property.beds > 0 && <div><span className="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Bedrooms</span><span className="font-semibold text-zinc-900 flex items-center gap-2"><Bed className="w-4 h-4 text-zinc-400"/> {property.beds}</span></div>}
+                {property.baths > 0 && <div><span className="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Bathrooms</span><span className="font-semibold text-zinc-900 flex items-center gap-2"><Bath className="w-4 h-4 text-zinc-400"/> {property.baths}</span></div>}
+                {property.sqft > 0 && <div><span className="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Area (Sq.Ft)</span><span className="font-semibold text-zinc-900 flex items-center gap-2"><Ruler className="w-4 h-4 text-zinc-400"/> {property.sqft.toLocaleString()}</span></div>}
+                {property.parking && <div><span className="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Parking</span><span className="font-semibold text-zinc-900 flex items-center gap-2"><Car className="w-4 h-4 text-zinc-400"/> {property.parking} Spaces</span></div>}
+                {property.floorNumber && <div><span className="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Floor</span><span className="font-semibold text-zinc-900 flex items-center gap-2"><Layers className="w-4 h-4 text-zinc-400"/> {property.floorNumber}</span></div>}
+                {property.furnishing && <div><span className="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Furnishing</span><span className="font-semibold text-zinc-900">{property.furnishing}</span></div>}
+                {property.yearBuilt && <div><span className="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Year Built</span><span className="font-semibold text-zinc-900">{property.yearBuilt}</span></div>}
+                {property.serviceCharges && <div><span className="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Service Charges</span><span className="font-semibold text-zinc-900">{property.serviceCharges}</span></div>}
+                {property.ownershipType && <div><span className="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Ownership</span><span className="font-semibold text-zinc-900">{property.ownershipType}</span></div>}
+                {property.completionYear && <div><span className="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Status</span><span className="font-semibold text-zinc-900">{property.completionYear === 'Ready' ? 'Ready to Move' : `Off-Plan (${property.completionYear})`}</span></div>}
+                {property.referenceNumber && <div><span className="text-[10px] uppercase tracking-widest text-zinc-400 block mb-1">Reference No.</span><span className="font-mono text-xs font-semibold text-zinc-900 flex items-center gap-1"><Hash className="w-3 h-3 text-zinc-400"/> {property.referenceNumber}</span></div>}
+              </div>
             </div>
 
-            {/* DESCRIPTION */}
-            <div className="bg-white border border-zinc-100 p-8 shadow-sm">
-              <h3 className="font-display text-xl text-zinc-900 font-semibold mb-4">The Narrative</h3>
-              <p className="font-sans text-sm text-zinc-600 leading-relaxed whitespace-pre-line">
-                {property.description}
-              </p>
+            {/* DESCRIPTION NARRATIVE */}
+            <div className="bg-white border border-zinc-100 p-8 shadow-sm rounded-xl">
+              <h3 className="font-display text-2xl text-zinc-900 font-semibold mb-6">Property Narrative</h3>
+              <div className="prose prose-zinc max-w-none text-zinc-600 text-sm leading-loose">
+                <p>{property.description}</p>
+                {property.investmentHighlights && (
+                  <>
+                    <h4 className="text-zinc-900 font-semibold mt-6 mb-4 uppercase tracking-widest text-[11px]">Investment Highlights</h4>
+                    <ul className="space-y-2 list-none p-0">
+                      {property.investmentHighlights.map((hl, idx) => (
+                        <li key={idx} className="flex items-start gap-2"><CheckCircle className="w-4 h-4 text-[#C89B3C] shrink-0 mt-1" /> <span>{hl}</span></li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+              </div>
             </div>
 
-            {/* SPEC HIGHLIGHTS */}
-            <div className="bg-white border border-zinc-100 p-8 shadow-sm">
-              <h3 className="font-display text-xl text-zinc-900 font-semibold mb-6">Amenity Register</h3>
+            {/* AMENITIES */}
+            <div className="bg-white border border-zinc-100 p-8 shadow-sm rounded-xl">
+              <h3 className="font-display text-2xl text-zinc-900 font-semibold mb-6 flex items-center gap-3"><Sparkles className="w-5 h-5 text-[#C89B3C]" /> Premium Amenities</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {property.amenities.map((amen, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-xs font-sans font-medium text-zinc-700">
-                    <CheckCircle className="w-4 h-4 text-gold shrink-0" />
-                    <span>{amen}</span>
+                  <div key={idx} className="bg-[#FAF8F4] border border-zinc-100 p-4 rounded-lg flex items-center gap-3 hover:border-[#C89B3C]/30 transition-colors">
+                    <div className="text-[#C89B3C] bg-white p-2 rounded-md shadow-sm">
+                      {getAmenityIcon(amen)}
+                    </div>
+                    <span className="text-xs font-semibold text-zinc-700">{amen}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* NEIGHBORHOOD CONNECTIONS */}
-            <div className="bg-white border border-zinc-100 p-8 shadow-sm">
-              <h3 className="font-display text-xl text-zinc-900 font-semibold mb-6">Proximity Dossier</h3>
-              <div className="space-y-6">
+            {/* PAYMENT PLAN */}
+            {(property.paymentPlanMilestones && property.paymentPlanMilestones.length > 0) || property.paymentPlan ? (
+              <div className="bg-white border border-zinc-100 p-8 shadow-sm rounded-xl">
+                <h3 className="font-display text-2xl text-zinc-900 font-semibold mb-6">Payment Strategy</h3>
+                {property.paymentPlanMilestones && property.paymentPlanMilestones.length > 0 ? (
+                  <div className="overflow-hidden border border-zinc-100 rounded-lg">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-[#FAF8F4] text-[10px] uppercase tracking-widest text-zinc-500 font-bold">
+                          <th className="p-4 border-b border-zinc-100">Milestone</th>
+                          <th className="p-4 border-b border-zinc-100 text-right">Percentage</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {property.paymentPlanMilestones.map((m, idx) => (
+                          <tr key={idx} className="border-b border-zinc-50 last:border-0 hover:bg-zinc-50 transition-colors">
+                            <td className="p-4 text-sm font-medium text-zinc-800">{m.milestone}</td>
+                            <td className="p-4 text-sm font-bold text-[#C89B3C] text-right">{m.percentage}%</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <p className="text-sm text-zinc-600 font-medium">{property.paymentPlan}</p>
+                )}
+              </div>
+            ) : null}
+
+            {/* MULTIMEDIA: VIDEO & 360 */}
+            {(property.videoUrl || property.virtualTour360Url) && (
+              <div className="bg-zinc-950 text-white border border-zinc-800 p-8 shadow-xl rounded-xl space-y-8">
+                <h3 className="font-display text-2xl font-semibold flex items-center gap-3"><Play className="w-5 h-5 text-[#C89B3C]" /> Immersive Media</h3>
+                {property.videoUrl && (
+                  <div className="space-y-3">
+                    <span className="text-[10px] uppercase tracking-widest font-bold text-[#C89B3C]">Cinematic Tour</span>
+                    <div className="aspect-[16/9] bg-zinc-900 rounded-lg overflow-hidden border border-white/10">
+                      <iframe src={property.videoUrl} className="w-full h-full" allowFullScreen></iframe>
+                    </div>
+                  </div>
+                )}
+                {property.virtualTour360Url && (
+                  <div className="space-y-3">
+                    <span className="text-[10px] uppercase tracking-widest font-bold text-[#C89B3C]">360° Virtual Walkthrough</span>
+                    <div className="aspect-[16/9] bg-zinc-900 rounded-lg overflow-hidden border border-white/10">
+                      <iframe src={property.virtualTour360Url} className="w-full h-full" allowFullScreen></iframe>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* LOCATION & NEARBY */}
+            <div className="bg-white border border-zinc-100 p-8 shadow-sm rounded-xl">
+              <h3 className="font-display text-2xl text-zinc-900 font-semibold mb-6 flex items-center gap-3"><MapPin className="w-5 h-5 text-[#C89B3C]" /> Location & Proximity</h3>
+              
+              {property.googleMapUrl && (
+                <div className="aspect-[21/9] w-full border border-zinc-200 rounded-lg overflow-hidden mb-8">
+                  <iframe src={property.googleMapUrl} width="100%" height="100%" style={{ border: 0 }} allowFullScreen={false} loading="lazy" referrerPolicy="no-referrer"></iframe>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div>
-                  <span className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 block mb-2">Elite School Access</span>
+                  <span className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 block mb-3 border-b border-zinc-100 pb-2">Education</span>
                   <ul className="space-y-2">
-                    {property.nearby.schools.map((school, sIdx) => (
-                      <li key={sIdx} className="text-xs text-zinc-600 font-sans">• {school}</li>
-                    ))}
+                    {property.nearby.schools.map((school, sIdx) => <li key={sIdx} className="text-xs text-zinc-700 font-medium flex items-start gap-2"><span className="text-[#C89B3C]">•</span> {school}</li>)}
                   </ul>
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 block mb-2">Medical Facilities</span>
+                  <span className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 block mb-3 border-b border-zinc-100 pb-2">Healthcare</span>
                   <ul className="space-y-2">
-                    {property.nearby.hospitals.map((hosp, hIdx) => (
-                      <li key={hIdx} className="text-xs text-zinc-600 font-sans">• {hosp}</li>
-                    ))}
+                    {property.nearby.hospitals.map((hosp, hIdx) => <li key={hIdx} className="text-xs text-zinc-700 font-medium flex items-start gap-2"><span className="text-[#C89B3C]">•</span> {hosp}</li>)}
                   </ul>
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 block mb-2">Highways & Monorail</span>
+                  <span className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 block mb-3 border-b border-zinc-100 pb-2">Transit & Leisure</span>
                   <ul className="space-y-2">
-                    {property.nearby.transport.map((trans, tIdx) => (
-                      <li key={tIdx} className="text-xs text-zinc-600 font-sans">• {trans}</li>
-                    ))}
+                    {property.nearby.transport.map((trans, tIdx) => <li key={tIdx} className="text-xs text-zinc-700 font-medium flex items-start gap-2"><span className="text-[#C89B3C]">•</span> {trans}</li>)}
                   </ul>
                 </div>
               </div>
             </div>
 
-            {/* INVESTMENT HIGHLIGHTS */}
-            {property.investmentHighlights && property.investmentHighlights.length > 0 && (
-              <div className="bg-[#FAF8F4] border border-[#C89B3C]/10 p-8 shadow-sm space-y-4">
-                <h3 className="font-display text-xl text-zinc-900 font-semibold flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-[#C89B3C]" /> Sovereign Investment Merits
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {property.investmentHighlights.map((hl, hlIdx) => (
-                    <div key={hlIdx} className="bg-white p-4 border border-zinc-100 shadow-xs flex flex-col justify-between">
-                      <p className="text-xs text-zinc-700 leading-relaxed font-sans">{hl}</p>
-                      <span className="text-[9px] uppercase tracking-wider font-bold text-[#C89B3C] mt-2">Institutional Grade</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* FLOOR PLANS & MASTER PLAN */}
+            {/* FLOOR PLANS */}
             {(property.floorPlanImage || property.masterPlanImage) && (
-              <div className="bg-white border border-zinc-100 p-8 shadow-sm space-y-6">
-                <h3 className="font-display text-xl text-zinc-900 font-semibold">Architectural Layouts</h3>
+              <div className="bg-white border border-zinc-100 p-8 shadow-sm rounded-xl">
+                <h3 className="font-display text-2xl text-zinc-900 font-semibold mb-6 flex items-center gap-3"><Layers className="w-5 h-5 text-[#C89B3C]" /> Floor & Master Plans</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {property.floorPlanImage && (
-                    <div className="space-y-2">
-                      <span className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 block">Unit Floor Plan</span>
-                      <div className="aspect-[4/3] bg-zinc-50 border border-zinc-150 relative overflow-hidden group">
-                        <img loading="lazy" src={property.floorPlanImage} alt="Floor Plan" referrerPolicy="no-referrer" className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                          <span className="text-white text-[10px] uppercase tracking-widest font-bold">Request Full CAD</span>
-                        </div>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs uppercase tracking-wider font-bold text-zinc-700">Unit Layout</span>
+                        <a href={property.floorPlanImage} download className="text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] hover:text-zinc-900 flex items-center gap-1"><Download className="w-3 h-3"/> PDF</a>
+                      </div>
+                      <div className="aspect-[4/3] bg-zinc-50 border border-zinc-200 rounded-lg overflow-hidden relative group">
+                        <img loading="lazy" src={property.floorPlanImage} alt="Floor Plan" className="object-contain w-full h-full p-4" />
                       </div>
                     </div>
                   )}
                   {property.masterPlanImage && (
-                    <div className="space-y-2">
-                      <span className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 block">Master Community Plan</span>
-                      <div className="aspect-[4/3] bg-zinc-50 border border-zinc-150 relative overflow-hidden group">
-                        <img loading="lazy" src={property.masterPlanImage} alt="Master Plan" referrerPolicy="no-referrer" className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                          <span className="text-white text-[10px] uppercase tracking-widest font-bold">Request Master Dossier</span>
-                        </div>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs uppercase tracking-wider font-bold text-zinc-700">Master Plan</span>
+                        <a href={property.masterPlanImage} download className="text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] hover:text-zinc-900 flex items-center gap-1"><Download className="w-3 h-3"/> PDF</a>
+                      </div>
+                      <div className="aspect-[4/3] bg-zinc-50 border border-zinc-200 rounded-lg overflow-hidden relative group">
+                        <img loading="lazy" src={property.masterPlanImage} alt="Master Plan" className="object-cover w-full h-full" />
                       </div>
                     </div>
                   )}
@@ -273,267 +400,140 @@ export default function PropertyDetail({ property, onBack, onToggleWishlist, wis
               </div>
             )}
 
-            {/* COMMUNITY MAP LOCATION */}
-            {property.googleMapUrl && (
-              <div className="bg-white border border-zinc-100 p-8 shadow-sm space-y-4">
-                <h3 className="font-display text-xl text-zinc-900 font-semibold">Asset Geo-Position</h3>
-                <div className="aspect-[16/9] w-full border border-zinc-200">
-                  <iframe
-                    src={property.googleMapUrl}
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen={false}
-                    loading="lazy"
-                    referrerPolicy="no-referrer"
-                    title="Asset Map"
-                  ></iframe>
-                </div>
-              </div>
-            )}
-
-            {/* PROPERTY FAQS */}
-            {property.faqs && property.faqs.length > 0 && (
-              <div className="bg-white border border-zinc-100 p-8 shadow-sm space-y-6">
-                <h3 className="font-display text-xl text-zinc-900 font-semibold">Property Intelligence FAQ</h3>
-                <div className="space-y-4">
-                  {property.faqs.map((faq, faqIdx) => (
-                    <div key={faqIdx} className="border-b border-zinc-100 pb-4 last:border-b-0 last:pb-0">
-                      <h4 className="text-sm font-sans font-semibold text-zinc-900 mb-1.5">{faq.question}</h4>
-                      <p className="text-xs text-zinc-600 font-sans leading-relaxed">{faq.answer}</p>
+            {/* SIMILAR PROPERTIES */}
+            {similarProperties.length > 0 && (
+              <div className="pt-8 border-t border-zinc-200">
+                <h3 className="font-display text-2xl text-zinc-900 font-semibold mb-6">Similar Properties</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                  {similarProperties.map(p => (
+                    <div key={p.id} onClick={() => { window.scrollTo(0,0); navigate(`/property/${p.slug}`); }} className="bg-white border border-zinc-100 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow group flex flex-col">
+                      <div className="relative aspect-[4/3] overflow-hidden bg-zinc-100">
+                        <img src={p.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <div className="absolute bottom-2 left-2 bg-zinc-900/90 text-white text-[9px] uppercase tracking-widest px-2 py-1 rounded">{p.type}</div>
+                      </div>
+                      <div className="p-4 flex flex-col flex-1">
+                        <h4 className="font-semibold text-sm text-zinc-900 group-hover:text-[#C89B3C] transition-colors line-clamp-1">{p.title}</h4>
+                        <p className="text-[10px] text-zinc-500 mt-1 mb-3">{p.community}</p>
+                        <div className="mt-auto pt-3 border-t border-zinc-100 font-mono font-bold text-xs">
+                          {p.price > 0 ? convertPrice(p.price).formatted : 'POA'}
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* NESTED MORTGAGE CALCULATOR */}
-            <div className="bg-zinc-900 text-white p-8">
-              <h3 className="font-display text-lg font-light mb-6 flex items-center gap-2">
-                <Compass className="w-5 h-5 text-gold" /> Asset Amortization Planner
-              </h3>
-
-              {property.price > 0 ? (
-                <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <label className="block text-[10px] uppercase tracking-wider font-bold text-zinc-400 mb-2">Down Payment</label>
-                      <input
-                        type="range"
-                        min={property.price * 0.1}
-                        max={property.price * 0.8}
-                        step={250000}
-                        value={downPayment}
-                        onChange={(e) => setDownPayment(Number(e.target.value))}
-                        className="w-full accent-gold h-1 cursor-pointer bg-zinc-800 mb-1"
-                      />
-                      <div className="flex justify-between text-[9px] text-zinc-500 font-mono">
-                        <span>10% DLD Base</span>
-                        <span>{convertPrice(downPayment).formatted}</span>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-[10px] uppercase tracking-wider font-bold text-zinc-400 mb-2">Mortgage Term</label>
-                        <select
-                          value={term}
-                          onChange={(e) => setTerm(Number(e.target.value))}
-                          className="w-full bg-zinc-950 border border-zinc-800 py-1.5 px-2 text-xs focus:outline-none"
-                        >
-                          <option value={10}>10 Years</option>
-                          <option value={15}>15 Years</option>
-                          <option value={20}>20 Years</option>
-                          <option value={25}>25 Years</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-[10px] uppercase tracking-wider font-bold text-zinc-400 mb-2">Rate (%)</label>
-                        <input
-                          type="number"
-                          step="0.1"
-                          value={interest}
-                          onChange={(e) => setInterest(Number(e.target.value))}
-                          className="w-full bg-zinc-950 border border-zinc-800 py-1.5 px-2 text-xs focus:outline-none text-zinc-200"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="border-t border-zinc-800 pt-4 flex justify-between items-center">
-                    <div>
-                      <span className="text-[9px] uppercase tracking-wider text-zinc-500 block font-bold">Estimated Payment</span>
-                      <span className="font-mono text-lg font-bold text-emerald-400">{convertPrice(Math.round(monthlyPayment)).formatted} / month</span>
-                    </div>
-                    <span className="text-[10px] text-zinc-400 max-w-[200px] text-right">Includes amortization principal and interest fees.</span>
-                  </div>
-                </>
-              ) : (
-                <div className="py-4 text-center">
-                  <p className="text-xs text-zinc-400 leading-relaxed">
-                    Amortization planner is available upon official pricing launch. Contact your private advisor to schedule priority ledger access.
-                  </p>
-                </div>
-              )}
-            </div>
-
           </div>
 
-          {/* ASSET METRICS & LEAD INTAKE SIDEBAR (5 cols) */}
-          <div className="lg:col-span-5 space-y-6">
+          {/* STICKY SIDEBAR (4 cols) */}
+          <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
             
-            {/* INVESTMENT APPRAISAL */}
-            <div className="bg-zinc-950 text-white p-8 border border-zinc-800 shadow-xl relative overflow-hidden">
-              <span className="text-[10px] uppercase tracking-widest font-semibold text-gold block mb-2">Investment Appraisal</span>
-              <h3 className="font-display text-xl font-light mb-6">Valuation Ledger</h3>
+            {/* PRICING & ENQUIRY CARD */}
+            <div className="bg-white border border-zinc-100 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] rounded-xl overflow-hidden">
+              <div className="bg-zinc-950 text-white p-6 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#C89B3C]/10 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+                <span className="text-[10px] uppercase tracking-widest font-semibold text-[#C89B3C] block mb-2">Starting Price</span>
+                <div className="font-mono text-3xl font-bold mb-4">
+                  {property.price > 0 ? convertPrice(property.price).formatted : 'Price on Request'}
+                </div>
+                <div className="flex justify-between items-center text-xs font-medium border-t border-zinc-800 pt-4 mt-2">
+                  <span className="text-zinc-400">Projected Yield</span>
+                  <span className="text-emerald-400">{property.roi}% Net ROI</span>
+                </div>
+              </div>
+              
+              <div className="p-6">
+                <h4 className="font-display text-lg text-zinc-900 font-semibold mb-4">Register Interest</h4>
+                
+                {success && (
+                  <div className="bg-emerald-50 text-emerald-700 border border-emerald-100 p-3 mb-4 text-[11px] leading-relaxed font-semibold rounded">
+                    {success}
+                  </div>
+                )}
 
+                <form onSubmit={(e) => handleLeadSubmit(e, 'Enquiry')} className="space-y-4 text-xs font-sans">
+                  <div>
+                    <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Full Name" className="w-full bg-[#FAF8F4] border border-zinc-200 rounded-md px-4 py-3 focus:border-[#C89B3C] focus:outline-none transition-colors" />
+                  </div>
+                  <div>
+                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email Address" className="w-full bg-[#FAF8F4] border border-zinc-200 rounded-md px-4 py-3 focus:border-[#C89B3C] focus:outline-none transition-colors" />
+                  </div>
+                  <div>
+                    <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone Number" className="w-full bg-[#FAF8F4] border border-zinc-200 rounded-md px-4 py-3 focus:border-[#C89B3C] focus:outline-none transition-colors" />
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-3">
+                    <input type="date" value={preferredDate} onChange={(e) => setPreferredDate(e.target.value)} className="w-full bg-[#FAF8F4] border border-zinc-200 rounded-md px-3 py-3 focus:border-[#C89B3C] focus:outline-none transition-colors text-zinc-500" />
+                    <select value={preferredTime} onChange={(e) => setPreferredTime(e.target.value)} className="w-full bg-[#FAF8F4] border border-zinc-200 rounded-md px-3 py-3 focus:border-[#C89B3C] focus:outline-none transition-colors text-zinc-500">
+                      <option value="Morning">Morning</option>
+                      <option value="Afternoon">Afternoon</option>
+                      <option value="Evening">Evening</option>
+                    </select>
+                  </div>
+
+                  <div className="pt-2">
+                    <button type="submit" className="w-full bg-zinc-950 hover:bg-[#C89B3C] text-white py-3.5 rounded-md text-[11px] font-bold uppercase tracking-widest transition-all duration-300 shadow-md">
+                      Enquire Now
+                    </button>
+                  </div>
+                </form>
+                
+                <div className="grid grid-cols-2 gap-3 mt-3">
+                  <a href={`https://wa.me/971500000000?text=I'm interested in ${property.title}`} target="_blank" rel="noopener noreferrer" className="bg-[#25D366] hover:bg-[#1EBE5A] text-white py-3 rounded-md text-[10px] font-bold uppercase tracking-widest flex justify-center items-center gap-2 transition-colors">
+                    <MessageSquare className="w-3.5 h-3.5"/> WhatsApp
+                  </a>
+                  <button onClick={(e) => handleLeadSubmit(e, 'Brochure')} className="bg-[#FAF8F4] hover:bg-zinc-100 text-zinc-900 border border-zinc-200 py-3 rounded-md text-[10px] font-bold uppercase tracking-widest flex justify-center items-center gap-2 transition-colors">
+                    <Download className="w-3.5 h-3.5"/> Brochure
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* AGENT CARD */}
+            {agent && (
+              <div className="bg-white border border-zinc-100 shadow-sm rounded-xl p-6 flex flex-col items-center text-center">
+                <img src={agent.image} alt={agent.name} className="w-24 h-24 rounded-full object-cover border-4 border-[#FAF8F4] shadow-sm mb-4" />
+                <h4 className="font-display text-lg font-semibold text-zinc-900">{agent.name}</h4>
+                <span className="text-[10px] uppercase tracking-widest text-[#C89B3C] font-bold mb-3 block">{agent.role}</span>
+                <p className="text-xs text-zinc-500 mb-4 px-4">Speaks: {agent.languages.join(', ')}</p>
+                <div className="w-full flex gap-2">
+                  <a href={`tel:${agent.phone}`} className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-white py-2.5 rounded text-[10px] uppercase tracking-widest font-bold transition-colors">Call</a>
+                  <a href={`mailto:${agent.email}`} className="flex-1 bg-zinc-100 hover:bg-zinc-200 text-zinc-900 py-2.5 rounded text-[10px] uppercase tracking-widest font-bold transition-colors">Email</a>
+                </div>
+              </div>
+            )}
+            
+            {/* AMORTIZATION CALCULATOR WIDGET */}
+            <div className="bg-[#FAF8F4] border border-zinc-200/60 p-6 rounded-xl">
+              <h4 className="font-display text-lg text-zinc-900 font-semibold mb-4 flex items-center gap-2">
+                <Compass className="w-4 h-4 text-[#C89B3C]" /> Mortgage Estimate
+              </h4>
               <div className="space-y-4">
-                <div className="flex justify-between border-b border-zinc-800 pb-2">
-                  <span className="text-xs text-zinc-400">Total Purchase Price</span>
-                  <span className="font-mono text-sm font-bold text-gold">
-                    {property.price > 0 ? convertPrice(property.price).formatted : 'Contact for Latest Price'}
-                  </span>
+                <div>
+                  <label className="text-[10px] uppercase tracking-widest font-bold text-zinc-500 flex justify-between"><span>Down Payment</span> <span>{convertPrice(downPayment).formatted}</span></label>
+                  <input type="range" min={property.price * 0.1} max={property.price * 0.8} step={50000} value={downPayment} onChange={(e) => setDownPayment(Number(e.target.value))} className="w-full accent-[#C89B3C] h-1 bg-zinc-200 mt-2" />
                 </div>
-                <div className="flex justify-between border-b border-zinc-800 pb-2">
-                  <span className="text-xs text-zinc-400">Projected Net Yield</span>
-                  <span className="font-mono text-sm font-bold text-emerald-400">{property.roi}% Net ROI</span>
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-zinc-500">Term (Yrs)</label>
+                    <select value={term} onChange={(e) => setTerm(Number(e.target.value))} className="w-full bg-white border border-zinc-200 py-1.5 px-2 text-xs mt-1">
+                      <option value={10}>10</option><option value={15}>15</option><option value={20}>20</option><option value={25}>25</option>
+                    </select>
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-[10px] uppercase tracking-widest font-bold text-zinc-500">Rate (%)</label>
+                    <input type="number" step="0.1" value={interest} onChange={(e) => setInterest(Number(e.target.value))} className="w-full bg-white border border-zinc-200 py-1.5 px-2 text-xs mt-1" />
+                  </div>
                 </div>
-                <div className="flex justify-between border-b border-zinc-800 pb-2">
-                  <span className="text-xs text-zinc-400">Lighthouse Appraisal Score</span>
-                  <span className="font-mono text-sm font-bold text-white">{property.investmentScore} / 100</span>
-                </div>
-                <div className="flex justify-between border-b border-zinc-800 pb-2">
-                  <span className="text-xs text-zinc-400">Golden Visa pre-qualified</span>
-                  <span className="font-sans text-xs font-bold text-emerald-400">Verified Eligible</span>
+                <div className="pt-4 border-t border-zinc-200">
+                  <span className="text-[10px] uppercase tracking-widest text-zinc-500 font-bold block mb-1">Monthly Payment</span>
+                  <span className="font-mono text-xl font-bold text-[#C89B3C]">{convertPrice(Math.round(monthlyPayment)).formatted}</span>
                 </div>
               </div>
-
-              <div className="mt-8 grid grid-cols-2 gap-3">
-                <a
-                  href={`https://wa.me/971500000000?text=I am interested in ${property.title}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 uppercase text-xs tracking-widest font-bold flex items-center justify-center space-x-2 transition-colors cursor-pointer"
-                >
-                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
-                  </svg>
-                  <span>WhatsApp Broker</span>
-                </a>
-                <a
-                  href="tel:+971501112233"
-                  className="bg-zinc-900 border border-zinc-800 hover:border-gold text-white text-center py-3 text-xs uppercase tracking-widest font-bold font-sans transition-all block"
-                >
-                  Priority Call
-                </a>
-              </div>
-            </div>
-
-            {/* PRIORITY VIEWING RESERVATION FORM */}
-            <div className="bg-white border border-zinc-100 p-8 shadow-sm">
-              <div className="flex items-center gap-2 mb-6 pb-2 border-b border-zinc-100">
-                <Calendar className="w-5 h-5 text-gold shrink-0" />
-                <h4 className="font-display text-lg text-zinc-900 font-semibold">Priority Booking</h4>
-              </div>
-
-              {success && (
-                <div className="bg-emerald-50 text-emerald-700 border border-emerald-100 p-4 mb-6 text-xs leading-relaxed font-semibold">
-                  {success}
-                </div>
-              )}
-
-              <form id="inquiry-form" onSubmit={(e) => handleLeadSubmit(e, 'Viewing')} className="space-y-4 text-xs font-sans">
-                <div>
-                  <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-2">Full Name</label>
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Alastair Sterling"
-                    className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-4 py-3 focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-2">Email Address</label>
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="client@privateoffice.com"
-                    className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-4 py-3 focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-2">Phone (Mobile/WhatsApp)</label>
-                  <input
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+44 7911 123456"
-                    className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-4 py-3 focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-2">Investment Narrative</label>
-                  <textarea
-                    rows={3}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-4 py-3 focus:outline-none text-zinc-600"
-                  ></textarea>
-                </div>
-
-                <div className="pt-2 flex flex-col gap-2">
-                  <button
-                    type="submit"
-                    className="bg-zinc-950 hover:bg-gold text-white hover:text-zinc-950 py-3.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2"
-                  >
-                    <Send className="w-3.5 h-3.5" /> Book Private Viewing
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={(e) => handleLeadSubmit(e, 'Brochure')}
-                    className="bg-transparent hover:bg-zinc-50 border border-zinc-200 text-zinc-800 py-3.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2"
-                  >
-                    <FileText className="w-3.5 h-3.5 text-gold" /> Download Private Brochure
-                  </button>
-                </div>
-              </form>
-            </div>
-
-            {/* DLD Milestones Disclaimer */}
-            <div className="bg-[#FAF8F4] border border-zinc-200/60 p-6 space-y-2">
-              <span className="block text-xs uppercase tracking-wider font-bold text-zinc-700 flex items-center gap-2">
-                <Award className="w-4 h-4 text-gold" /> DLD Regulatory Clearance
-              </span>
-              <p className="text-[10px] text-zinc-500 leading-normal">
-                This asset is cleared by the Dubai Land Department. For off-plan allocations, construction funds are protected within audited project escrow structures under Dubai Law No. 8 of 2007.
-              </p>
             </div>
 
           </div>
-
-        </div>
-
-        {/* MOBILE STICKY CTA */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 p-4 bg-white/95 backdrop-blur-md border-t border-zinc-200 z-50 flex gap-3 pb-safe shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
-          <button
-            onClick={(e) => handleLeadSubmit(e, 'Brochure')}
-            className="flex-1 bg-transparent border border-zinc-950 text-zinc-950 hover:bg-zinc-50 py-3.5 text-[10px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-1.5 rounded-lg"
-          >
-            <FileText className="w-3.5 h-3.5" /> Brochure
-          </button>
-          <button
-            onClick={() => {
-              document.getElementById('inquiry-form')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="flex-1 bg-zinc-950 hover:bg-gold text-white hover:text-zinc-950 py-3.5 text-[10px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-1.5 rounded-lg"
-          >
-            <Calendar className="w-3.5 h-3.5" /> Book Viewing
-          </button>
         </div>
 
       </div>
