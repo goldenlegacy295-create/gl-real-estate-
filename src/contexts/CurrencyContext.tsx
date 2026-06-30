@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
-export type Currency = 'AED' | 'USD' | 'EUR' | 'GBP' | 'SAR' | 'QAR' | 'INR' | 'RUB' | 'CNY' | 'JPY' | 'CAD' | 'AUD' | 'SGD' | 'HKD' | 'CHF';
+export type Currency = 'AED' | 'USD' | 'EUR' | 'GBP' | 'SAR' | 'QAR' | 'INR' | 'RUB' | 'CNY' | 'JPY' | 'CAD' | 'AUD' | 'SGD' | 'HKD' | 'CHF' | 'KWD' | 'OMR';
 
 interface CurrencyContextType {
   currency: Currency;
@@ -58,7 +58,7 @@ export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setRates({
           AED: 1, USD: 0.27, EUR: 0.25, GBP: 0.21, SAR: 1.02, QAR: 0.99,
           INR: 22.5, RUB: 24.5, CNY: 1.95, JPY: 40.5, CAD: 0.37, AUD: 0.42,
-          SGD: 0.37, HKD: 2.13, CHF: 0.24
+          SGD: 0.37, HKD: 2.13, CHF: 0.24, KWD: 0.084, OMR: 0.105
         });
       } finally {
         setIsLoading(false);

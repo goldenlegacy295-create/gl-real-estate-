@@ -18,6 +18,7 @@ import { generateGlobalSchema, injectSchema } from './utils/seo';
 
 // Data
 import { PROPERTIES, DEVELOPERS, COMMUNITIES, AGENTS, BLOGS, FAQS } from './data';
+import whatsappLogo from '../assets/logos/whatsapp logo.png';
 import { Property, Lead } from './types';
 import { Phone, Calendar, Mail, X, Send, Award, ArrowUp, MessageSquare } from 'lucide-react';
 
@@ -366,7 +367,7 @@ export default function App() {
       </main>
 
       {/* FLOATING ACTION TELEMETRY TRIGGERS */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+      <div className="fixed bottom-6 left-6 z-40 flex flex-col gap-3">
         {/* Scroll Top Button */}
         {showScrollTop && (
           <button
@@ -382,7 +383,7 @@ export default function App() {
       {/* VIP CONSULTATION REGISTRATION OVERLAY / MODAL */}
       {consultationOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/75 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-          <div className="bg-white border border-zinc-100 p-8 md:p-10 max-w-md w-full relative shadow-2xl rounded-none">
+          <div className="bg-white border border-zinc-100 p-6 md:p-8 max-w-[400px] w-full relative shadow-2xl rounded-none">
             <button
               onClick={() => setConsultationOpen(false)}
               className="absolute top-4 right-4 text-zinc-400 hover:text-zinc-900 focus:outline-none"
@@ -402,48 +403,48 @@ export default function App() {
               </div>
             )}
 
-            <form onSubmit={handleModalSubmit} className="space-y-4 text-xs font-sans">
+            <form onSubmit={handleModalSubmit} className="space-y-3 text-[11px] font-sans">
               <div>
-                <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-2">Your Full Name</label>
+                <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-1.5 text-center">Your Full Name</label>
                 <input
                   type="text"
                   required
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
                   placeholder="Sir Reginald Althorpe"
-                  className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-4 py-3 focus:outline-none"
+                  className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-3 py-2.5 focus:outline-none text-center"
                 />
               </div>
 
               <div>
-                <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-2">Secure Email Address</label>
+                <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-1.5 text-center">Secure Email Address</label>
                 <input
                   type="email"
                   required
                   value={clientEmail}
                   onChange={(e) => setClientEmail(e.target.value)}
                   placeholder="arthur@althorpewealth.com"
-                  className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-4 py-3 focus:outline-none"
+                  className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-3 py-2.5 focus:outline-none text-center"
                 />
               </div>
 
               <div>
-                <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-2">Direct Phone (WhatsApp)</label>
+                <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-1.5 text-center">Direct Phone (WhatsApp)</label>
                 <input
                   type="tel"
                   value={clientPhone}
                   onChange={(e) => setClientPhone(e.target.value)}
                   placeholder="+44 7911 123456"
-                  className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-4 py-3 focus:outline-none"
+                  className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-3 py-2.5 focus:outline-none text-center"
                 />
               </div>
 
               <div>
-                <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-2">Estimated Capital Allocation</label>
+                <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-1.5 text-center">Estimated Capital Allocation</label>
                 <select
                   value={clientBudget}
                   onChange={(e) => setClientBudget(e.target.value)}
-                  className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-4 py-3 focus:outline-none cursor-pointer"
+                  className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-3 py-2.5 focus:outline-none cursor-pointer text-center appearance-none"
                 >
                   <option>AED 2M - 5M (Golden Visa base)</option>
                   <option>AED 5M - 15M (Premium Beachfront)</option>
@@ -453,20 +454,20 @@ export default function App() {
               </div>
 
               <div>
-                <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-2">Investment Scope Brief</label>
+                <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-1.5 text-center">Investment Scope Brief</label>
                 <textarea
-                  rows={3}
+                  rows={2}
                   value={clientMessage}
                   onChange={(e) => setClientMessage(e.target.value)}
-                  placeholder="We require custom yield audits, off-market villa lists, or Golden Visa biometrics legal filing support..."
-                  className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-4 py-3 focus:outline-none text-zinc-600"
+                  placeholder="We require custom yield audits, off-market villa lists..."
+                  className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-3 py-2.5 focus:outline-none text-zinc-600 text-center resize-none"
                 ></textarea>
               </div>
 
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full bg-zinc-950 hover:bg-gold text-white hover:text-zinc-950 py-3.5 text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2"
+                  className="w-full bg-zinc-950 hover:bg-gold text-white hover:text-zinc-950 py-3 text-[11px] font-bold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   <Send className="w-3.5 h-3.5" /> Transmit Priority Request
                 </button>
@@ -475,6 +476,37 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* GLOBAL WHATSAPP FLOATING BUTTON */}
+      <div className="fixed bottom-8 right-4 lg:bottom-12 lg:right-6 z-[90] flex flex-col items-end gap-3 pointer-events-none">
+        
+        {/* Hello Texting Bubble */}
+        <a 
+          href="https://wa.me/971556656007"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-white text-zinc-900 text-[13px] font-[600] px-4 py-2.5 rounded-[18px] rounded-br-[4px] shadow-[0_10px_25px_rgba(0,0,0,0.15)] pointer-events-auto hover:-translate-y-0.5 transition-transform origin-bottom-right animate-in fade-in zoom-in slide-in-from-bottom-4 duration-500 fill-mode-both"
+          style={{ animationDelay: '1s', animationFillMode: 'both' }}
+        >
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 bg-[#25D366] rounded-full animate-pulse"></span>
+            Hello 👋
+          </span>
+        </a>
+
+        {/* WhatsApp Icon Button */}
+        <a
+          href="https://wa.me/971556656007"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-[#25D366] text-white p-4 rounded-full shadow-[0_0_20px_rgba(37,211,102,0.5)] hover:shadow-[0_0_30px_rgba(37,211,102,0.8)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center group pointer-events-auto"
+        >
+          <img src={whatsappLogo} alt="WhatsApp" className="w-7 h-7 object-contain animate-pulse group-hover:animate-none" />
+          <span className="absolute right-full mr-4 bg-zinc-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            Chat with us
+          </span>
+        </a>
+      </div>
 
     </div>
   );

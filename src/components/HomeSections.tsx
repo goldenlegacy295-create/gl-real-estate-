@@ -1,11 +1,12 @@
 import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, DollarSign, ArrowRight, Award, ShieldCheck, Mail, Phone, ExternalLink, HelpCircle, CheckCircle, Download, Send, Bookmark, Instagram, Twitter, Linkedin, Facebook } from 'lucide-react';
+import { Search, MapPin, DollarSign, ArrowRight, Award, ShieldCheck, Mail, Phone, ExternalLink, HelpCircle, CheckCircle, Download, Send, Bookmark, Instagram, Twitter, Linkedin, Facebook, MessageSquare } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useCurrency } from '../contexts/CurrencyContext';
 import { Property, Developer, Community, Agent, Blog, FAQ } from '../types';
 import heroVideo from '../../assets/videos/hero.mp4';
 import ceoImg from '../../assets/photos/arvind_ceo_and_advisor.png';
+import whatsappLogo from '../../assets/logos/whatsapp logo.png';
 
 interface HomeSectionsProps {
   properties: Property[];
@@ -193,6 +194,7 @@ export default function HomeSections({
             muted
             playsInline
             onLoadedData={() => setVideoLoaded(true)}
+            style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
             className={`w-full h-full object-cover scale-105 select-none pointer-events-none transition-opacity duration-[1500ms] ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
           >
             <source src={heroVideo} type="video/mp4" />
@@ -322,7 +324,7 @@ export default function HomeSections({
             </div>
             
             {/* Infinite Loop Scroller */}
-            <div className="relative w-full overflow-hidden select-none">
+            <div className="relative w-full overflow-hidden select-none" style={{ contain: 'paint' }}>
               {/* Inject local style for pure self-contained marquee scroll */}
               <style dangerouslySetInnerHTML={{__html: `
                 @keyframes partnerMarquee {
@@ -334,6 +336,8 @@ export default function HomeSections({
                   width: max-content;
                   will-change: transform;
                   animation: partnerMarquee 25s linear infinite;
+                  backface-visibility: hidden;
+                  -webkit-font-smoothing: subpixel-antialiased;
                 }
                 .partner-marquee-container:hover {
                   animation-play-state: paused;
@@ -1020,9 +1024,16 @@ export default function HomeSections({
 
             {/* MESSAGE DIRECT INTAKE FORM (7 cols) */}
             <div className="lg:col-span-7 bg-white border border-zinc-100 p-8 md:p-10 shadow-sm gsap-reveal-right">
-              <h3 className="font-display text-xl text-zinc-900 font-semibold mb-6 flex items-center gap-2">
-                <Mail className="w-5 h-5 text-gold" /> Coordinate Your Portfolio
-              </h3>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+                <h3 className="font-display text-xl text-zinc-900 font-semibold flex items-center gap-2 m-0">
+                  <Mail className="w-5 h-5 text-gold" /> Coordinate Your Portfolio
+                </h3>
+                <a href="https://wa.me/971556656007" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-full hover:bg-[#20bd5a] transition-all duration-300 shadow-[0_4px_14px_rgba(37,211,102,0.3)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.4)] hover:-translate-y-0.5 group relative overflow-hidden self-start">
+                  <span className="absolute inset-0 bg-white/20 animate-pulse pointer-events-none"></span>
+                  <img src={whatsappLogo} alt="WhatsApp" className="w-4 h-4 object-contain relative z-10" />
+                  <span className="text-[11px] uppercase tracking-wider font-bold relative z-10">+971 556656007</span>
+                </a>
+              </div>
 
               {contactSuccess && (
                 <div className="bg-emerald-50 text-emerald-700 border border-emerald-100 p-4 mb-6 text-xs leading-relaxed font-semibold">
@@ -1086,7 +1097,7 @@ export default function HomeSections({
       {/* SECTION 18: LUXURY FOOTER */}
       <footer className="bg-zinc-950 text-white py-16 px-6 border-t border-zinc-900">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-12">
             
             {/* BRAND */}
             <div className="space-y-4">
@@ -1100,6 +1111,9 @@ export default function HomeSections({
                 Legacy of Trust. Future of Luxury.
               </span>
               <div className="flex gap-3 pt-4">
+                <a href="https://wa.me/971556656007" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all duration-300" aria-label="WhatsApp">
+                  <MessageSquare className="w-3.5 h-3.5" />
+                </a>
                 <a href="#" className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-gold hover:text-zinc-950 hover:border-gold transition-all duration-300">
                   <Instagram className="w-3.5 h-3.5" />
                 </a>
@@ -1155,6 +1169,22 @@ export default function HomeSections({
                   Join
                 </button>
               </div>
+            </div>
+
+            {/* HEADQUARTERS */}
+            <div className="space-y-4">
+              <span className="text-[10px] uppercase tracking-widest text-zinc-400 font-bold block">Corporate Headquarters</span>
+              <div>
+                <p className="text-[11px] text-zinc-300 leading-relaxed font-sans font-bold">
+                  Our Private Office
+                </p>
+                <p className="text-[10px] text-zinc-500 leading-relaxed font-sans mt-1">
+                  Boulevard Plaza Tower 2<br/>
+                  Downtown Dubai, UAE<br/>
+                  PO Box 12345
+                </p>
+              </div>
+
             </div>
 
           </div>
