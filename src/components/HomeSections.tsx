@@ -1,9 +1,11 @@
 import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, DollarSign, ArrowRight, Award, ShieldCheck, Mail, Phone, ExternalLink, HelpCircle, CheckCircle, Download, Send, Bookmark } from 'lucide-react';
+import { Search, MapPin, DollarSign, ArrowRight, Award, ShieldCheck, Mail, Phone, ExternalLink, HelpCircle, CheckCircle, Download, Send, Bookmark, Instagram, Twitter, Linkedin, Facebook } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { useCurrency } from '../contexts/CurrencyContext';
 import { Property, Developer, Community, Agent, Blog, FAQ } from '../types';
 import heroVideo from '../../assets/videos/hero.mp4';
-import ceoImg from '../../assets/photos/arvind-pal-singh.png';
+import ceoImg from '../../assets/photos/arvind_ceo_and_advisor.png';
 
 interface HomeSectionsProps {
   properties: Property[];
@@ -28,6 +30,10 @@ export default function HomeSections({
   onOpenConsultation,
   onSelectDeveloper
 }: HomeSectionsProps) {
+  const { t } = useTranslation();
+  const { convertPrice } = useCurrency();
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const [activeDevId, setActiveDevId] = useState('emaar');
   // Sticky search state
@@ -50,7 +56,6 @@ export default function HomeSections({
   // FAQ Accordion active index
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
-  const [videoLoaded, setVideoLoaded] = useState(false);
 
   const handleSearchSubmit = () => {
     navigate('/search');
@@ -111,6 +116,64 @@ export default function HomeSections({
       });
   };
 
+  const renderCategorySlider = (title: string, filterFn: (p: Property) => boolean) => {
+    const filtered = properties.filter(filterFn);
+    if (filtered.length === 0) return null;
+    return (
+      <div className="gsap-stagger-container mb-16">
+        <div className="flex items-center justify-between gap-4 mb-8 px-6 lg:px-0">
+          <div className="flex items-center gap-4 flex-1">
+            <h3 className="font-display text-2xl font-semibold text-zinc-900">{title}</h3>
+            <div className="h-px bg-zinc-200 flex-1 hidden sm:block"></div>
+          </div>
+          <button onClick={() => navigate('/search')} className="text-[10px] font-bold text-[#C89B3C] uppercase tracking-wider hover:text-zinc-900 transition-colors whitespace-nowrap">
+            View All
+          </button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 px-6 lg:px-0">
+          {filtered.map(prop => (
+            <div key={prop.id} onClick={() => onSelectProperty(prop)} className="bg-white border border-[#ECECEC] rounded-[18px] overflow-hidden group cursor-pointer hover:shadow-2xl hover:shadow-black/5 transition-all duration-500 flex flex-col">
+              <div className="relative aspect-[4/3] bg-zinc-100 overflow-hidden shrink-0">
+                <img src={prop.image} alt={prop.title} loading="lazy" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute top-4 left-4 bg-zinc-950/80 backdrop-blur-md text-white text-[9px] uppercase tracking-widest font-bold px-3 py-1 rounded-full">
+                  {prop.developer}
+                </div>
+                {prop.roi && (
+                  <div className="absolute bottom-4 left-4 bg-[#C89B3C]/90 backdrop-blur-md text-white text-[9px] uppercase tracking-widest font-bold px-3 py-1 rounded-full shadow-lg">
+                    Est. ROI {prop.roi}%
+                  </div>
+                )}
+              </div>
+              <div className="p-6 flex flex-col flex-1">
+                <h4 className="font-display text-lg font-semibold text-zinc-900 group-hover:text-[#C89B3C] transition-colors line-clamp-1">{prop.title}</h4>
+                <p className="text-xs text-zinc-500 mt-2 line-clamp-2 mb-4 flex-1">{prop.description}</p>
+                
+                {/* Property Stats */}
+                <div className="flex items-center gap-4 text-[10px] text-zinc-500 uppercase tracking-wider font-semibold mb-5 pb-4 border-b border-zinc-100">
+                  {prop.beds && <span>{prop.beds} Beds</span>}
+                  {prop.baths && <span>{prop.baths} Baths</span>}
+                  {prop.sqft && <span>{prop.sqft.toLocaleString()} Sq.Ft</span>}
+                </div>
+
+                <div className="flex justify-between items-center text-xs mt-auto">
+                  <div className="flex flex-col">
+                    <span className="text-[8px] uppercase tracking-widest text-zinc-400 mb-0.5">Starting Price</span>
+                    <span className="font-mono font-bold text-zinc-950 text-sm">
+                      {prop.price > 0 ? convertPrice(prop.price).formatted : 'Contact Us'}
+                    </span>
+                  </div>
+                  <span className="text-zinc-950 group-hover:text-[#C89B3C] font-bold uppercase tracking-wider border-b border-transparent group-hover:border-[#C89B3C] pb-0.5 transition-all">
+                    View
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="bg-white">
       
@@ -141,7 +204,11 @@ export default function HomeSections({
         <div className="max-w-7xl mx-auto px-4 lg:px-6 relative z-10 w-full text-center flex flex-col items-center justify-center">
           {/* HERO HEADING CENTERED */}
           <div className="max-w-4xl mx-auto drop-shadow-2xl flex flex-col items-center">
-            <span className="text-[10px] lg:text-xs uppercase tracking-[0.3em] font-semibold text-[#C89B3C] block mb-4 lg:mb-6">Legacy of Trust. Future of Luxury.</span>
+            <span className="text-[10px] lg:text-xs uppercase tracking-[0.3em] font-semibold text-[#C89B3C] block mb-3">Legacy of Trust. Future of Luxury.</span>
+            <span className="text-[9px] lg:text-[10px] uppercase tracking-[0.2em] font-bold text-white bg-[#C89B3C]/20 border border-[#C89B3C]/40 px-4 py-1.5 rounded-full inline-flex items-center gap-1.5 mb-4 lg:mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(200,155,60,0.4)] hover:bg-[#C89B3C]/30 hover:scale-105 transition-all duration-300">
+              <Award className="w-3 h-3 text-[#C89B3C]" />
+              {t('hero.minInvestment')}: <span className="text-[#C89B3C]">{convertPrice(600000).formatted}</span>
+            </span>
             <h1 className="font-display text-[42px] leading-[1.1] md:text-7xl font-normal tracking-tight text-white w-[90%] mx-auto">
               Your Legacy Starts <br className="hidden md:block" />
               With The <span className="italic text-[#C89B3C] font-light">Right Property</span>
@@ -259,70 +326,77 @@ export default function HomeSections({
               {/* Inject local style for pure self-contained marquee scroll */}
               <style dangerouslySetInnerHTML={{__html: `
                 @keyframes partnerMarquee {
-                  0% { transform: translateX(0); }
-                  100% { transform: translateX(-50%); }
+                  0% { transform: translate3d(0, 0, 0); }
+                  100% { transform: translate3d(-50%, 0, 0); }
                 }
                 .partner-marquee-container {
                   display: flex;
                   width: max-content;
-                  animation: partnerMarquee 20s linear infinite;
+                  will-change: transform;
+                  animation: partnerMarquee 25s linear infinite;
                 }
                 .partner-marquee-container:hover {
                   animation-play-state: paused;
                 }
               `}} />
               
-              <div className="partner-marquee-container flex items-center gap-16">
-                {/* First Set */}
-                {[
-                  { name: 'SOBHA', domain: 'sobharealty.com' },
-                  { name: 'DANUBE', domain: 'danubeproperties.ae' },
-                  { name: 'DAMAC', domain: 'damacproperties.com' },
-                  { name: 'AZIZI', domain: 'azizidevelopments.com' },
-                  { name: 'BINGHATTI', domain: 'binghatti.com' },
-                  { name: 'EMAAR', domain: 'emaar.com' },
-                  { name: 'NAKHEEL', domain: 'nakheel.com' }
-                ].map((partner, index) => (
-                  <div key={`p1-${index}`} className="flex items-center justify-center min-w-[120px]">
-                    <img 
-                      src={`https://logo.clearbit.com/${partner.domain}`} 
-                      alt={`${partner.name} Logo`} 
-                      className="h-8 md:h-10 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-                      onError={(e) => { 
-                        e.currentTarget.style.display = 'none'; 
-                        e.currentTarget.nextElementSibling!.style.display = 'block'; 
-                      }} 
-                    />
-                    <span style={{ display: 'none' }} className="font-display text-base font-extrabold tracking-[0.2em] text-zinc-400 hover:text-[#C89B3C] transition-colors duration-300">
-                      {partner.name}
-                    </span>
-                  </div>
-                ))}
-                {/* Duplicated set for infinite loop illusion */}
-                {[
-                  { name: 'SOBHA', domain: 'sobharealty.com' },
-                  { name: 'DANUBE', domain: 'danubeproperties.ae' },
-                  { name: 'DAMAC', domain: 'damacproperties.com' },
-                  { name: 'AZIZI', domain: 'azizidevelopments.com' },
-                  { name: 'BINGHATTI', domain: 'binghatti.com' },
-                  { name: 'EMAAR', domain: 'emaar.com' },
-                  { name: 'NAKHEEL', domain: 'nakheel.com' }
-                ].map((partner, index) => (
-                  <div key={`p2-${index}`} className="flex items-center justify-center min-w-[120px]">
-                    <img 
-                      src={`https://logo.clearbit.com/${partner.domain}`} 
-                      alt={`${partner.name} Logo`} 
-                      className="h-8 md:h-10 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-                      onError={(e) => { 
-                        e.currentTarget.style.display = 'none'; 
-                        e.currentTarget.nextElementSibling!.style.display = 'block'; 
-                      }} 
-                    />
-                    <span style={{ display: 'none' }} className="font-display text-base font-extrabold tracking-[0.2em] text-zinc-400 hover:text-[#C89B3C] transition-colors duration-300">
-                      {partner.name}
-                    </span>
-                  </div>
-                ))}
+              <div className="partner-marquee-container">
+                <div className="flex items-center gap-16 pr-16 flex-shrink-0">
+                  {/* First Set */}
+                  {[
+                    { name: 'SOBHA', logo: '/photos/Partners/sobha-realty.png', sizeClass: '' },
+                    { name: 'DANUBE', logo: '/photos/Partners/Danube.png', sizeClass: 'scale-125' },
+                    { name: 'DAMAC', logo: '/photos/Partners/Damac.png', sizeClass: 'scale-125' },
+                    { name: 'AZIZI', logo: '/photos/Partners/Azizi.png', sizeClass: '' },
+                    { name: 'BINGHATTI', logo: '/photos/Partners/Binghatti.webp', sizeClass: '' },
+                    { name: 'EMAAR', logo: '/photos/Partners/EMAAR.png', sizeClass: 'scale-125' },
+                    { name: 'NAKHEEL', logo: '/photos/Partners/Nakheel.jpg', sizeClass: '' },
+                    { name: 'ALEF', logo: '/photos/Partners/Alef.jpg', sizeClass: '' }
+                  ].map((partner, index) => (
+                    <div key={`p1-${index}`} className="flex items-center justify-center min-w-[120px]">
+                      <img loading="lazy" 
+                        src={partner.logo} 
+                        alt={`${partner.name} Logo`} 
+                        className={`h-10 md:h-12 w-auto object-contain transition-all duration-300 ${partner.sizeClass || ''}`}
+                        onError={(e) => { 
+                          e.currentTarget.style.display = 'none'; 
+                          e.currentTarget.nextElementSibling!.style.display = 'block'; 
+                        }} 
+                      />
+                      <span style={{ display: 'none' }} className="font-display text-base font-extrabold tracking-[0.2em] text-zinc-400 hover:text-[#C89B3C] transition-colors duration-300">
+                        {partner.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center gap-16 pr-16 flex-shrink-0">
+                  {/* Duplicated set for infinite loop illusion */}
+                  {[
+                    { name: 'SOBHA', logo: '/photos/Partners/sobha-realty.png', sizeClass: '' },
+                    { name: 'DANUBE', logo: '/photos/Partners/Danube.png', sizeClass: 'scale-125' },
+                    { name: 'DAMAC', logo: '/photos/Partners/Damac.png', sizeClass: 'scale-125' },
+                    { name: 'AZIZI', logo: '/photos/Partners/Azizi.png', sizeClass: '' },
+                    { name: 'BINGHATTI', logo: '/photos/Partners/Binghatti.webp', sizeClass: '' },
+                    { name: 'EMAAR', logo: '/photos/Partners/EMAAR.png', sizeClass: 'scale-125' },
+                    { name: 'NAKHEEL', logo: '/photos/Partners/Nakheel.jpg', sizeClass: '' },
+                    { name: 'ALEF', logo: '/photos/Partners/Alef.jpg', sizeClass: '' }
+                  ].map((partner, index) => (
+                    <div key={`p2-${index}`} className="flex items-center justify-center min-w-[120px]">
+                      <img loading="lazy" 
+                        src={partner.logo} 
+                        alt={`${partner.name} Logo`} 
+                        className={`h-10 md:h-12 w-auto object-contain transition-all duration-300 ${partner.sizeClass || ''}`}
+                        onError={(e) => { 
+                          e.currentTarget.style.display = 'none'; 
+                          e.currentTarget.nextElementSibling!.style.display = 'block'; 
+                        }} 
+                      />
+                      <span style={{ display: 'none' }} className="font-display text-base font-extrabold tracking-[0.2em] text-zinc-400 hover:text-[#C89B3C] transition-colors duration-300">
+                        {partner.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -419,7 +493,7 @@ export default function HomeSections({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 gsap-stagger-container">
             {/* Card 1 */}
             <div className="group relative bg-zinc-900 border border-white/10 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(200,155,60,0.2)] transition-all duration-500 gsap-stagger-item overflow-hidden rounded-xl h-[380px] flex flex-col justify-end p-8">
-              <img 
+              <img loading="lazy" 
                 src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&q=80&w=800" 
                 alt="Dubai Skyline" 
                 className="absolute inset-0 w-full h-full object-cover grayscale opacity-30 group-hover:opacity-50 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
@@ -438,7 +512,7 @@ export default function HomeSections({
 
             {/* Card 2 */}
             <div className="group relative bg-zinc-900 border border-white/10 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(200,155,60,0.2)] transition-all duration-500 gsap-stagger-item overflow-hidden rounded-xl h-[380px] flex flex-col justify-end p-8">
-              <img 
+              <img loading="lazy" 
                 src="https://images.unsplash.com/photo-1546412414-8035e1776c9a?auto=format&fit=crop&q=80&w=800" 
                 alt="Luxury Passport" 
                 className="absolute inset-0 w-full h-full object-cover grayscale opacity-30 group-hover:opacity-50 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
@@ -457,7 +531,7 @@ export default function HomeSections({
 
             {/* Card 3 */}
             <div className="group relative bg-zinc-900 border border-white/10 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(200,155,60,0.2)] transition-all duration-500 gsap-stagger-item overflow-hidden rounded-xl h-[380px] flex flex-col justify-end p-8">
-              <img 
+              <img loading="lazy" 
                 src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800" 
                 alt="Financial District" 
                 className="absolute inset-0 w-full h-full object-cover grayscale opacity-30 group-hover:opacity-50 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
@@ -488,7 +562,7 @@ export default function HomeSections({
               <div className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-gold/20 via-transparent to-gold/10 opacity-20 group-hover:opacity-40 transition-opacity duration-700 blur-lg"></div>
               <div className="relative border border-white/5 p-2 bg-zinc-900/40 backdrop-blur-md rounded-2xl">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-zinc-800">
-                  <img 
+                  <img loading="lazy" 
                     src={ceoImg} 
                     alt="Mr. Arvind Pal - CEO of Golden Legacy Real Estate" 
                     referrerPolicy="no-referrer"
@@ -621,7 +695,7 @@ export default function HomeSections({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gsap-stagger-container">
-            {properties.filter(p => p.type === 'Villa' || p.type === 'Penthouse').slice(0, 3).map(prop => (
+            {properties.filter(p => ['prop-1', 'prop-10', 'prop-11'].includes(p.id)).map(prop => (
               <div
                 key={prop.id}
                 className="bg-white border border-[#ECECEC] flex flex-col justify-between group gsap-stagger-item"
@@ -659,7 +733,7 @@ export default function HomeSections({
                     <div>
                       <span className="text-[9px] uppercase tracking-wider text-zinc-400 block">Acquisition Value</span>
                       <span className="font-mono font-bold text-zinc-950">
-                        {prop.price > 0 ? `AED ${prop.price.toLocaleString()}` : 'Contact for Latest Price'}
+                        {prop.price > 0 ? convertPrice(prop.price).formatted : 'Contact for Latest Price'}
                       </span>
                     </div>
                     <button
@@ -677,6 +751,39 @@ export default function HomeSections({
         </div>
       </section>
 
+      {/* SECTION 10: INVENTORY (CATEGORIZED) */}
+      <section className="py-24 bg-[#FAF8F4] px-6 overflow-hidden border-t border-[#ECECEC]">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center max-w-2xl mx-auto mb-16 gsap-reveal">
+            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-[#C89B3C] block mb-2">Complete Portfolio</span>
+            <h2 className="font-display text-3xl md:text-5xl text-zinc-950 font-normal tracking-tight leading-tight">
+              Our Exclusive <span className="italic font-light text-[#C89B3C]">Inventory</span>
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            {renderCategorySlider('Featured Properties', p => ['prop-1', 'prop-10', 'prop-11'].includes(p.id))}
+            {renderCategorySlider('Apartments', p => p.type === 'Apartment')}
+            {renderCategorySlider('Villas & Mansions', p => p.type === 'Villa')}
+            {renderCategorySlider('Townhouses', p => p.type === 'Townhouse')}
+            {renderCategorySlider('Penthouses', p => p.type === 'Penthouse')}
+            {renderCategorySlider('Commercial Properties', p => p.type === 'Commercial')}
+            {renderCategorySlider('Off-Plan Projects', p => p.status === 'Off-Plan')}
+            {renderCategorySlider('Ready to Move', p => p.status === 'Ready')}
+            {renderCategorySlider('Luxury Collection', p => p.price > 5000000)}
+            {renderCategorySlider('Waterfront Collection', p => p.community.toLowerCase().includes('marina') || p.community.toLowerCase().includes('palm') || p.community.toLowerCase().includes('creek'))}
+            {renderCategorySlider('New Launches', p => p.isNewLaunch === true || ['prop-1', 'prop-10'].includes(p.id))}
+            
+            <div className="text-center mt-12 pt-8">
+              <button onClick={() => navigate('/search')} className="px-10 py-4 bg-zinc-950 text-white rounded-lg text-xs uppercase tracking-widest font-bold hover:bg-[#C89B3C] transition-colors shadow-lg">
+                Browse Full Inventory
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       {/* SECTION 11: MEET OUR EXPERTS */}
       <section className="py-24 bg-[#FAF8F4] px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto">
@@ -691,12 +798,12 @@ export default function HomeSections({
             {agents.map(agent => (
               <div key={agent.id} className="bg-white border border-zinc-100 p-8 flex flex-col justify-between shadow-sm hover:border-gold/30 transition-all duration-300 gsap-stagger-item">
                 <div className="space-y-4 text-center">
-                  <div className="w-24 h-24 rounded-full overflow-hidden mx-auto border-2 border-gold/20">
+                  <div className="w-24 h-24 rounded-full overflow-hidden mx-auto border-2 border-gold/20 flex items-center justify-center bg-zinc-50/50">
                     <img
                       src={agent.image}
                       alt={agent.name}
                       referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain p-1"
                     />
                   </div>
                   <div>
@@ -992,6 +1099,20 @@ export default function HomeSections({
               <span className="block text-[8px] font-mono text-gold uppercase tracking-[0.3em]">
                 Legacy of Trust. Future of Luxury.
               </span>
+              <div className="flex gap-3 pt-4">
+                <a href="#" className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-gold hover:text-zinc-950 hover:border-gold transition-all duration-300">
+                  <Instagram className="w-3.5 h-3.5" />
+                </a>
+                <a href="#" className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-gold hover:text-zinc-950 hover:border-gold transition-all duration-300">
+                  <Linkedin className="w-3.5 h-3.5" />
+                </a>
+                <a href="#" className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-gold hover:text-zinc-950 hover:border-gold transition-all duration-300">
+                  <Twitter className="w-3.5 h-3.5" />
+                </a>
+                <a href="#" className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-gold hover:text-zinc-950 hover:border-gold transition-all duration-300">
+                  <Facebook className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
 
             {/* QUICK LINKS */}

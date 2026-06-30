@@ -14,6 +14,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // Register GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
+import { generateGlobalSchema, injectSchema } from './utils/seo';
+
 // Data
 import { PROPERTIES, DEVELOPERS, COMMUNITIES, AGENTS, BLOGS, FAQS } from './data';
 import { Property, Lead } from './types';
@@ -59,6 +61,15 @@ export default function App() {
   const [modalSuccess, setModalSuccess] = useState('');
 
   useEffect(() => {
+    // Inject global SEO schema
+    injectSchema(generateGlobalSchema(), 'global-schema');
+
+    // Force scroll to top on refresh and disable browser automatic scroll restoration
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 400);
     };

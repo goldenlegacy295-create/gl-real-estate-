@@ -108,3 +108,16 @@ export function generateGlobalSchema() {
     }
   });
 }
+
+export function injectSchema(schemaString: string | null, id: string) {
+  if (!schemaString) return;
+  
+  let script = document.getElementById(id) as HTMLScriptElement;
+  if (!script) {
+    script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = id;
+    document.head.appendChild(script);
+  }
+  script.text = schemaString;
+}

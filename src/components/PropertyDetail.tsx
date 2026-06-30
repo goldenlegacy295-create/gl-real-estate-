@@ -1,7 +1,8 @@
 import { useState, useEffect, FormEvent } from 'react';
 import { ArrowLeft, Phone, Calendar, Share2, Compass, MapPin, Award, CheckCircle, FileText, Send, Sparkles } from 'lucide-react';
+import { useCurrency } from '../contexts/CurrencyContext';
+import { generatePropertySchema, injectSchema } from '../utils/seo';
 import { Property } from '../types';
-
 interface PropertyDetailProps {
   property: Property;
   onBack: () => void;
@@ -10,6 +11,7 @@ interface PropertyDetailProps {
 }
 
 export default function PropertyDetail({ property, onBack, onToggleWishlist, wishlist }: PropertyDetailProps) {
+  const { convertPrice } = useCurrency();
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [isWishlisted, setIsWishlisted] = useState(false);
 
@@ -28,7 +30,14 @@ export default function PropertyDetail({ property, onBack, onToggleWishlist, wis
 
   useEffect(() => {
     setIsWishlisted(wishlist.includes(property.id));
-  }, [wishlist, property.id]);
+    injectSchema(generatePropertySchema(property), `property-schema-${property.id}`);
+    
+    // Cleanup function to remove script on unmount
+    return () => {
+      const script = document.getElementById(`property-schema-${property.id}`);
+      if (script) script.remove();
+    };
+  }, [wishlist, property]);
 
   useEffect(() => {
     const loan = property.price - downPayment;
@@ -242,7 +251,7 @@ export default function PropertyDetail({ property, onBack, onToggleWishlist, wis
                     <div className="space-y-2">
                       <span className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 block">Unit Floor Plan</span>
                       <div className="aspect-[4/3] bg-zinc-50 border border-zinc-150 relative overflow-hidden group">
-                        <img src={property.floorPlanImage} alt="Floor Plan" referrerPolicy="no-referrer" className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
+                        <img loading="lazy" src={property.floorPlanImage} alt="Floor Plan" referrerPolicy="no-referrer" className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                           <span className="text-white text-[10px] uppercase tracking-widest font-bold">Request Full CAD</span>
                         </div>
@@ -253,7 +262,7 @@ export default function PropertyDetail({ property, onBack, onToggleWishlist, wis
                     <div className="space-y-2">
                       <span className="text-[10px] uppercase tracking-wider font-bold text-zinc-400 block">Master Community Plan</span>
                       <div className="aspect-[4/3] bg-zinc-50 border border-zinc-150 relative overflow-hidden group">
-                        <img src={property.masterPlanImage} alt="Master Plan" referrerPolicy="no-referrer" className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
+                        <img loading="lazy" src={property.masterPlanImage} alt="Master Plan" referrerPolicy="no-referrer" className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105" />
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                           <span className="text-white text-[10px] uppercase tracking-widest font-bold">Request Master Dossier</span>
                         </div>
@@ -320,7 +329,7 @@ export default function PropertyDetail({ property, onBack, onToggleWishlist, wis
                       />
                       <div className="flex justify-between text-[9px] text-zinc-500 font-mono">
                         <span>10% DLD Base</span>
-                        <span>AED {downPayment.toLocaleString()}</span>
+                        <span>{convertPrice(downPayment).formatted}</span>
                       </div>
                     </div>
 
@@ -354,7 +363,7 @@ export default function PropertyDetail({ property, onBack, onToggleWishlist, wis
                   <div className="border-t border-zinc-800 pt-4 flex justify-between items-center">
                     <div>
                       <span className="text-[9px] uppercase tracking-wider text-zinc-500 block font-bold">Estimated Payment</span>
-                      <span className="font-mono text-lg font-bold text-emerald-400">AED {Math.round(monthlyPayment).toLocaleString()} / month</span>
+                      <span className="font-mono text-lg font-bold text-emerald-400">{convertPrice(Math.round(monthlyPayment)).formatted} / month</span>
                     </div>
                     <span className="text-[10px] text-zinc-400 max-w-[200px] text-right">Includes amortization principal and interest fees.</span>
                   </div>
@@ -382,7 +391,7 @@ export default function PropertyDetail({ property, onBack, onToggleWishlist, wis
                 <div className="flex justify-between border-b border-zinc-800 pb-2">
                   <span className="text-xs text-zinc-400">Total Purchase Price</span>
                   <span className="font-mono text-sm font-bold text-gold">
-                    {property.price > 0 ? `AED ${property.price.toLocaleString()}` : 'Contact for Latest Price'}
+                    {property.price > 0 ? convertPrice(property.price).formatted : 'Contact for Latest Price'}
                   </span>
                 </div>
                 <div className="flex justify-between border-b border-zinc-800 pb-2">

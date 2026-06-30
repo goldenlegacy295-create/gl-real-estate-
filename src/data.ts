@@ -386,11 +386,11 @@ export const PROPERTIES: Property[] = [
     beds: 3,
     baths: 3,
     sqft: 1850,
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200',
+    image: '/photos/inventory/burj-azizi-main.jpeg',
     images: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200',
-      'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200',
-      'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=1200'
+      '/photos/inventory/burj-azizi-main.jpeg',
+      '/photos/inventory/burj-azizi-1.jpeg',
+      '/photos/inventory/burj-azizi-2.jpeg'
     ],
     description: 'Soaring on Sheikh Zayed Road, Burj Azizi is planned to be the second-tallest building in the world. It provides an ultra-exclusive selection of glass sky residences, breathtaking Burj Khalifa and skyline views, personalized 7-star valet and butler networks, and global investment pedigree.',
     roi: 9.1,
@@ -642,22 +642,112 @@ export const PROPERTIES: Property[] = [
     faqs: [
       { question: 'Does each apartment have a private car elevator?', answer: 'Yes, the signature sky mansion collection includes custom car lifts that allow you to park your vehicles inside your residence.' }
     ]
+  },
+  {
+    id: 'prop-10',
+    title: 'BINGHATTI Thilala',
+    slug: 'binghatti-thilala',
+    seoTitle: 'BINGHATTI Thilala | Luxury Property in Dubai',
+    seoDescription: 'Discover BINGHATTI Thilala, a premium property offering exceptional luxury and high investment returns in Dubai.',
+    goldenVisaEligible: true,
+    pros: ['High capital appreciation', 'Prime location', 'Premium amenities'],
+    cons: ['High initial investment', 'Subject to market fluctuations'],
+    whoShouldBuy: 'High-net-worth individuals and investors seeking luxury assets with strong capital appreciation.',
+    whoShouldNotBuy: 'Short-term speculators seeking immediate liquid cash flow.',
+    price: 1800000,
+    location: 'Business Bay, Dubai',
+    community: 'Business Bay',
+    developer: 'Binghatti Developers',
+    type: 'Villa',
+    subType: 'Luxury Villas',
+    beds: 4,
+    baths: 4,
+    sqft: 3200,
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200',
+    images: [
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200',
+      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1200'
+    ],
+    description: 'BINGHATTI Thilala offers unparalleled signature luxury villas, featuring exquisite modern architecture, high-end finishing, and breathtaking views, tailored for the elite investor.',
+    roi: 8.2,
+    completionYear: 2027,
+    paymentPlan: '60/40 Payment Plan',
+    featured: true,
+    investmentScore: 92,
+    amenities: ['Private Pool', 'Equipped Gymnasium', 'Landscaped Gardens', '24/7 Security'],
+    nearby: {
+      schools: ['GEMS Wellington (10 mins)'],
+      hospitals: ['Mediclinic (8 mins)'],
+      transport: ['Metro Station (5 mins)']
+    },
+    floorPlanImage: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1200',
+    masterPlanImage: 'https://images.unsplash.com/photo-1524813686514-a57563d77965?q=80&w=1200',
+    googleMapUrl: 'https://maps.google.com/maps?q=Business%20Bay,%20Dubai&t=&z=13&ie=UTF8&iwloc=&output=embed',
+    investmentHighlights: ['Guaranteed Net Rental ROI', 'Flexible Payment Plan', 'High Capital Appreciation Potential'],
+    faqs: [
+      { question: 'What is the payment plan?', answer: 'It is a 60/40 payment plan.' }
+    ]
+  },
+  {
+    id: 'prop-11',
+    title: 'Damac Highlands',
+    slug: 'damac-highlands',
+    seoTitle: 'Damac Highlands | Luxury Property in Dubai',
+    seoDescription: 'Discover Damac Highlands, a premium property offering exceptional luxury and high investment returns in Dubai.',
+    goldenVisaEligible: true,
+    pros: ['High capital appreciation', 'Prime location', 'Premium amenities'],
+    cons: ['High initial investment', 'Subject to market fluctuations'],
+    whoShouldBuy: 'High-net-worth individuals and investors seeking luxury assets with strong capital appreciation.',
+    whoShouldNotBuy: 'Short-term speculators seeking immediate liquid cash flow.',
+    price: 2200000,
+    location: 'DAMAC Hills, Dubai',
+    community: 'DAMAC Hills',
+    developer: 'DAMAC Properties',
+    type: 'Villa',
+    subType: 'Luxury Villas',
+    beds: 5,
+    baths: 6,
+    sqft: 4500,
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200',
+    images: [
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200',
+      'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?q=80&w=1200'
+    ],
+    description: 'Damac Highlands is a premium villa community located in the heart of DAMAC Hills, offering sprawling landscapes, championship golf course access, and unmatched tranquility.',
+    roi: 7.9,
+    completionYear: 2026,
+    paymentPlan: '50/50 Payment Plan',
+    featured: true,
+    investmentScore: 90,
+    amenities: ['Golf Course Access', 'Private Pool', 'Landscaped Gardens', 'Clubhouse'],
+    nearby: {
+      schools: ['Jebel Ali School (5 mins)'],
+      hospitals: ['Aster Clinic (10 mins)'],
+      transport: ['Bus Stop (2 mins)']
+    },
+    floorPlanImage: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1200',
+    masterPlanImage: 'https://images.unsplash.com/photo-1524813686514-a57563d77965?q=80&w=1200',
+    googleMapUrl: 'https://maps.google.com/maps?q=DAMAC%20Hills,%20Dubai&t=&z=13&ie=UTF8&iwloc=&output=embed',
+    investmentHighlights: ['Prime Golf Course Location', 'Flexible Payment Plan', 'High Capital Appreciation Potential'],
+    faqs: [
+      { question: 'Is it near the golf course?', answer: 'Yes, it offers direct access to the championship golf course.' }
+    ]
   }
 ];
 
 export const AGENTS: Agent[] = [
   {
     id: 'agent-1',
-    name: 'Tariq Al-Mansoor',
-    slug: 'tariq-al-mansoor',
-    seoTitle: 'Tariq Al-Mansoor | Dubai Real Estate',
-    seoDescription: 'Explore signature projects and investment opportunities by Tariq Al-Mansoor.',
-    role: 'Managing Partner & Founder',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300',
-    languages: ['Arabic', 'English', 'French'],
+    name: 'Arvind Pal Singh',
+    slug: 'arvind-pal-singh',
+    seoTitle: 'Arvind Pal Singh | Dubai Real Estate',
+    seoDescription: 'Explore signature projects and investment opportunities by Arvind Pal Singh.',
+    role: 'CEO & Founder',
+    image: '/photos/arvind_ceo_and_advisor.png',
+    languages: ['English', 'Hindi'],
     experience: 18,
     propertiesSold: 420,
-    email: 'tariq@goldenlegacy.ae',
+    email: 'arvind@goldenlegacy.ae',
     phone: '+971 50 111 2233',
     whatsApp: 'https://wa.me/971501112233'
   },
@@ -674,20 +764,20 @@ export const AGENTS: Agent[] = [
     propertiesSold: 280,
     email: 'elena@goldenlegacy.ae',
     phone: '+971 50 444 5566',
-    whatsApp: 'https://wa.me/971504445566'
+    whatsApp: 'https://wa.me/971504445566'                                      
   },
-  {
+  {                 
     id: 'agent-3',
-    name: 'Marcus Sterling',
-    slug: 'marcus-sterling',
-    seoTitle: 'Marcus Sterling | Dubai Real Estate',
-    seoDescription: 'Explore signature projects and investment opportunities by Marcus Sterling.',
-    role: 'Senior Wealth Portfolio Advisor',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300',
-    languages: ['English', 'Spanish'],
+    name: 'Oshhavarora',
+    slug: 'oshhavarora',
+    seoTitle: 'Oshhavarora | Dubai Real Estate',
+    seoDescription: 'Explore signature projects and investment opportunities by Oshhavarora.',
+    role: 'Advisor',
+    image: '/photos/advisor.png',
+    languages: ['English', 'Hindi'],
     experience: 10,
     propertiesSold: 195,
-    email: 'marcus@goldenlegacy.ae',
+    email: 'oshhavarora@goldenlegacy.ae',
     phone: '+971 50 777 8899',
     whatsApp: 'https://wa.me/971507778899'
   }
@@ -718,7 +808,7 @@ To qualify for a 10-year Golden Visa through property, you must fulfill the foll
 At Golden Legacy Real Estate, our certified visa consultants handle the entire process end-to-end, from premium property acquisition to biometrics and card collection within 14 working days.`,
     image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200',
     date: 'June 20, 2026',
-    author: 'Tariq Al-Mansoor',
+    author: 'Arvind Pal Singh',
     readTime: '6 min read'
   },
   {
@@ -772,7 +862,7 @@ Every registered off-plan project in Dubai must maintain a designated Bank Escro
 This absolute structural safety makes purchasing off-plan in Dubai as secure as buying completed properties, allowing international buyers to profit from entry-level pre-launch pricing with complete peace of mind.`,
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200',
     date: 'April 02, 2026',
-    author: 'Marcus Sterling',
+    author: 'Oshhavarora',
     readTime: '5 min read'
   }
 ];

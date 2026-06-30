@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Search, SlidersHorizontal, ArrowUpDown, Shuffle, Trash, Check, Info } from 'lucide-react';
+import { useCurrency } from '../contexts/CurrencyContext';
 import { Property } from '../types';
 
 interface PropertySearchProps {
@@ -12,6 +13,7 @@ interface PropertySearchProps {
 }
 
 export default function PropertySearch({ properties, onSelectProperty, wishlist, onToggleWishlist, preset = 'all', initialSearchTerm = '' }: PropertySearchProps) {
+  const { convertPrice, currency } = useCurrency();
   // Filters state
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const [selectedCommunity, setSelectedCommunity] = useState('All');
@@ -195,7 +197,7 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
               <div>
                 <div className="flex justify-between text-xs font-semibold text-zinc-700 mb-2">
                   <span>Maximum Budget</span>
-                  <span className="font-mono text-gold">AED {(priceRange / 1000000).toFixed(1)}M</span>
+                  <span className="font-mono text-gold">{convertPrice(priceRange).formatted}</span>
                 </div>
                 <input
                   type="range"
@@ -353,7 +355,7 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
                           <span>{prop.sqft.toLocaleString()} Sqft</span>
                         </div>
                         <span className="text-zinc-400 text-[10px]">
-                          {prop.price > 0 ? `AED ${(prop.price / prop.sqft).toFixed(0)}/sqft` : 'Price on Request'}
+                          {prop.price > 0 ? `${convertPrice(prop.price / prop.sqft).formatted}/sqft` : 'Price on Request'}
                         </span>
                       </div>
 
@@ -362,7 +364,7 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
                         <div>
                           <span className="text-[9px] uppercase tracking-wider font-bold text-zinc-400 block">Acquisition Value</span>
                           <span className="font-mono text-sm font-bold text-zinc-900">
-                            {prop.price > 0 ? `AED ${prop.price.toLocaleString()}` : 'Contact for Latest Price'}
+                            {prop.price > 0 ? convertPrice(prop.price).formatted : 'Contact for Latest Price'}
                           </span>
                         </div>
                         

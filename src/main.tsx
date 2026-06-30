@@ -4,12 +4,16 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import App from './App.tsx';
 import './index.css';
+import { CurrencyProvider } from './contexts/CurrencyContext';
+import './i18n/config';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <App />
+        <CurrencyProvider>
+          <App />
+        </CurrencyProvider>
       </BrowserRouter>
     </HelmetProvider>
   </StrictMode>,

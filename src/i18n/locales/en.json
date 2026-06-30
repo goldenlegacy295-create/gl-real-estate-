@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "home": "Home",
+    "buy": "Buy",
+    "sell": "Sell",
+    "rent": "Rent",
+    "offPlan": "Off Plan",
+    "developers": "Developers",
+    "areas": "Areas",
+    "services": "Services",
+    "blogs": "Blogs",
+    "contact": "Contact",
+    "consultation": "Consultation",
+    "currency": "Currency"
+  },
+  "hero": {
+    "minInvestment": "Minimum Investment",
+    "startingFrom": "Starting from",
+    "title1": "Institutional",
+    "title2": "Real Estate",
+    "title3": "Advisory",
+    "subtitle": "Discover Dubai's most prestigious properties with trusted family advisors."
+  },
+  "properties": {
+    "viewDetails": "View Details",
+    "auditAsset": "Audit Asset",
+    "contactForPrice": "Contact for Price"
+  }
+}

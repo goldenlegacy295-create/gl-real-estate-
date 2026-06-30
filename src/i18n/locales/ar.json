@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "buy": "شراء",
+    "sell": "بيع",
+    "rent": "إيجار",
+    "offPlan": "قيد الإنشاء",
+    "developers": "المطورون",
+    "areas": "المناطق",
+    "services": "الخدمات",
+    "blogs": "المدونات",
+    "contact": "اتصل بنا",
+    "consultation": "استشارة",
+    "currency": "العملة"
+  },
+  "hero": {
+    "minInvestment": "الحد الأدنى للاستثمار",
+    "startingFrom": "يبدأ من",
+    "title1": "استشارات",
+    "title2": "عقارية",
+    "title3": "مؤسسية",
+    "subtitle": "اكتشف أفخم عقارات دبي مع مستشارين موثوقين."
+  },
+  "properties": {
+    "viewDetails": "عرض التفاصيل",
+    "auditAsset": "تدقيق الأصل",
+    "contactForPrice": "تواصل لمعرفة السعر"
+  }
+}
