@@ -163,8 +163,9 @@ export default function HomeSections({
                       {prop.price > 0 ? convertPrice(prop.price).formatted : 'Contact Us'}
                     </span>
                   </div>
-                  <span className="text-zinc-950 group-hover:text-[#C89B3C] font-bold uppercase tracking-wider border-b border-transparent group-hover:border-[#C89B3C] pb-0.5 transition-all">
-                    View
+                  <span className="flex items-center gap-1.5 text-[#25D366] font-bold uppercase tracking-wider pb-0.5 transition-all">
+                    <img src={whatsappLogo} alt="WhatsApp" className="w-3.5 h-3.5 object-contain" />
+                    Chat for more info
                   </span>
                 </div>
               </div>
@@ -470,10 +471,11 @@ export default function HomeSections({
                       </span>
                     </div>
                     <button
-                      onClick={() => onSelectProperty(prop)}
-                      className="text-xs text-gold hover:text-gold-deep font-semibold tracking-wider uppercase font-sans"
+                      onClick={(e) => { e.stopPropagation(); onSelectProperty(prop); }}
+                      className="flex items-center gap-1.5 text-xs text-[#25D366] hover:text-[#20bd5a] font-semibold tracking-wider uppercase font-sans"
                     >
-                      Get Dossier &gt;
+                      <img src={whatsappLogo} alt="WhatsApp" className="w-4 h-4 object-contain" />
+                      Chat for more info
                     </button>
                   </div>
                 </div>
@@ -741,10 +743,11 @@ export default function HomeSections({
                       </span>
                     </div>
                     <button
-                      onClick={() => onSelectProperty(prop)}
-                      className="text-xs text-zinc-950 hover:text-gold font-bold tracking-wider uppercase font-sans border-b border-zinc-950 hover:border-gold pb-0.5"
+                      onClick={(e) => { e.stopPropagation(); onSelectProperty(prop); }}
+                      className="flex items-center gap-1.5 text-xs text-[#25D366] hover:text-[#20bd5a] font-bold tracking-wider uppercase font-sans"
                     >
-                      Audit Asset
+                      <img src={whatsappLogo} alt="WhatsApp" className="w-4 h-4 object-contain" />
+                      Chat for more info
                     </button>
                   </div>
                 </div>

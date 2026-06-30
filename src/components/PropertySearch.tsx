@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { Search, SlidersHorizontal, ArrowUpDown, Shuffle, Trash, Check, Info } from 'lucide-react';
 import { useCurrency } from '../contexts/CurrencyContext';
 import { Property } from '../types';
+import whatsappLogo from '../../assets/logos/whatsapp logo.png';
 
 interface PropertySearchProps {
   properties: Property[];
@@ -384,9 +385,10 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
 
                           <button
                             onClick={() => onSelectProperty(prop)}
-                            className="bg-zinc-950 hover:bg-gold text-white text-xs uppercase tracking-widest px-4 py-3 lg:py-2 font-sans font-semibold transition-all duration-500 flex-1 lg:flex-none text-center h-[48px] lg:h-auto flex items-center justify-center"
+                            className="bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs uppercase tracking-widest px-4 py-3 lg:py-2 font-sans font-semibold transition-all duration-500 flex-1 lg:flex-none text-center h-[48px] lg:h-auto flex items-center justify-center gap-2"
                           >
-                            View Details
+                            <img src={whatsappLogo} alt="WhatsApp" className="w-4 h-4 object-contain brightness-0 invert" />
+                            Chat for more info
                           </button>
                         </div>
                       </div>

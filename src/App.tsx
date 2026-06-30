@@ -194,9 +194,8 @@ export default function App() {
 
 
   const handleSelectProperty = (property: Property) => {
-    setSelectedProperty(property);
-    setView('detail');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const text = encodeURIComponent(`Hi, I am interested in ${property.title} (${property.referenceNumber || property.id}). Price: ${property.price > 0 ? property.price.toLocaleString() + ' AED' : 'Price on Request'}. I would like to know more info about this property.`);
+    window.open(`https://wa.me/971556656007?text=${text}`, '_blank');
   };
 
   const handleAddProperty = (newProp: Property) => {

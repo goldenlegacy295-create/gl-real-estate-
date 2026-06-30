@@ -32,8 +32,8 @@ const MAIN_NAV = [
   { label: 'Buy', path: '/search?type=buy', hasMegaMenu: true, id: 'buy' },
   { label: 'Rent', path: '/search?type=rent', hasMegaMenu: true, id: 'rent' },
   { label: 'Off Plan', path: '/search?type=off-plan', hasMegaMenu: true, id: 'offplan' },
-  { label: 'Developers', path: '/developers', hasMegaMenu: true, id: 'developers' },
-  { label: 'Communities', path: '/communities', hasMegaMenu: false, id: 'communities' }
+  { label: 'Commercial', path: '/search?type=commercial', hasMegaMenu: false, id: 'commercial' },
+  { label: 'Developers', path: '/developers', hasMegaMenu: true, id: 'developers' }
 ];
 
 const BUY_MENU = ['Apartments', 'Villas', 'Townhouses', 'Penthouses', 'Mansions', 'Luxury Homes'];
