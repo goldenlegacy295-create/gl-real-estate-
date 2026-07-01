@@ -32,9 +32,9 @@ export const PropertyImageSlider: React.FC<PropertyImageSliderProps> = ({ images
           alt={`${alt} - Slide ${idx + 1}`}
           loading={idx === 0 ? "lazy" : undefined}
           referrerPolicy="no-referrer"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-in-out ${
             idx === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-          } group-hover:scale-105 transition-transform`}
+          } group-hover:scale-105`}
         />
       ))}
     </div>
