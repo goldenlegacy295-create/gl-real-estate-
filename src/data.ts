@@ -706,10 +706,10 @@ export const PROPERTIES: Property[] = [
   },
   {
     id: 'prop-11',
-    title: 'Damac Highlands',
-    slug: 'damac-highlands',
-    seoTitle: 'Damac Highlands | Luxury Property in Dubai',
-    seoDescription: 'Discover Damac Highlands, a premium property offering exceptional luxury and high investment returns in Dubai.',
+    title: 'DAMAC ISLANDS',
+    slug: 'damac-islands',
+    seoTitle: 'DAMAC ISLANDS | Luxury Property in Dubai',
+    seoDescription: 'Discover DAMAC ISLANDS, a premium property offering exceptional luxury and high investment returns in Dubai.',
     goldenVisaEligible: true,
     pros: ['High capital appreciation', 'Prime location', 'Premium amenities'],
     cons: ['High initial investment', 'Subject to market fluctuations'],
@@ -729,7 +729,7 @@ export const PROPERTIES: Property[] = [
       'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200',
       'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?q=80&w=1200'
     ],
-    description: 'Damac Highlands is a premium villa community located in the heart of DAMAC Hills, offering sprawling landscapes, championship golf course access, and unmatched tranquility.',
+    description: 'DAMAC ISLANDS is a premium villa community located in the heart of DAMAC Hills, offering sprawling landscapes, championship golf course access, and unmatched tranquility.',
     roi: 7.9,
     completionYear: 2026,
     paymentPlan: '50/50 Payment Plan',
