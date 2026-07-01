@@ -319,10 +319,8 @@ export default function HomeSections({
       <section className="py-12 bg-white border-b border-[#ECECEC] overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="bg-white shadow-sm py-8 px-6 flex flex-col items-center rounded-xl border border-[#ECECEC] overflow-hidden">
-            <div className="text-center mb-8 shrink-0">
-              <span className="text-xs uppercase tracking-[0.2em] font-semibold text-zinc-400 block mb-1">In Collaboration With</span>
-              <h3 className="font-display text-2xl md:text-4xl text-[#C89B3C] font-bold tracking-tight">Official Partners</h3>
-              <div className="w-16 h-[2px] bg-gradient-to-r from-transparent via-[#C89B3C] to-transparent mx-auto mt-4"></div>
+            <div className="w-full mb-8">
+              <h3 className="font-display text-2xl md:text-3xl text-[#1a2f4d] font-bold tracking-tight text-left">Developers We Work With</h3>
             </div>
             
             {/* Infinite Loop Scroller */}
@@ -337,7 +335,7 @@ export default function HomeSections({
                   display: flex;
                   width: max-content;
                   will-change: transform;
-                  animation: partnerMarquee 25s linear infinite;
+                  animation: partnerMarquee 60s linear infinite;
                   backface-visibility: hidden;
                   -webkit-font-smoothing: subpixel-antialiased;
                 }
@@ -359,11 +357,11 @@ export default function HomeSections({
                     { name: 'NAKHEEL', logo: '/photos/Partners/Nakheel.jpg', sizeClass: '' },
                     { name: 'ALEF', logo: '/photos/Partners/Alef.jpg', sizeClass: '' }
                   ].map((partner, index) => (
-                    <div key={`p1-${index}`} className="flex items-center justify-center min-w-[120px]">
+                    <div key={`p1-${index}`} className="flex items-center justify-center min-w-[160px] md:min-w-[180px] h-[70px] md:h-[80px] border border-zinc-100 rounded-lg bg-white p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:border-zinc-200 transition-colors">
                       <img loading="lazy" 
                         src={partner.logo} 
                         alt={`${partner.name} Logo`} 
-                        className={`h-10 md:h-12 w-auto object-contain transition-all duration-300 ${partner.sizeClass || ''}`}
+                        className={`max-h-full max-w-full object-contain transition-all duration-300 ${partner.sizeClass || ''}`}
                         onError={(e) => { 
                           e.currentTarget.style.display = 'none'; 
                           e.currentTarget.nextElementSibling!.style.display = 'block'; 
@@ -387,11 +385,11 @@ export default function HomeSections({
                     { name: 'NAKHEEL', logo: '/photos/Partners/Nakheel.jpg', sizeClass: '' },
                     { name: 'ALEF', logo: '/photos/Partners/Alef.jpg', sizeClass: '' }
                   ].map((partner, index) => (
-                    <div key={`p2-${index}`} className="flex items-center justify-center min-w-[120px]">
+                    <div key={`p2-${index}`} className="flex items-center justify-center min-w-[160px] md:min-w-[180px] h-[70px] md:h-[80px] border border-zinc-100 rounded-lg bg-white p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:border-zinc-200 transition-colors">
                       <img loading="lazy" 
                         src={partner.logo} 
                         alt={`${partner.name} Logo`} 
-                        className={`h-10 md:h-12 w-auto object-contain transition-all duration-300 ${partner.sizeClass || ''}`}
+                        className={`max-h-full max-w-full object-contain transition-all duration-300 ${partner.sizeClass || ''}`}
                         onError={(e) => { 
                           e.currentTarget.style.display = 'none'; 
                           e.currentTarget.nextElementSibling!.style.display = 'block'; 

@@ -8,6 +8,7 @@ import InvestmentCalculator from './components/InvestmentCalculator';
 import GoldenVisaPortal from './components/GoldenVisaPortal';
 import AdminDashboard from './components/AdminDashboard';
 import NotFound from './pages/NotFound';
+import About from './pages/About';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -343,22 +344,8 @@ export default function App() {
             </div>
           } />
 
-          {/* Fallbacks */}
-          <Route path="/about" element={
-            <div className="bg-[#FAF8F4] pt-28 pb-12">
-              <HomeSections
-                properties={properties}
-                developers={DEVELOPERS}
-                communities={COMMUNITIES}
-                agents={AGENTS}
-                blogs={BLOGS}
-                faqs={FAQS}
-                onSelectProperty={handleSelectProperty}
-                onOpenConsultation={() => setConsultationOpen(true)}
-                onSelectDeveloper={(devName) => {}}
-              />
-            </div>
-          } />
+          {/* About Page */}
+          <Route path="/about" element={<About />} />
 
           {/* 404 Wildcard */}
           <Route path="*" element={<NotFound />} />
