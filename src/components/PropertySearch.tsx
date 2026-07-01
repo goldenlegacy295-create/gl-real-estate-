@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { Search, SlidersHorizontal, ArrowUpDown, Shuffle, Trash, Check, Info } from 'lucide-react';
 import { useCurrency } from '../contexts/CurrencyContext';
 import { Property } from '../types';
+import { PropertyImageSlider } from './PropertyImageSlider';
 import whatsappLogo from '../../assets/logos/whatsapp logo.png';
 
 interface PropertySearchProps {
@@ -292,15 +293,10 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
                   
                   {/* IMAGE & BADGES */}
                   <div className="relative overflow-hidden aspect-[4/3] bg-zinc-100">
-                    <img
-                      src={prop.image}
-                      alt={prop.title}
-                      referrerPolicy="no-referrer"
-                      className="object-cover w-full h-full transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
+                    <PropertyImageSlider images={prop.images && prop.images.length > 0 ? prop.images : [prop.image]} alt={prop.title} />
 
                     {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 via-transparent to-transparent pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 via-transparent to-transparent pointer-events-none z-10"></div>
 
                     {/* Badges */}
                     <div className="absolute top-4 left-4 flex gap-2">

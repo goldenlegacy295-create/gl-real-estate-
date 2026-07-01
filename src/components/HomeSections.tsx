@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, DollarSign, ArrowRight, Award, ShieldCheck, Mail, Phone, ExternalLink, HelpCircle, CheckCircle, Download, Send, Bookmark, Instagram, Twitter, Linkedin, Facebook, MessageSquare } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useCurrency } from '../contexts/CurrencyContext';
+import { PropertyImageSlider } from './PropertyImageSlider';
 import { Property, Developer, Community, Agent, Blog, FAQ } from '../types';
 import heroVideo from '../../assets/videos/hero.mp4';
 import ceoImg from '../../assets/photos/arvind_ceo_and_advisor.png';
@@ -135,8 +136,8 @@ export default function HomeSections({
           {filtered.map(prop => (
             <div key={prop.id} onClick={() => onSelectProperty(prop)} className="bg-white border border-[#ECECEC] rounded-[18px] overflow-hidden group cursor-pointer hover:shadow-2xl hover:shadow-black/5 transition-all duration-500 flex flex-col">
               <div className="relative aspect-[4/3] bg-zinc-100 overflow-hidden shrink-0">
-                <img src={prop.image} alt={prop.title} loading="lazy" className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute top-4 left-4 bg-zinc-950/80 backdrop-blur-md text-white text-[9px] uppercase tracking-widest font-bold px-3 py-1 rounded-full">
+                <PropertyImageSlider images={prop.images && prop.images.length > 0 ? prop.images : [prop.image]} alt={prop.title} />
+                <div className="absolute top-4 left-4 bg-zinc-950/80 backdrop-blur-md text-white text-[9px] uppercase tracking-widest font-bold px-3 py-1 rounded-full z-20">
                   {prop.developer}
                 </div>
                 {prop.roi && (

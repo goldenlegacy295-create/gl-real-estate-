@@ -5,6 +5,7 @@ import {
   Building, Expand, Maximize2, Download, Facebook, Twitter, Linkedin, 
   MessageSquare, Car, Key, Ruler, Layers, Shield, Bed, Bath, Hash, Info, Home
 } from 'lucide-react';
+import { PropertyImageSlider } from './PropertyImageSlider';
 import { useCurrency } from '../contexts/CurrencyContext';
 import { generatePropertySchema, injectSchema } from '../utils/seo';
 import { Property } from '../types';
@@ -408,8 +409,8 @@ export default function PropertyDetail({ property, onBack, onToggleWishlist, wis
                   {similarProperties.map(p => (
                     <div key={p.id} onClick={() => { window.scrollTo(0,0); navigate(`/property/${p.slug}`); }} className="bg-white border border-zinc-100 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow group flex flex-col">
                       <div className="relative aspect-[4/3] overflow-hidden bg-zinc-100">
-                        <img src={p.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                        <div className="absolute bottom-2 left-2 bg-zinc-900/90 text-white text-[9px] uppercase tracking-widest px-2 py-1 rounded">{p.type}</div>
+                        <PropertyImageSlider images={p.images && p.images.length > 0 ? p.images : [p.image]} alt={p.title} />
+                        <div className="absolute bottom-2 left-2 bg-zinc-900/90 text-white text-[9px] uppercase tracking-widest px-2 py-1 rounded z-20">{p.type}</div>
                       </div>
                       <div className="p-4 flex flex-col flex-1">
                         <h4 className="font-semibold text-sm text-zinc-900 group-hover:text-[#C89B3C] transition-colors line-clamp-1">{p.title}</h4>
