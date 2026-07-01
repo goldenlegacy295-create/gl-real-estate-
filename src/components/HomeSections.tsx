@@ -871,11 +871,11 @@ export default function HomeSections({
                 </div>
                 <div className="flex gap-3 items-center">
                   <Phone className="w-4 h-4 text-gold" />
-                  <span>+971 50 111 2233 (Asset Line)</span>
+                  <span>+971 556656007 (Asset Line)</span>
                 </div>
                 <div className="flex gap-3 items-center">
                   <Mail className="w-4 h-4 text-gold" />
-                  <span>desk@goldenlegacy.ae</span>
+                  <span>dxb.goldenlegacy@gmail.com</span>
                 </div>
               </div>
 
