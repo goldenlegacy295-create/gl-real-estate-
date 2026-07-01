@@ -13,7 +13,7 @@ export default function About() {
       "image": "https://goldenlegacy.ae/logo.png",
       "@id": "https://goldenlegacy.ae",
       "url": "https://goldenlegacy.ae",
-      "telephone": "+971561513435",
+      "telephone": "+971556656007",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Sheikh Zayed Road",

@@ -178,9 +178,9 @@ export default function Header({ onOpenConsultation }: HeaderProps) {
           <div className="flex items-center shrink-0 justify-self-end">
             
             {/* Phone Number */}
-            <a href="https://wa.me/971561513435" target="_blank" rel="noopener noreferrer" className="flex items-center gap-[4px] text-white font-[600] text-[13px] whitespace-nowrap mr-[12px]">
+            <a href="https://wa.me/971556656007" target="_blank" rel="noopener noreferrer" className="flex items-center gap-[4px] text-white font-[600] text-[13px] whitespace-nowrap mr-[12px]">
               <img src={whatsappLogo} alt="WhatsApp" className="w-[14px] h-[14px] object-contain" />
-              +971 56 151 3435
+              +971 55 665 6007
             </a>
 
             {/* CTA */}
@@ -310,8 +310,8 @@ export default function Header({ onOpenConsultation }: HeaderProps) {
               Book Consultation
             </button>
             <div className="flex gap-4">
-              <a href="tel:+971561513435" className="flex-1 bg-white/5 text-white py-3.5 rounded-full flex items-center justify-center gap-2 text-sm font-bold border border-white/10"><Phone className="w-4 h-4"/> Call</a>
-              <a href="https://wa.me/971561513435" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 py-3.5 rounded-full flex items-center justify-center gap-2 text-sm font-bold"><img src={whatsappLogo} alt="WhatsApp" className="w-4 h-4 object-contain" /> Chat</a>
+              <a href="tel:+971556656007" className="flex-1 bg-white/5 text-white py-3.5 rounded-full flex items-center justify-center gap-2 text-sm font-bold border border-white/10"><Phone className="w-4 h-4"/> Call</a>
+              <a href="https://wa.me/971556656007" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 py-3.5 rounded-full flex items-center justify-center gap-2 text-sm font-bold"><img src={whatsappLogo} alt="WhatsApp" className="w-4 h-4 object-contain" /> Chat</a>
             </div>
           </div>
         </div>
