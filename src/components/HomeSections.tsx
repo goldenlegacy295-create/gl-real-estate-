@@ -1,8 +1,10 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, DollarSign, ArrowRight, Award, ShieldCheck, Mail, Phone, ExternalLink, HelpCircle, CheckCircle, Download, Send, Bookmark, Instagram, Twitter, Linkedin, Facebook, MessageSquare } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useCurrency } from '../contexts/CurrencyContext';
+import { generateGlobalSchema, injectSchema } from '../utils/seo';
 import { PropertyImageSlider } from './PropertyImageSlider';
 import { Property, Developer, Community, Agent, Blog, FAQ } from '../types';
 import heroVideo from '../../assets/videos/hero.mp4';
@@ -57,6 +59,12 @@ export default function HomeSections({
 
   // FAQ Accordion active index
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+
+  useEffect(() => {
+    // Inject AEO/GEO optimized schema
+    const schema = generateGlobalSchema();
+    injectSchema(schema, 'global-schema');
+  }, []);
 
 
   const handleSearchSubmit = () => {
@@ -179,6 +187,20 @@ export default function HomeSections({
 
   return (
     <div className="bg-white">
+      <Helmet>
+        <title>Golden Legacy Real Estate | Premier Dubai Properties</title>
+        <meta name="description" content="Discover Dubai's most prestigious properties with trusted family advisors, institutional-grade analytics, and exclusive off-market allocations." />
+        <meta name="keywords" content="Dubai real estate, luxury villas Dubai, buy property Dubai, Golden Visa properties, off-plan projects, Dubai investment" />
+        
+        {/* Open Graph / Social */}
+        <meta property="og:title" content="Golden Legacy Real Estate | Premier Dubai Properties" />
+        <meta property="og:description" content="Access our audited, off-market portfolio, Golden Visa guides, and expert tax structuring." />
+        <meta property="og:type" content="website" />
+        
+        {/* AEO / GEO Specific Tags */}
+        <meta name="subject" content="Dubai Luxury Real Estate" />
+        <meta name="audience" content="Investors, High-Net-Worth Individuals" />
+      </Helmet>
       
       {/* SECTION 1: LUXURY HERO */}
       <section className="relative min-h-0 lg:min-h-screen flex flex-col lg:flex-row items-center justify-center bg-zinc-950 text-white overflow-hidden pt-[112px] pb-12 lg:py-32 border-b border-[#C89B3C]/20">
@@ -481,209 +503,77 @@ export default function HomeSections({
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* SECTION 4: WHY INVEST IN DUBAI */}
-      <section className="py-24 bg-zinc-950 px-6 overflow-hidden relative border-t border-zinc-900">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
-        <div className="max-w-6xl mx-auto relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-20 gsap-reveal">
-            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-[#C89B3C] block mb-3">Institutional Safety</span>
-            <h2 className="font-display text-3xl md:text-5xl text-white font-normal tracking-tight leading-tight">
-              Why Global Portfolios <span className="italic font-light text-[#C89B3C]">Prefer Dubai</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 gsap-stagger-container">
-            {/* Card 1 */}
-            <div className="group relative bg-zinc-900 border border-white/10 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(200,155,60,0.2)] transition-all duration-500 gsap-stagger-item overflow-hidden rounded-xl h-[380px] flex flex-col justify-end p-8">
-              <img loading="lazy" 
-                src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&q=80&w=800" 
-                alt="Dubai Skyline" 
-                className="absolute inset-0 w-full h-full object-cover grayscale opacity-30 group-hover:opacity-50 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-zinc-950/20"></div>
-              
-              <div className="absolute top-6 right-6 font-display text-5xl font-bold text-white/10 group-hover:text-[#C89B3C]/20 transition-colors duration-500">01</div>
-              
-              <div className="relative z-10 space-y-3">
-                <h4 className="font-display text-2xl font-normal text-white group-hover:text-[#C89B3C] transition-colors duration-300">0% Personal Taxation</h4>
-                <p className="text-sm text-zinc-400 font-sans leading-relaxed font-light group-hover:text-zinc-200 transition-colors duration-300">
-                  Enjoy absolute tax freedom. Dubai levies 0% personal income tax, 0% capital gains tax, and 0% ongoing corporate tax on residential rent.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="group relative bg-zinc-900 border border-white/10 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(200,155,60,0.2)] transition-all duration-500 gsap-stagger-item overflow-hidden rounded-xl h-[380px] flex flex-col justify-end p-8">
-              <img loading="lazy" 
-                src="https://images.unsplash.com/photo-1546412414-8035e1776c9a?auto=format&fit=crop&q=80&w=800" 
-                alt="Luxury Passport" 
-                className="absolute inset-0 w-full h-full object-cover grayscale opacity-30 group-hover:opacity-50 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-zinc-950/20"></div>
-              
-              <div className="absolute top-6 right-6 font-display text-5xl font-bold text-white/10 group-hover:text-[#C89B3C]/20 transition-colors duration-500">02</div>
-              
-              <div className="relative z-10 space-y-3">
-                <h4 className="font-display text-2xl font-normal text-white group-hover:text-[#C89B3C] transition-colors duration-300">10-Year Golden Visa</h4>
-                <p className="text-sm text-zinc-400 font-sans leading-relaxed font-light group-hover:text-zinc-200 transition-colors duration-300">
-                  Real estate acquisitions of AED 2 Million or above secure long-term, self-sponsored residency, complete with family sponsorship options.
-                </p>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="group relative bg-zinc-900 border border-white/10 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(200,155,60,0.2)] transition-all duration-500 gsap-stagger-item overflow-hidden rounded-xl h-[380px] flex flex-col justify-end p-8">
-              <img loading="lazy" 
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800" 
-                alt="Financial District" 
-                className="absolute inset-0 w-full h-full object-cover grayscale opacity-30 group-hover:opacity-50 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-zinc-950/20"></div>
-              
-              <div className="absolute top-6 right-6 font-display text-5xl font-bold text-white/10 group-hover:text-[#C89B3C]/20 transition-colors duration-500">03</div>
-              
-              <div className="relative z-10 space-y-3">
-                <h4 className="font-display text-2xl font-normal text-white group-hover:text-[#C89B3C] transition-colors duration-300">High Yield Index (7-9%)</h4>
-                <p className="text-sm text-zinc-400 font-sans leading-relaxed font-light group-hover:text-zinc-200 transition-colors duration-300">
-                  Gross rental yields in Dubai surpass London (3.2%) and New York (2.9%), optimizing immediate liquidity for global investors.
-                </p>
-              </div>
-            </div>
+          <div className="mt-12 text-center">
+            <button onClick={() => navigate('/search')} className="px-8 py-4 bg-[#1a2f4d] hover:bg-[#C89B3C] text-white font-bold rounded-lg uppercase tracking-widest text-xs transition-colors shadow-lg">
+              Browse Full Inventory
+            </button>
           </div>
         </div>
       </section>
 
-      {/* SECTION 4.5: FOUNDER & CORPORATE LEGACY */}
-      <section id="founder-section" className="py-16 bg-zinc-950 text-white px-6 overflow-hidden relative border-t border-b border-zinc-900">
-        <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#C89B3C_1px,transparent_1px)] [background-size:16px_16px]"></div>
-        <div className="max-w-6xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            
-            {/* Left Column: Elegant Compact CEO Portrait */}
-            <div className="lg:col-span-4 relative group gsap-reveal-left max-w-sm mx-auto lg:max-w-none">
-              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-gold/20 via-transparent to-gold/10 opacity-20 group-hover:opacity-40 transition-opacity duration-700 blur-lg"></div>
-              <div className="relative border border-white/5 p-2 bg-zinc-900/40 backdrop-blur-md rounded-2xl">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-zinc-800">
-                  <img loading="lazy" 
-                    src={ceoImg} 
-                    alt="Mr. Arvind Pal - CEO of Golden Legacy Real Estate" 
-                    referrerPolicy="no-referrer"
-                    className="object-cover w-full h-full object-top transition-all duration-1000 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent pointer-events-none"></div>
-                  
-                  {/* Floating badge inside image */}
-                  <div className="absolute bottom-4 left-4 right-4 p-3 bg-zinc-950/95 border border-gold/15 backdrop-blur-md text-center">
-                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-gold font-bold block mb-0.5">
-                      Golden Legacy Real Estate
-                    </span>
-                    <span className="text-[10px] text-white/60 font-light">
-                      Founder's Executive Office
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            {/* Right Column: Corporate Biography & Elevated Vision */}
-            <div className="lg:col-span-8 space-y-6 gsap-reveal-right">
-              <div className="space-y-2">
-                <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-gold block">
-                  Corporate Leadership
-                </span>
-                <h2 className="font-display text-2xl md:text-3xl font-normal tracking-tight text-white leading-tight">
-                  The Vision Behind <span className="italic font-light text-gold">The Legacy</span>
-                </h2>
-              </div>
 
-              <div className="space-y-4 text-zinc-300 font-sans text-xs md:text-sm font-light leading-relaxed">
-                <div className="border-l border-gold pl-4 space-y-1">
-                  <span className="font-display text-lg font-semibold text-white block">
-                    Mr. Arvind Pal
-                  </span>
-                  <span className="text-[9px] uppercase tracking-widest font-mono text-gold block">
-                    FOUNDER & CHIEF EXECUTIVE OFFICER
-                  </span>
-                </div>
-
-                <p>
-                  Arvind Pal Singh Arora is an eminent <span className="text-[#C89B3C] font-medium">global real estate strategist</span> and visionary entrepreneur who founded <strong className="text-white font-medium">GOLDEN LEGACY</strong> to champion high-end sovereign advisory and <span className="text-[#C89B3C] font-medium">UHNW portfolio optimization</span>. Leveraging an elite background in <span className="text-[#C89B3C] font-medium">international wealth management</span> and corporate structuring, he successfully steers family offices and institutional boards toward <span className="text-[#C89B3C] font-medium">high-yield capital growth</span> and master-planned asset allocations.
-                </p>
-                <p>
-                  Under his sophisticated stewardship, the firm guides acquisitions across <span className="text-[#C89B3C] font-medium">Dubai’s most exclusive zip codes</span>—partnering with institutional developers such as Emaar, Sobha, and DAMAC. Built upon discretion and data-driven intelligence, GOLDEN LEGACY delivers unparalleled capital appreciation, secures <span className="text-[#C89B3C] font-medium">Golden Visa residency solutions</span>, and preserves <span className="text-[#C89B3C] font-medium">generational wealth</span> for its elite clientele.
-                </p>
-              </div>
-
-              {/* CEO Signature / Stats */}
-              <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-                <div>
-                  <span className="text-[9px] uppercase tracking-widest font-mono text-zinc-400 block mb-0.5">
-                    Direct Portfolios Guided
-                  </span>
-                  <span className="font-display text-xl font-bold text-white">
-                    AED 2.4 Billion+
-                  </span>
-                </div>
-                <div>
-                  <span className="text-[9px] uppercase tracking-widest font-mono text-zinc-400 block mb-0.5">
-                    UHNW Families Advised
-                  </span>
-                  <span className="font-display text-xl font-bold text-white">
-                    180+ Global Investors
-                  </span>
-                </div>
-                <div className="flex items-center">
-                  <span className="font-display italic text-xl text-gold font-light tracking-wide opacity-85">
-                    Arvind Pal S.
-                  </span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 5: COMMUNITIES MASONRY GRID */}
+      {/* SECTION 5: EXPLORE PRIME LOCATIONS */}
       <section className="py-24 bg-[#FAF8F4] px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16 gsap-reveal">
-            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-gold block mb-2">Sovereign Locations</span>
-            <h2 className="font-display text-3xl md:text-5xl text-zinc-950 font-normal tracking-tight leading-tight">
-              Dubai\'s Sovereign <span className="italic font-light">Zip Codes</span>
-            </h2>
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+            <div>
+              <h2 className="font-display text-3xl md:text-5xl text-[#1a2f4d] font-bold tracking-tight">Explore Prime Locations</h2>
+            </div>
+            <button onClick={() => navigate('/search')} className="mt-6 md:mt-0 px-6 py-3 bg-zinc-100 hover:bg-zinc-200 text-zinc-900 text-sm font-semibold rounded-lg transition-colors">
+              View More Areas
+            </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gsap-stagger-container">
-            {communities.map(comm => (
-              <div
-                key={comm.id}
-                className="relative h-96 group overflow-hidden cursor-pointer gsap-stagger-item"
-                style={{ borderRadius: '18px' }}
-                onClick={() => navigate('/search')}
-              >
-                <img
-                  src={comm.image}
-                  alt={comm.name}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-zinc-950/20 to-transparent"></div>
-
-                <div className="absolute bottom-6 left-6 right-6 space-y-2">
-                  <span className="text-[10px] uppercase tracking-widest font-bold text-gold block">
-                    Average Yield: {comm.avgRoi}% ROI
-                  </span>
-                  <h3 className="font-display text-xl text-white font-semibold">{comm.name}</h3>
-                  <p className="text-[11px] text-zinc-300 leading-relaxed font-sans line-clamp-2 opacity-80 group-hover:opacity-100 transition-opacity">
-                    {comm.description}
-                  </p>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-4 md:h-[600px]">
+            {/* Palm Jebel Ali (col span 2, row 1) */}
+            <div 
+              className="md:col-span-2 md:row-span-1 relative rounded-xl overflow-hidden group cursor-pointer h-64 md:h-auto"
+              onClick={() => navigate('/search')}
+            >
+              <img src="https://images.unsplash.com/photo-1546412414-8035e1776c9a?auto=format&fit=crop&q=80&w=1200" alt="Palm Jebel Ali" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+              <div className="absolute bottom-6 left-8">
+                <h3 className="text-white text-2xl font-bold font-display tracking-wide mb-1">Palm Jebel Ali</h3>
+                <p className="text-white/80 text-sm max-w-md">Iconic waterfront development featuring luxurious villas and world-class amenities</p>
               </div>
-            ))}
+            </div>
+
+            {/* Downtown Dubai (col 3, row span 2) */}
+            <div 
+              className="md:col-span-1 md:row-span-2 relative rounded-xl overflow-hidden group cursor-pointer h-64 md:h-auto"
+              onClick={() => navigate('/search')}
+            >
+              <img src="https://images.unsplash.com/photo-1512453979798-5eaad0ff3b0d?auto=format&fit=crop&q=80&w=800" alt="Downtown Dubai" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+              <div className="absolute bottom-6 left-8">
+                <h3 className="text-white text-2xl font-bold font-display tracking-wide">Downtown Dubai</h3>
+              </div>
+            </div>
+
+            {/* Business Bay (col 1, row 2) */}
+            <div 
+              className="md:col-span-1 md:row-span-1 relative rounded-xl overflow-hidden group cursor-pointer h-64 md:h-auto"
+              onClick={() => navigate('/search')}
+            >
+              <img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&q=80&w=800" alt="Business Bay" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+              <div className="absolute bottom-6 left-8">
+                <h3 className="text-white text-2xl font-bold font-display tracking-wide">Business Bay</h3>
+              </div>
+            </div>
+
+            {/* Dubai Marina (col 2, row 2) */}
+            <div 
+              className="md:col-span-1 md:row-span-1 relative rounded-xl overflow-hidden group cursor-pointer h-64 md:h-auto"
+              onClick={() => navigate('/search')}
+            >
+              <img src="https://images.unsplash.com/photo-1582672060624-cb814c812c4c?auto=format&fit=crop&q=80&w=800" alt="Dubai Marina" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+              <div className="absolute bottom-6 left-8">
+                <h3 className="text-white text-2xl font-bold font-display tracking-wide">Dubai Marina</h3>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -757,225 +647,59 @@ export default function HomeSections({
         </div>
       </section>
 
-      {/* SECTION 10: INVENTORY (CATEGORIZED) */}
-      <section className="py-24 bg-[#FAF8F4] px-6 overflow-hidden border-t border-[#ECECEC]">
+      {/* SECTION 10: WHY CHOOSE GOLDEN LEGACY */}
+      <section className="py-24 bg-white px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16 gsap-reveal">
-            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-[#C89B3C] block mb-2">Complete Portfolio</span>
-            <h2 className="font-display text-3xl md:text-5xl text-zinc-950 font-normal tracking-tight leading-tight">
-              Our Exclusive <span className="italic font-light text-[#C89B3C]">Inventory</span>
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            {renderCategorySlider('Featured Properties', p => ['prop-1', 'prop-10', 'prop-11'].includes(p.id))}
-            {renderCategorySlider('Apartments', p => p.type === 'Apartment')}
-            {renderCategorySlider('Villas & Mansions', p => p.type === 'Villa')}
-            {renderCategorySlider('Townhouses', p => p.type === 'Townhouse')}
-            {renderCategorySlider('Penthouses', p => p.type === 'Penthouse')}
-            {renderCategorySlider('Commercial Properties', p => p.type === 'Commercial')}
-            {renderCategorySlider('Off-Plan Projects', p => p.status === 'Off-Plan')}
-            {renderCategorySlider('Ready to Move', p => p.status === 'Ready')}
-            {renderCategorySlider('Luxury Collection', p => p.price > 5000000)}
-            {renderCategorySlider('Waterfront Collection', p => p.community.toLowerCase().includes('marina') || p.community.toLowerCase().includes('palm') || p.community.toLowerCase().includes('creek'))}
-            {renderCategorySlider('New Launches', p => p.isNewLaunch === true || ['prop-1', 'prop-10'].includes(p.id))}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
-            <div className="text-center mt-12 pt-8">
-              <button onClick={() => navigate('/search')} className="px-10 py-4 bg-zinc-950 text-white rounded-lg text-xs uppercase tracking-widest font-bold hover:bg-[#C89B3C] transition-colors shadow-lg">
-                Browse Full Inventory
-              </button>
+            {/* Left Masonry Image Collage */}
+            <div className="grid grid-cols-2 gap-4 h-[500px]">
+              <div className="col-span-2 relative rounded-2xl overflow-hidden shadow-lg h-64">
+                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800" alt="Office Presentation" className="w-full h-full object-cover" />
+              </div>
+              <div className="relative rounded-2xl overflow-hidden shadow-lg h-48">
+                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=600" alt="Client Meeting" className="w-full h-full object-cover" />
+              </div>
+              <div className="relative rounded-2xl overflow-hidden shadow-lg h-48">
+                <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&q=80&w=600" alt="Property Tour" className="w-full h-full object-cover" />
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-
-      {/* SECTION 11: MEET OUR EXPERTS */}
-      <section className="py-24 bg-[#FAF8F4] px-6 overflow-hidden">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16 gsap-reveal">
-            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-gold block mb-2">Elite Advisory Desk</span>
-            <h2 className="font-display text-3xl md:text-5xl text-zinc-950 font-normal tracking-tight leading-tight">
-              Our Senior Wealth <span className="italic font-light">Advisors</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 gsap-stagger-container">
-            {agents.map(agent => (
-              <div key={agent.id} className="bg-white border border-zinc-100 p-8 flex flex-col justify-between shadow-sm hover:border-gold/30 transition-all duration-300 gsap-stagger-item">
-                <div className="space-y-4 text-center">
-                  <div className="w-24 h-24 rounded-full overflow-hidden mx-auto border-2 border-gold/20 flex items-center justify-center bg-zinc-50/50">
-                    <img
-                      src={agent.image}
-                      alt={agent.name}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-contain p-1"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="font-display text-base font-semibold text-zinc-900">{agent.name}</h4>
-                    <span className="text-[10px] uppercase tracking-wider text-gold font-bold">{agent.role}</span>
-                  </div>
-                  
-                  <div className="text-xs text-zinc-500 font-sans space-y-1">
-                    <div>Languages: <span className="text-zinc-700 font-medium">{agent.languages.join(', ')}</span></div>
-                    <div>Experience: <span className="text-zinc-700 font-medium">{agent.experience} Years</span></div>
-                    <div>Private portfolio count: <span className="text-zinc-700 font-medium">{agent.propertiesSold} registered</span></div>
-                  </div>
-                </div>
-
-                <div className="pt-6 border-t border-zinc-100 mt-6 grid grid-cols-2 gap-2">
-                  <a
-                    href={agent.whatsApp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] uppercase tracking-widest font-bold py-2.5 text-center font-sans"
-                  >
-                    <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
-                    </svg>
-                    <span>WhatsApp</span>
-                  </a>
-                  <a
-                    href={`mailto:${agent.email}`}
-                    className="bg-zinc-900 text-white text-[10px] uppercase tracking-widest font-bold py-2.5 text-center font-sans"
-                  >
-                    Private Mail
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 12: WHY GOLDEN LEGACY VALUES TIMELINE */}
-      <section className="py-24 bg-white px-6 overflow-hidden">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center max-w-xl mx-auto mb-16 gsap-reveal">
-            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-gold block mb-2">Our Standard of Excellence</span>
-            <h2 className="font-display text-3xl text-zinc-950 font-normal tracking-tight">
-              An Enduring <span className="italic font-light text-gold">Commitment</span>
-            </h2>
-          </div>
-
-          <div className="space-y-12 gsap-stagger-container">
-            <div className="flex gap-6 items-start gsap-stagger-item">
-              <div className="w-12 h-12 border border-gold rounded-full flex items-center justify-center bg-gold/5 font-mono text-xs font-bold text-gold shrink-0">
-                01
-              </div>
-              <div className="space-y-1">
-                <h4 className="font-display text-base font-semibold text-zinc-900">Unconditional Trust & Privacy</h4>
-                <p className="text-xs text-zinc-500 leading-relaxed font-sans">
-                  We cater strictly to family offices and high-net-worth sovereign individuals. Your financial disclosures, holdings and portfolio allocations are held in absolute fiduciary confidence.
+            {/* Right Text Content */}
+            <div className="space-y-10">
+              <div>
+                <h2 className="font-display text-4xl md:text-5xl text-[#1a2f4d] font-bold tracking-tight mb-6">
+                  Why Choose Golden Legacy Real Estate?
+                </h2>
+                <p className="text-zinc-600 text-lg leading-relaxed">
+                  With years of experience and deep market insights, we help you find properties perfectly aligned with your lifestyle and investment goals.
                 </p>
               </div>
-            </div>
 
-            <div className="flex gap-6 items-start gsap-stagger-item">
-              <div className="w-12 h-12 border border-gold rounded-full flex items-center justify-center bg-gold/5 font-mono text-xs font-bold text-gold shrink-0">
-                02
-              </div>
-              <div className="space-y-1">
-                <h4 className="font-display text-base font-semibold text-zinc-900">Complete Institutional Transparency</h4>
-                <p className="text-xs text-zinc-500 leading-relaxed font-sans">
-                  No hidden transactional fees or marketing hyperbole. We audit escrow structures, construct net ROI amortizations, and present real Land Department statistics.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-6 items-start gsap-stagger-item">
-              <div className="w-12 h-12 border border-gold rounded-full flex items-center justify-center bg-gold/5 font-mono text-xs font-bold text-gold shrink-0">
-                03
-              </div>
-              <div className="space-y-1">
-                <h4 className="font-display text-base font-semibold text-zinc-900">Elite End-to-End VIP Desk</h4>
-                <p className="text-xs text-zinc-500 leading-relaxed font-sans">
-                  From biometric Golden Visa applications and escrow contract signings to custom post-handover property managements—our team manages your Dubai footprint.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 15: DUBAI INVESTMENT GUIDE LEAD GENERATION */}
-      <section className="py-24 bg-zinc-950 text-white px-6 relative overflow-hidden">
-        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-80 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div className="max-w-4xl mx-auto relative z-10 text-center space-y-8 gsap-reveal-scale">
-          <span className="text-xs uppercase tracking-[0.25em] text-gold font-bold block">Exclusive Intelligence Dossier</span>
-          <h2 className="font-display text-3xl md:text-5xl font-light tracking-tight text-white leading-tight">
-            Unlock the Dubai <br />
-            <span className="italic text-gold">Wealth Blueprint 2026</span>
-          </h2>
-          <p className="max-w-xl mx-auto text-xs text-zinc-400 font-sans leading-relaxed">
-            Acquire instant access to our audited, off-market villa portfolio, Golden Visa biometric guide, and tax structuring ledger. Unconditional safety.
-          </p>
-
-          {pdfSuccess && (
-            <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 p-4 max-w-md mx-auto text-xs leading-relaxed font-semibold">
-              {pdfSuccess}
-            </div>
-          )}
-
-          <form onSubmit={handlePdfSubmit} className="max-w-lg mx-auto flex flex-col sm:flex-row gap-3">
-            <input
-              type="text"
-              required
-              placeholder="Your Full Name"
-              value={pdfName}
-              onChange={(e) => setPdfName(e.target.value)}
-              className="flex-1 bg-zinc-900 border border-zinc-800 focus:border-gold px-4 py-3.5 text-xs text-zinc-200 focus:outline-none placeholder-zinc-500"
-            />
-            <input
-              type="email"
-              required
-              placeholder="Secure Email Address"
-              value={pdfEmail}
-              onChange={(e) => setPdfEmail(e.target.value)}
-              className="flex-1 bg-zinc-900 border border-zinc-800 focus:border-gold px-4 py-3.5 text-xs text-zinc-200 focus:outline-none placeholder-zinc-500"
-            />
-            <button
-              type="submit"
-              className="bg-gold hover:bg-gold-deep text-zinc-950 hover:text-white px-6 py-3.5 text-xs uppercase tracking-widest font-bold font-sans transition-all duration-300 shrink-0"
-            >
-              Secure Guide
-            </button>
-          </form>
-        </div>
-      </section>
-
-      {/* SECTION 16: FAQ ACCORDION */}
-      <section className="py-24 bg-white px-6 overflow-hidden">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center max-w-xl mx-auto mb-16 gsap-reveal">
-            <span className="text-xs uppercase tracking-[0.25em] font-semibold text-gold block mb-2">Institutional FAQ</span>
-            <h2 className="font-display text-3xl text-zinc-950 font-normal tracking-tight">
-              Private Office <span className="italic font-light">Disclosure Desk</span>
-            </h2>
-          </div>
-
-          <div className="space-y-4 gsap-stagger-container">
-            {faqs.map((faq, index) => (
-              <div
-                key={faq.id}
-                className="border-b border-zinc-100 pb-4 cursor-pointer gsap-stagger-item"
-                onClick={() => setActiveFaq(activeFaq === index ? null : index)}
-              >
-                <div className="flex justify-between items-center py-2">
-                  <h4 className="font-display text-sm font-semibold text-zinc-900 hover:text-gold transition-colors">
-                    {faq.question}
-                  </h4>
-                  <span className="text-xs text-gold font-mono">{activeFaq === index ? '▲' : '▼'}</span>
-                </div>
-                {activeFaq === index && (
-                  <p className="text-xs text-zinc-500 leading-relaxed font-sans pt-2 animate-in fade-in duration-300">
-                    {faq.answer}
+              <div className="space-y-8">
+                <div className="space-y-2">
+                  <h3 className="font-display text-2xl font-bold text-[#1a2f4d]">1. Market Expertise</h3>
+                  <p className="text-zinc-600 leading-relaxed">
+                    Golden Legacy Real Estate has in-depth knowledge of the Dubai real estate market, helping clients find ideal properties tailored to their needs.
                   </p>
-                )}
+                </div>
+                
+                <div className="space-y-2">
+                  <h3 className="font-display text-2xl font-bold text-[#1a2f4d]">2. Comprehensive Services</h3>
+                  <p className="text-zinc-600 leading-relaxed">
+                    From property buying and selling to leasing and property management, Golden Legacy offers a full suite of services.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <h3 className="font-display text-2xl font-bold text-[#1a2f4d]">3. Client-Centric Approach</h3>
+                  <p className="text-zinc-600 leading-relaxed">
+                    Known for its transparent and customer-focused service, Golden Legacy aims to build long-term relationships with clients, ensuring a smooth experience.
+                  </p>
+                </div>
               </div>
-            ))}
+            </div>
+
           </div>
         </div>
       </section>
