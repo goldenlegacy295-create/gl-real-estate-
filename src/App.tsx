@@ -195,7 +195,8 @@ export default function App() {
 
 
   const handleSelectProperty = (property: Property) => {
-    const text = encodeURIComponent(`Hi, I am interested in ${property.title} (${property.referenceNumber || property.id}). Price: ${property.price > 0 ? property.price.toLocaleString() + ' AED' : 'Price on Request'}. I would like to know more info about this property.`);
+    const mainImageUrl = property.image.startsWith('http') ? property.image : `${window.location.origin}${property.image.startsWith('/') ? '' : '/'}${property.image}`;
+    const text = encodeURIComponent(`Hi, I am interested in ${property.title} (${property.referenceNumber || property.id}). Price: ${property.price > 0 ? property.price.toLocaleString() + ' AED' : 'Price on Request'}.\n\nProperty Image: ${mainImageUrl}\n\nI would like to know more info about this property.`);
     window.open(`https://wa.me/971556656007?text=${text}`, '_blank');
   };
 

@@ -338,95 +338,57 @@ export default function HomeSections({
       </section>
 
       {/* SECTION 2: FEATURED DEVELOPERS */}
-      <section className="py-12 bg-white border-b border-[#ECECEC] overflow-hidden">
+      <section className="py-24 bg-white overflow-hidden border-b border-zinc-100">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="bg-white shadow-sm py-8 px-6 flex flex-col items-center rounded-xl border border-[#ECECEC] overflow-hidden">
-            <div className="w-full mb-8">
-              <h3 className="font-display text-2xl md:text-3xl text-[#1a2f4d] font-bold tracking-tight text-left">Developers We Work With</h3>
-            </div>
+          <div className="flex flex-col items-center">
+            <h3 className="font-display text-2xl md:text-3xl text-zinc-900 font-bold tracking-tight mb-16 text-center">
+              Our Leading Partners
+            </h3>
             
-            {/* Infinite Loop Scroller */}
-            <div className="relative w-full overflow-hidden select-none" style={{ contain: 'paint' }}>
-              {/* Inject local style for pure self-contained marquee scroll */}
-              <style dangerouslySetInnerHTML={{__html: `
-                @keyframes partnerMarquee {
-                  0% { transform: translate3d(0, 0, 0); }
-                  100% { transform: translate3d(-50%, 0, 0); }
-                }
-                .partner-marquee-container {
-                  display: flex;
-                  width: max-content;
-                  will-change: transform;
-                  animation: partnerMarquee 60s linear infinite;
-                  backface-visibility: hidden;
-                  -webkit-font-smoothing: subpixel-antialiased;
-                }
-                .partner-marquee-container:hover {
-                  animation-play-state: paused;
-                }
-              `}} />
-              
-              <div className="partner-marquee-container">
-                <div className="flex items-center gap-16 pr-16 flex-shrink-0">
-                  {/* First Set */}
-                  {[
-                    { name: 'SOBHA', logo: '/photos/Partners/sobha-realty.png', sizeClass: '' },
-                    { name: 'DANUBE', logo: '/photos/Partners/Danube.png', sizeClass: 'scale-125' },
-                    { name: 'DAMAC', logo: '/photos/Partners/Damac.png', sizeClass: 'scale-125' },
-                    { name: 'AZIZI', logo: '/photos/Partners/Azizi.png', sizeClass: '' },
-                    { name: 'BINGHATTI', logo: '/photos/Partners/Binghatti.webp', sizeClass: '' },
-                    { name: 'EMAAR', logo: '/photos/Partners/EMAAR.png', sizeClass: 'scale-125' },
-                    { name: 'NAKHEEL', logo: '/photos/Partners/Nakheel.jpg', sizeClass: '' },
-                    { name: 'ALEF', logo: '/photos/Partners/Alef.jpg', sizeClass: '' }
-                  ].map((partner, index) => (
-                    <div key={`p1-${index}`} className="flex items-center justify-center min-w-[160px] md:min-w-[180px] h-[70px] md:h-[80px] border border-zinc-100 rounded-lg bg-white p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:border-zinc-200 transition-colors">
-                      <img loading="lazy" 
-                        src={partner.logo} 
-                        alt={`${partner.name} Logo`} 
-                        className={`max-h-full max-w-full object-contain transition-all duration-300 ${partner.sizeClass || ''}`}
-                        onError={(e) => { 
-                          e.currentTarget.style.display = 'none'; 
-                          e.currentTarget.nextElementSibling!.style.display = 'block'; 
-                        }} 
-                      />
-                      <span style={{ display: 'none' }} className="font-display text-base font-extrabold tracking-[0.2em] text-zinc-400 hover:text-[#C89B3C] transition-colors duration-300">
-                        {partner.name}
+            <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8 md:gap-y-16 justify-items-center max-w-5xl mx-auto">
+              {[
+                { name: 'DAMAC', logo: '/photos/Partners/Damac.png' },
+                { name: 'EMAAR', logo: '/photos/Partners/EMAAR.png' },
+                { name: 'SOBHA', logo: '/photos/Partners/sobha-realty.png' },
+                { name: 'NAKHEEL', logo: '/photos/Partners/Nakheel.jpg' },
+                { name: 'DANUBE', logo: '/photos/Partners/Danube.png' },
+                { name: 'AZIZI', logo: '/photos/Partners/Azizi.png' },
+                { name: 'BINGHATTI', logo: '/photos/Partners/Binghatti.webp' },
+                { name: 'ALEF', logo: '/photos/Partners/Alef.jpg' },
+                { name: 'MERAAS', textLogo: true },
+              ].map((partner, index) => (
+                <div key={index} className="flex items-center justify-center hover:scale-105 transition-all duration-300 hover:drop-shadow-[0_0_15px_rgba(200,155,60,0.4)] w-40 h-20 md:w-56 md:h-28">
+                  {partner.textLogo ? (
+                    <div className="flex items-center justify-center gap-2 text-zinc-900 font-display text-xl md:text-3xl font-bold tracking-widest w-full h-full">
+                      <span className="flex gap-[3px]">
+                        <div className="w-1 h-5 md:h-7 bg-zinc-900"></div>
+                        <div className="w-1 h-5 md:h-7 bg-zinc-900"></div>
+                        <div className="w-1 h-5 md:h-7 bg-zinc-900"></div>
                       </span>
+                      MERAAS
                     </div>
-                  ))}
+                  ) : (
+                    <img 
+                      src={partner.logo} 
+                      alt={`${partner.name} Logo`} 
+                      className="w-full h-full object-contain"
+                      onError={(e) => { 
+                        e.currentTarget.style.display = 'none'; 
+                        if (e.currentTarget.nextElementSibling) {
+                          (e.currentTarget.nextElementSibling as HTMLElement).style.display = 'block'; 
+                        }
+                      }} 
+                    />
+                  )}
+                  {!partner.textLogo && (
+                    <span style={{ display: 'none' }} className="font-display text-xl md:text-2xl font-extrabold tracking-[0.2em] text-zinc-900">
+                      {partner.name}
+                    </span>
+                  )}
                 </div>
-                <div className="flex items-center gap-16 pr-16 flex-shrink-0">
-                  {/* Duplicated set for infinite loop illusion */}
-                  {[
-                    { name: 'SOBHA', logo: '/photos/Partners/sobha-realty.png', sizeClass: '' },
-                    { name: 'DANUBE', logo: '/photos/Partners/Danube.png', sizeClass: 'scale-125' },
-                    { name: 'DAMAC', logo: '/photos/Partners/Damac.png', sizeClass: 'scale-125' },
-                    { name: 'AZIZI', logo: '/photos/Partners/Azizi.png', sizeClass: '' },
-                    { name: 'BINGHATTI', logo: '/photos/Partners/Binghatti.webp', sizeClass: '' },
-                    { name: 'EMAAR', logo: '/photos/Partners/EMAAR.png', sizeClass: 'scale-125' },
-                    { name: 'NAKHEEL', logo: '/photos/Partners/Nakheel.jpg', sizeClass: '' },
-                    { name: 'ALEF', logo: '/photos/Partners/Alef.jpg', sizeClass: '' }
-                  ].map((partner, index) => (
-                    <div key={`p2-${index}`} className="flex items-center justify-center min-w-[160px] md:min-w-[180px] h-[70px] md:h-[80px] border border-zinc-100 rounded-lg bg-white p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:border-zinc-200 transition-colors">
-                      <img loading="lazy" 
-                        src={partner.logo} 
-                        alt={`${partner.name} Logo`} 
-                        className={`max-h-full max-w-full object-contain transition-all duration-300 ${partner.sizeClass || ''}`}
-                        onError={(e) => { 
-                          e.currentTarget.style.display = 'none'; 
-                          e.currentTarget.nextElementSibling!.style.display = 'block'; 
-                        }} 
-                      />
-                      <span style={{ display: 'none' }} className="font-display text-base font-extrabold tracking-[0.2em] text-zinc-400 hover:text-[#C89B3C] transition-colors duration-300">
-                        {partner.name}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              ))}
             </div>
           </div>
-
         </div>
       </section>
 
@@ -457,12 +419,7 @@ export default function HomeSections({
                 style={{ borderRadius: '18px', overflow: 'hidden' }}
               >
                 <div className="relative aspect-[4/3] bg-zinc-100 overflow-hidden">
-                  <img
-                    src={prop.image}
-                    alt={prop.title}
-                    referrerPolicy="no-referrer"
-                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
-                  />
+                  <PropertyImageSlider className="group-hover:scale-105 transition-transform duration-500" images={prop.images && prop.images.length > 0 ? prop.images : [prop.image]} alt={prop.title} />
                   <div className="absolute top-4 left-4 bg-gold text-zinc-950 text-[9px] uppercase tracking-widest font-bold px-3 py-1">
                     Completion {prop.completionYear}
                   </div>
@@ -503,11 +460,6 @@ export default function HomeSections({
               </div>
             ))}
           </div>
-          <div className="mt-12 text-center">
-            <button onClick={() => navigate('/search')} className="px-8 py-4 bg-[#1a2f4d] hover:bg-[#C89B3C] text-white font-bold rounded-lg uppercase tracking-widest text-xs transition-colors shadow-lg">
-              Browse Full Inventory
-            </button>
-          </div>
         </div>
       </section>
 
@@ -531,7 +483,7 @@ export default function HomeSections({
               className="md:col-span-2 md:row-span-1 relative rounded-xl overflow-hidden group cursor-pointer h-64 md:h-auto"
               onClick={() => navigate('/search')}
             >
-              <img src="https://images.unsplash.com/photo-1546412414-8035e1776c9a?auto=format&fit=crop&q=80&w=1200" alt="Palm Jebel Ali" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src="/photos/inventory/DAMAC ISLANDS/DAMAC ISLANDS (1).png" alt="Palm Jebel Ali" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
               <div className="absolute bottom-6 left-8">
                 <h3 className="text-white text-2xl font-bold font-display tracking-wide mb-1">Palm Jebel Ali</h3>
@@ -544,7 +496,7 @@ export default function HomeSections({
               className="md:col-span-1 md:row-span-2 relative rounded-xl overflow-hidden group cursor-pointer h-64 md:h-auto"
               onClick={() => navigate('/search')}
             >
-              <img src="https://images.unsplash.com/photo-1512453979798-5eaad0ff3b0d?auto=format&fit=crop&q=80&w=800" alt="Downtown Dubai" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src="/photos/inventory/burj aziz/burj aziz.jpeg" alt="Downtown Dubai" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
               <div className="absolute bottom-6 left-8">
                 <h3 className="text-white text-2xl font-bold font-display tracking-wide">Downtown Dubai</h3>
@@ -556,7 +508,7 @@ export default function HomeSections({
               className="md:col-span-1 md:row-span-1 relative rounded-xl overflow-hidden group cursor-pointer h-64 md:h-auto"
               onClick={() => navigate('/search')}
             >
-              <img src="https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&q=80&w=800" alt="Business Bay" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src="/photos/inventory/Bugatti Residences By Binghatti/Bugatti Residences By Binghatti (1).png" alt="Business Bay" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
               <div className="absolute bottom-6 left-8">
                 <h3 className="text-white text-2xl font-bold font-display tracking-wide">Business Bay</h3>
@@ -568,7 +520,7 @@ export default function HomeSections({
               className="md:col-span-1 md:row-span-1 relative rounded-xl overflow-hidden group cursor-pointer h-64 md:h-auto"
               onClick={() => navigate('/search')}
             >
-              <img src="https://images.unsplash.com/photo-1582672060624-cb814c812c4c?auto=format&fit=crop&q=80&w=800" alt="Dubai Marina" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <img src="/photos/inventory/Damac Lagoons/Damac Lagoons (1).png" alt="Dubai Marina" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
               <div className="absolute bottom-6 left-8">
                 <h3 className="text-white text-2xl font-bold font-display tracking-wide">Dubai Marina</h3>
@@ -597,12 +549,7 @@ export default function HomeSections({
                 style={{ borderRadius: '18px', overflow: 'hidden' }}
               >
                 <div className="relative aspect-[4/3] bg-zinc-100 overflow-hidden">
-                  <img
-                    src={prop.image}
-                    alt={prop.title}
-                    referrerPolicy="no-referrer"
-                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
-                  />
+                  <PropertyImageSlider className="group-hover:scale-105 transition-transform duration-500" images={prop.images && prop.images.length > 0 ? prop.images : [prop.image]} alt={prop.title} />
                   <div className="absolute top-4 left-4 bg-zinc-950 text-white text-[9px] uppercase tracking-widest font-bold px-3 py-1">
                     {prop.type}
                   </div>
@@ -643,57 +590,247 @@ export default function HomeSections({
               </div>
             ))}
           </div>
+          <div className="mt-12 text-center">
+            <button onClick={() => navigate('/search')} className="px-8 py-4 bg-[#1a2f4d] hover:bg-[#C89B3C] text-white font-bold rounded-lg uppercase tracking-widest text-xs transition-colors shadow-lg">
+              Browse Full Inventory
+            </button>
+          </div>
+        </div>
+      </section>
 
+      {/* SECTION A: INSTITUTIONAL SAFETY */}
+      <section className="py-24 bg-[#0a0a0a] px-6 overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-[#C89B3C] block mb-2">Institutional Safety</span>
+            <h2 className="font-display text-3xl md:text-5xl text-white font-normal tracking-tight leading-tight">
+              Why Global Portfolios <span className="italic font-light text-[#C89B3C]">Prefer Dubai</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                id: '01',
+                title: '0% Personal Taxation',
+                desc: 'Enjoy absolute tax freedom. Dubai levies 0% personal income tax, 0% capital gains tax, and 0% ongoing corporate tax on residential rent.',
+                bg: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=800'
+              },
+              {
+                id: '02',
+                title: '10-Year Golden Visa',
+                desc: 'Real estate acquisitions of AED 2 Million or above secure long-term, self-sponsored residency, complete with family sponsorship options.',
+                bg: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&q=80&w=800'
+              },
+              {
+                id: '03',
+                title: 'High Yield Index (7-9%)',
+                desc: 'Gross rental yields in Dubai surpass London (3.2%) and New York (2.9%), optimizing immediate liquidity for global investors.',
+                bg: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&q=80&w=800'
+              }
+            ].map(item => (
+              <div key={item.id} className="relative rounded-2xl overflow-hidden h-[400px] border border-white/10 group">
+                <img src={item.bg} alt={item.title} className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                <div className="absolute top-6 right-6 text-4xl font-display font-bold text-white/10 group-hover:text-[#C89B3C]/30 transition-colors duration-700">{item.id}</div>
+                <div className="absolute bottom-0 left-0 p-8 space-y-4">
+                  <h3 className="text-xl font-display font-bold text-white group-hover:text-[#C89B3C] transition-colors duration-300">{item.title}</h3>
+                  <p className="text-sm text-zinc-300 font-sans leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION B: CORPORATE LEADERSHIP */}
+      <section className="py-24 bg-[#0a0a0a] px-6 overflow-hidden relative border-t border-white/5">
+        {/* Subtle horizontal green line */}
+        <div className="absolute top-[65%] left-0 w-full h-px bg-[#25D366] z-0 pointer-events-none shadow-[0_0_10px_#25D366]"></div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+            
+            {/* Left Image Card */}
+            <div className="lg:col-span-4">
+              <div className="border border-white/20 rounded-xl p-2 bg-[#111]">
+                <div className="rounded-lg overflow-hidden bg-zinc-900 border border-white/10 relative pb-6">
+                  <img src="/photos/arvind_ceo_and_advisor.png" alt="Mr. Arvind Pal" className="w-full aspect-[4/5] object-cover object-top" />
+                  <div className="text-center mt-6">
+                    <span className="text-[9px] uppercase tracking-widest text-[#C89B3C] font-bold block mb-1">Golden Legacy Real Estate</span>
+                    <span className="text-[10px] text-zinc-500 font-serif italic">Founder's Executive Office</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Text */}
+            <div className="lg:col-span-8 space-y-8 bg-[#0a0a0a] p-4 relative z-10">
+              <div>
+                <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-[#C89B3C] block mb-2">Corporate Leadership</span>
+                <h2 className="font-display text-3xl md:text-4xl text-white font-normal tracking-tight leading-tight">
+                  The Vision Behind <span className="italic font-light text-[#C89B3C]">The Legacy</span>
+                </h2>
+              </div>
+
+              <div className="border-l-2 border-[#C89B3C] pl-6 space-y-1">
+                <h3 className="text-xl font-display font-bold text-white">Mr. Arvind Pal</h3>
+                <span className="text-[9px] uppercase tracking-widest text-[#C89B3C] font-bold">FOUNDER & CHIEF EXECUTIVE OFFICER</span>
+              </div>
+
+              <div className="space-y-6 text-sm text-zinc-400 font-sans leading-relaxed max-w-3xl">
+                <p>
+                  Arvind Pal Singh Arora is an eminent <span className="text-[#C89B3C] font-semibold">global real estate strategist</span> and visionary entrepreneur who founded <span className="text-white font-bold">GOLDEN LEGACY</span> to champion high-end sovereign advisory and <span className="text-[#25D366] font-semibold">UHNW portfolio optimization</span>. Leveraging an elite background in <span className="text-[#C89B3C] font-semibold">international wealth management</span> and corporate structuring, he successfully steers family offices and institutional boards toward <span className="text-[#C89B3C] font-semibold">high-yield capital growth</span> and master-planned asset allocations.
+                </p>
+                <p>
+                  Under his sophisticated stewardship, the firm guides acquisitions across <span className="text-[#C89B3C] font-semibold">Dubai's most exclusive zip codes</span>—partnering with institutional developers such as Emaar, Sobha, and DAMAC. Built upon discretion and data-driven intelligence, GOLDEN LEGACY delivers unparalleled capital appreciation, secures <span className="text-[#C89B3C] font-semibold">Golden Visa residency solutions</span>, and preserves <span className="text-[#C89B3C] font-semibold">generational wealth</span> for its elite clientele.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 pt-6 border-t border-white/10 items-end">
+                <div>
+                  <span className="text-[9px] uppercase tracking-widest text-zinc-500 font-bold block mb-1">Direct Portfolios Guided</span>
+                  <span className="text-xl font-display font-bold text-white">AED 2.4 Billion+</span>
+                </div>
+                <div>
+                  <span className="text-[9px] uppercase tracking-widest text-zinc-500 font-bold block mb-1">UHNW Families Advised</span>
+                  <span className="text-xl font-display font-bold text-white">180+ Global Investors</span>
+                </div>
+                <div className="text-right hidden lg:block">
+                  <span className="font-serif italic text-[#C89B3C] text-2xl">Arvind Pal S.</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION C: ELITE ADVISORY DESK */}
+      <section className="py-24 bg-[#FAF8F4] px-6 overflow-hidden">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-[#C89B3C] block mb-2">Elite Advisory Desk</span>
+            <h2 className="font-display text-3xl md:text-5xl text-zinc-950 font-normal tracking-tight leading-tight">
+              Our Senior Wealth <span className="italic font-light">Advisors</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                id: 'agent-1',
+                name: 'Arvind Pal Singh',
+                role: 'CEO & Founder',
+                image: '/photos/arvind_ceo_and_advisor.png',
+                langs: 'English, Hindi',
+                exp: '18 Years',
+                portfolio: 420,
+                wa: 'https://wa.me/971501112233',
+                mail: 'mailto:arvind@goldenlegacy.ae'
+              },
+              {
+                id: 'agent-2',
+                name: 'Elena Rostova',
+                role: 'Director of Luxury Acquisitions',
+                image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300',
+                langs: 'Russian, English, German',
+                exp: '12 Years',
+                portfolio: 280,
+                wa: 'https://wa.me/971501112233',
+                mail: 'mailto:elena@goldenlegacy.ae'
+              },
+              {
+                id: 'agent-3',
+                name: 'Oshhavarora',
+                role: 'Advisor',
+                image: '/photos/Oshhav Arora advisor.png',
+                langs: 'English, Hindi',
+                exp: '5 Years',
+                portfolio: 195,
+                wa: 'https://wa.me/971501112233',
+                mail: 'mailto:advisor@goldenlegacy.ae'
+              }
+            ].map(agent => (
+              <div key={agent.id} className="bg-white border border-[#ECECEC] p-8 flex flex-col items-center text-center shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_30px_rgba(0,0,0,0.08)] transition-all duration-300 relative group">
+                <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-white ring-1 ring-[#C89B3C]/30 mb-6 bg-zinc-100 group-hover:ring-[#C89B3C] transition-all">
+                  <img src={agent.image} alt={agent.name} className="w-full h-full object-cover object-top" />
+                </div>
+                <h3 className="font-display text-lg font-bold text-zinc-900 mb-1">{agent.name}</h3>
+                <span className="text-[9px] uppercase tracking-widest font-bold text-[#C89B3C] block mb-6">{agent.role}</span>
+                
+                <div className="space-y-1.5 text-[11px] font-sans text-zinc-500 mb-8 w-full border-b border-zinc-100 pb-8">
+                  <p>Languages: <span className="font-semibold text-zinc-900">{agent.langs}</span></p>
+                  <p>Experience: <span className="font-semibold text-zinc-900">{agent.exp}</span></p>
+                  <p>Private portfolio count: <span className="font-semibold text-zinc-900">{agent.portfolio} registered</span></p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 w-full">
+                  <a href={agent.wa} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-1.5 bg-[#25D366] text-white py-3 px-2 text-[9px] font-bold uppercase tracking-wider hover:bg-[#20bd5a] transition-colors rounded-sm">
+                    <img src={whatsappLogo} alt="WhatsApp" className="w-3.5 h-3.5" />
+                    WhatsApp
+                  </a>
+                  <a href={agent.mail} className="flex items-center justify-center bg-zinc-950 text-white py-3 px-2 text-[9px] font-bold uppercase tracking-wider hover:bg-zinc-800 transition-colors rounded-sm">
+                    Private Mail
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* SECTION 10: WHY CHOOSE GOLDEN LEGACY */}
-      <section className="py-24 bg-white px-6 overflow-hidden">
+      <section className="py-24 bg-[#0a0a0a] px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
             {/* Left Masonry Image Collage */}
             <div className="grid grid-cols-2 gap-4 h-[500px]">
-              <div className="col-span-2 relative rounded-2xl overflow-hidden shadow-lg h-64">
-                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800" alt="Office Presentation" className="w-full h-full object-cover" />
+              <div className="col-span-2 relative rounded-2xl overflow-hidden h-64 border border-white/10 group">
+                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=800" alt="Luxury Villa" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
               </div>
-              <div className="relative rounded-2xl overflow-hidden shadow-lg h-48">
-                <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=600" alt="Client Meeting" className="w-full h-full object-cover" />
+              <div className="relative rounded-2xl overflow-hidden h-48 border border-white/10 group mt-4">
+                <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=600" alt="Dubai Skyline" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
               </div>
-              <div className="relative rounded-2xl overflow-hidden shadow-lg h-48">
-                <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&q=80&w=600" alt="Property Tour" className="w-full h-full object-cover" />
+              <div className="relative rounded-2xl overflow-hidden h-48 border border-white/10 group mt-4">
+                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=600" alt="Luxury Interior" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
               </div>
             </div>
 
             {/* Right Text Content */}
             <div className="space-y-10">
               <div>
-                <h2 className="font-display text-4xl md:text-5xl text-[#1a2f4d] font-bold tracking-tight mb-6">
-                  Why Choose Golden Legacy Real Estate?
+                <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-[#C89B3C] block mb-2">Our Expertise</span>
+                <h2 className="font-display text-4xl md:text-5xl text-white font-normal tracking-tight leading-tight mb-6">
+                  Why Choose <span className="text-[#C89B3C] italic font-light">Golden Legacy</span> Real Estate?
                 </h2>
-                <p className="text-zinc-600 text-lg leading-relaxed">
+                <p className="text-zinc-400 text-lg leading-relaxed">
                   With years of experience and deep market insights, we help you find properties perfectly aligned with your lifestyle and investment goals.
                 </p>
               </div>
 
               <div className="space-y-8">
-                <div className="space-y-2">
-                  <h3 className="font-display text-2xl font-bold text-[#1a2f4d]">1. Market Expertise</h3>
-                  <p className="text-zinc-600 leading-relaxed">
+                <div className="space-y-2 border-l-2 border-[#C89B3C] pl-6">
+                  <h3 className="font-display text-2xl font-bold text-white">1. Market Expertise</h3>
+                  <p className="text-zinc-400 leading-relaxed text-sm">
                     Golden Legacy Real Estate has in-depth knowledge of the Dubai real estate market, helping clients find ideal properties tailored to their needs.
                   </p>
                 </div>
                 
-                <div className="space-y-2">
-                  <h3 className="font-display text-2xl font-bold text-[#1a2f4d]">2. Comprehensive Services</h3>
-                  <p className="text-zinc-600 leading-relaxed">
+                <div className="space-y-2 border-l-2 border-[#C89B3C] pl-6">
+                  <h3 className="font-display text-2xl font-bold text-white">2. Comprehensive Services</h3>
+                  <p className="text-zinc-400 leading-relaxed text-sm">
                     From property buying and selling to leasing and property management, Golden Legacy offers a full suite of services.
                   </p>
                 </div>
 
-                <div className="space-y-2">
-                  <h3 className="font-display text-2xl font-bold text-[#1a2f4d]">3. Client-Centric Approach</h3>
-                  <p className="text-zinc-600 leading-relaxed">
+                <div className="space-y-2 border-l-2 border-[#C89B3C] pl-6">
+                  <h3 className="font-display text-2xl font-bold text-white">3. Client-Centric Approach</h3>
+                  <p className="text-zinc-400 leading-relaxed text-sm">
                     Known for its transparent and customer-focused service, Golden Legacy aims to build long-term relationships with clients, ensuring a smooth experience.
                   </p>
                 </div>
@@ -703,6 +840,7 @@ export default function HomeSections({
           </div>
         </div>
       </section>
+
 
       {/* SECTION 17: CONTACT OFFICE & MAP */}
       <section className="py-24 bg-[#FAF8F4] px-6 overflow-hidden">

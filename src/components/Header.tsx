@@ -29,12 +29,11 @@ const CURRENCIES: Currency[] = ['AED', 'USD', 'EUR', 'GBP', 'INR', 'SAR', 'QAR',
 
 // Main Navigation Items
 const MAIN_NAV = [
-  { label: 'Buy', path: '/search?type=buy', hasMegaMenu: true, id: 'buy' },
-  { label: 'Rent', path: '/search?type=rent', hasMegaMenu: true, id: 'rent' },
+  { label: 'About', path: '/about', hasMegaMenu: false, id: 'about' },
+  { label: 'Buy / Rent', path: '/search', hasMegaMenu: true, id: 'buy-rent' },
   { label: 'Off Plan', path: '/search?type=off-plan', hasMegaMenu: true, id: 'offplan' },
   { label: 'Commercial', path: '/search?type=commercial', hasMegaMenu: false, id: 'commercial' },
-  { label: 'Developers', path: '/developers', hasMegaMenu: true, id: 'developers' },
-  { label: 'About', path: '/about', hasMegaMenu: false, id: 'about' }
+  { label: 'Developers', path: '/developers', hasMegaMenu: true, id: 'developers' }
 ];
 
 const BUY_MENU = ['Apartments', 'Villas', 'Townhouses', 'Penthouses', 'Mansions', 'Luxury Homes'];

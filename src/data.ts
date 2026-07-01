@@ -923,7 +923,7 @@ export const AGENTS: Agent[] = [
     seoTitle: 'Oshhavarora | Dubai Real Estate',
     seoDescription: 'Explore signature projects and investment opportunities by Oshhavarora.',
     role: 'Advisor',
-    image: '/photos/advisor.png',
+    image: '/photos/Oshhav Arora advisor.png',
     languages: ['English', 'Hindi'],
     experience: 10,
     propertiesSold: 195,
