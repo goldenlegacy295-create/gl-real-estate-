@@ -88,7 +88,7 @@ export function generateGlobalSchema() {
     image: `${SITE_URL}/assets/photos/logo.png`,
     '@id': `${SITE_URL}`,
     url: `${SITE_URL}`,
-    telephone: '+971556656007',
+    telephone: '+971561513435',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Downtown Dubai',

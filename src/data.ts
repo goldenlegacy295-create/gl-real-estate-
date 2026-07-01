@@ -898,8 +898,8 @@ export const AGENTS: Agent[] = [
     experience: 18,
     propertiesSold: 420,
     email: 'arvind@goldenlegacy.ae',
-    phone: '+971 556656007',
-    whatsApp: 'https://wa.me/971556656007'
+    phone: '+971 56 151 3435',
+    whatsApp: 'https://wa.me/971561513435'
   },
   {
     id: 'agent-2',
@@ -913,8 +913,8 @@ export const AGENTS: Agent[] = [
     experience: 12,
     propertiesSold: 280,
     email: 'elena@goldenlegacy.ae',
-    phone: '+971 556656007',
-    whatsApp: 'https://wa.me/971556656007'                                      
+    phone: '+971 56 151 3435',
+    whatsApp: 'https://wa.me/971561513435'                                      
   },
   {                 
     id: 'agent-3',
@@ -928,8 +928,8 @@ export const AGENTS: Agent[] = [
     experience: 10,
     propertiesSold: 195,
     email: 'oshhavarora@goldenlegacy.ae',
-    phone: '+971 556656007',
-    whatsApp: 'https://wa.me/971556656007'
+    phone: '+971 56 151 3435',
+    whatsApp: 'https://wa.me/971561513435'
   }
 ];
 
