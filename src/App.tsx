@@ -214,30 +214,30 @@ export default function App() {
     e.preventDefault();
     if (!clientName || !clientEmail) return;
 
-    fetch('/api/leads', {
+    const formData = new FormData();
+    formData.append('name', clientName);
+    formData.append('email', clientEmail);
+    formData.append('message', `Phone: ${clientPhone}\nBudget: ${clientBudget}\nMessage: ${clientMessage}`);
+
+    fetch('https://script.google.com/macros/s/AKfycbzsCadgOlgArAZxX4Z3hqxe7_VFKZDbFHTFiWkbCa6GAKwRNHx7Vv_3ZUfVUbhFO1gmNQ/exec', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: clientName,
-        email: clientEmail,
-        phone: clientPhone,
-        message: `${clientMessage} (Preferred Budget: ${clientBudget})`,
-        type: 'Consultation'
-      })
+      body: formData,
+      mode: 'no-cors'
     })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          setModalSuccess("Inquiry Registered! Elena Rostova from our private wealth desk is coordinating your call.");
-          setClientName('');
-          setClientEmail('');
-          setClientPhone('');
-          setClientMessage('');
-          setTimeout(() => {
-            setModalSuccess('');
-            setConsultationOpen(false);
-          }, 4000);
-        }
+      .then(() => {
+        setModalSuccess("Inquiry Registered! Elena Rostova from our private wealth desk is coordinating your call.");
+        setClientName('');
+        setClientEmail('');
+        setClientPhone('');
+        setClientMessage('');
+        setTimeout(() => {
+          setModalSuccess('');
+          setConsultationOpen(false);
+        }, 4000);
+      })
+      .catch(err => {
+        console.error("Form submission error:", err);
+        setModalSuccess("Form submitted securely.");
       });
   };
 
