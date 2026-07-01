@@ -101,7 +101,7 @@ export default function HomeSections({
   };
 
   // IMPORTANT: Replace this placeholder with the Web App URL generated from the Google Apps Script
-  const GOOGLE_SCRIPT_WEB_APP_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+  const GOOGLE_SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzsCadgOlgArAZxX4Z3hqxe7_VFKZDbFHTFiWkbCa6GAKwRNHx7Vv_3ZUfVUbhFO1gmNQ/exec";
 
   const handleContactSubmit = (e: FormEvent) => {
     e.preventDefault();
