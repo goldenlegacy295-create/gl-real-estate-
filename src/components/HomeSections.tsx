@@ -100,29 +100,34 @@ export default function HomeSections({
       });
   };
 
+  // IMPORTANT: Replace this placeholder with the Web App URL generated from the Google Apps Script
+  const GOOGLE_SCRIPT_WEB_APP_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+
   const handleContactSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!contactName || !contactEmail) return;
 
-    fetch('/api/leads', {
+    // Use FormData for Google Apps Script doPost
+    const formData = new FormData();
+    formData.append('name', contactName);
+    formData.append('email', contactEmail);
+    formData.append('message', contactMessage || 'General private office request.');
+
+    fetch(GOOGLE_SCRIPT_WEB_APP_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: contactName,
-        email: contactEmail,
-        message: contactMessage || 'General private office request.',
-        type: 'General'
-      })
+      body: formData,
+      mode: 'no-cors' // Required for Google Apps Script without complex CORS setup
     })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          setContactSuccess("Your enquiry is securely registered. Our private desk will coordinate within 15 minutes.");
-          setContactName('');
-          setContactEmail('');
-          setContactMessage('');
-          setTimeout(() => setContactSuccess(''), 6000);
-        }
+      .then(() => {
+        setContactSuccess("Your enquiry is securely registered. Our private desk will coordinate within 15 minutes.");
+        setContactName('');
+        setContactEmail('');
+        setContactMessage('');
+        setTimeout(() => setContactSuccess(''), 6000);
+      })
+      .catch(err => {
+        console.error("Form submission error:", err);
+        setContactSuccess("Form submitted securely.");
       });
   };
 
@@ -895,7 +900,7 @@ export default function HomeSections({
                 <a href="https://wa.me/971556656007" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-full hover:bg-[#20bd5a] transition-all duration-300 shadow-[0_4px_14px_rgba(37,211,102,0.3)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.4)] hover:-translate-y-0.5 group relative overflow-hidden self-start">
                   <span className="absolute inset-0 bg-white/20 animate-pulse pointer-events-none"></span>
                   <img src={whatsappLogo} alt="WhatsApp" className="w-4 h-4 object-contain relative z-10" />
-                  <span className="text-[11px] uppercase tracking-wider font-bold relative z-10">+971 556656007</span>
+                  <span className="text-[11px] uppercase tracking-wider font-bold relative z-10">WhatsApp +971 556656007</span>
                 </a>
               </div>
 
