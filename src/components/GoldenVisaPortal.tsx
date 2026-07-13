@@ -1,4 +1,5 @@
 import { useState, FormEvent } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Award, ShieldCheck, CheckCircle, Clock, BookOpen, UserPlus, Phone, CreditCard, HelpCircle } from 'lucide-react';
 
 export default function GoldenVisaPortal() {
@@ -73,6 +74,11 @@ export default function GoldenVisaPortal() {
 
   return (
     <div className="bg-[#FAF8F4] py-24 px-6">
+      <Helmet>
+        <title>Dubai Golden Visa Investment | Golden Legacy Real Estate</title>
+        <meta name="description" content="Secure your 10-Year UAE Golden Visa through property investment with Golden Legacy, a leading Dubai real estate company. Check your eligibility and timeline today." />
+        <meta name="keywords" content="Dubai Golden Visa, UAE Golden Visa, Dubai real estate company, property investment Dubai, Dubai property visa, buy property Dubai" />
+      </Helmet>
       <div className="max-w-6xl mx-auto">
         
         {/* HERO TITLE */}

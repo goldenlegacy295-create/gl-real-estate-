@@ -54,8 +54,13 @@ export default function HomeSections({
   // Contact Form state
   const [contactName, setContactName] = useState('');
   const [contactEmail, setContactEmail] = useState('');
+  const [contactPhone, setContactPhone] = useState('');
   const [contactMessage, setContactMessage] = useState('');
   const [contactSuccess, setContactSuccess] = useState('');
+
+  // VVIP Ledger state
+  const [ledgerEmail, setLedgerEmail] = useState('');
+  const [ledgerSuccess, setLedgerSuccess] = useState('');
 
   // FAQ Accordion active index
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -111,7 +116,7 @@ export default function HomeSections({
     const formData = new FormData();
     formData.append('name', contactName);
     formData.append('email', contactEmail);
-    formData.append('message', contactMessage || 'General private office request.');
+    formData.append('message', `Phone: ${contactPhone || 'Not provided'}\n\nMessage:\n${contactMessage || 'General private office request.'}`);
 
     fetch(GOOGLE_SCRIPT_WEB_APP_URL, {
       method: 'POST',
@@ -122,12 +127,37 @@ export default function HomeSections({
         setContactSuccess("Your enquiry is securely registered. Our private desk will coordinate within 15 minutes.");
         setContactName('');
         setContactEmail('');
+        setContactPhone('');
         setContactMessage('');
         setTimeout(() => setContactSuccess(''), 6000);
       })
       .catch(err => {
         console.error("Form submission error:", err);
         setContactSuccess("Form submitted securely.");
+      });
+  };
+
+  const handleLedgerSubmit = () => {
+    if (!ledgerEmail) return;
+
+    const formData = new FormData();
+    formData.append('name', 'VVIP Subscriber');
+    formData.append('email', ledgerEmail);
+    formData.append('message', 'VVIP Private Ledger registration request.');
+
+    fetch(GOOGLE_SCRIPT_WEB_APP_URL, {
+      method: 'POST',
+      body: formData,
+      mode: 'no-cors'
+    })
+      .then(() => {
+        setLedgerSuccess("Subscribed! Your email has been added to our off-market mailing desk.");
+        setLedgerEmail('');
+        setTimeout(() => setLedgerSuccess(''), 6000);
+      })
+      .catch(err => {
+        console.error("Form submission error:", err);
+        setLedgerSuccess("Secure subscription recorded.");
       });
   };
 
@@ -193,13 +223,13 @@ export default function HomeSections({
   return (
     <div className="bg-white">
       <Helmet>
-        <title>Golden Legacy Real Estate | Premier Dubai Properties</title>
-        <meta name="description" content="Discover Dubai's most prestigious properties with trusted family advisors, institutional-grade analytics, and exclusive off-market allocations." />
-        <meta name="keywords" content="Dubai real estate, luxury villas Dubai, buy property Dubai, Golden Visa properties, off-plan projects, Dubai investment" />
+        <title>Dubai Real Estate Company | Luxury Properties & Villas | Golden Legacy</title>
+        <meta name="description" content="Discover Dubai's most prestigious properties with Golden Legacy Real Estate, a leading Dubai real estate agency specializing in luxury apartments, off-plan projects, and high ROI investments in Business Bay, Downtown Dubai, and Dubai Marina." />
+        <meta name="keywords" content="Dubai real estate company, luxury real estate Dubai, real estate agency Dubai, buy property Dubai, off plan property Dubai, Dubai property investment" />
         
         {/* Open Graph / Social */}
-        <meta property="og:title" content="Golden Legacy Real Estate | Premier Dubai Properties" />
-        <meta property="og:description" content="Access our audited, off-market portfolio, Golden Visa guides, and expert tax structuring." />
+        <meta property="og:title" content="Dubai Real Estate Company | Luxury Properties & Villas | Golden Legacy" />
+        <meta property="og:description" content="Discover Dubai's most prestigious properties with Golden Legacy Real Estate, a leading Dubai real estate agency specializing in luxury apartments, off-plan projects, and high ROI investments." />
         <meta property="og:type" content="website" />
         
         {/* AEO / GEO Specific Tags */}
@@ -241,11 +271,11 @@ export default function HomeSections({
               {t('hero.minInvestment')}: <span className="text-[#C89B3C]">{convertPrice(600000).formatted}</span>
             </span>
             <h1 className="font-display text-[42px] leading-[1.1] md:text-7xl font-normal tracking-tight text-white w-[90%] mx-auto">
-              Your Legacy Starts <br className="hidden md:block" />
-              With The <span className="italic text-[#C89B3C] font-light">Right Property</span>
+              Dubai Real Estate Company <br className="hidden md:block" />
+              For <span className="italic text-[#C89B3C] font-light">Luxury Properties</span>
             </h1>
             <p className="max-w-2xl mx-auto text-zinc-300 font-sans text-sm md:text-base leading-relaxed font-light hidden sm:block mt-6">
-              Discover Dubai's most prestigious properties with trusted family advisors, institutional-grade analytics, and exclusive off-market allocations.
+              Golden Legacy Real Estate is a leading real estate agency in Dubai, specializing in luxury apartments, exclusive waterfront villas, and high-ROI off-plan investments across Business Bay, Dubai Marina, and Palm Jumeirah.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6 lg:mt-8 w-full px-4 sm:px-0 max-w-[340px] sm:max-w-none mx-auto">
@@ -404,7 +434,7 @@ export default function HomeSections({
             <div className="gsap-reveal-left">
               <span className="text-xs uppercase tracking-[0.25em] font-semibold text-gold block mb-2">High Capital Growth</span>
               <h2 className="font-display text-3xl md:text-5xl text-zinc-950 font-normal tracking-tight">
-                Featured Off-Plan <span className="italic font-light">Allocations</span>
+                Off-Plan Property <span className="italic font-light">Dubai</span>
               </h2>
             </div>
             <button
@@ -542,8 +572,8 @@ export default function HomeSections({
           <div className="text-center max-w-2xl mx-auto mb-16 gsap-reveal">
             <span className="text-xs uppercase tracking-[0.25em] font-semibold text-gold block mb-2">Bespoke Living</span>
             <h2 className="font-display text-3xl md:text-5xl text-zinc-950 font-normal tracking-tight leading-tight">
-              The Signature <span className="italic font-light">Villas & Apartments</span>
-            </h2>
+                Luxury Apartments & <span className="italic font-light">Villas in Dubai</span>
+              </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gsap-stagger-container">
@@ -609,7 +639,7 @@ export default function HomeSections({
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-[#C89B3C] block mb-2">Institutional Safety</span>
             <h2 className="font-display text-3xl md:text-5xl text-white font-normal tracking-tight leading-tight">
-              Why Global Portfolios <span className="italic font-light text-[#C89B3C]">Prefer Dubai</span>
+              Why Invest in <span className="italic font-light text-[#C89B3C]">Dubai Real Estate</span>
             </h2>
           </div>
 
@@ -685,10 +715,10 @@ export default function HomeSections({
 
               <div className="space-y-6 text-sm text-zinc-400 font-sans leading-relaxed max-w-3xl">
                 <p>
-                  Arvind Pal Singh Arora is an eminent <span className="text-[#C89B3C] font-semibold">global real estate strategist</span> and visionary entrepreneur who founded <span className="text-white font-bold">GOLDEN LEGACY</span> to champion high-end sovereign advisory and <span className="text-[#25D366] font-semibold">UHNW portfolio optimization</span>. Leveraging an elite background in <span className="text-[#C89B3C] font-semibold">international wealth management</span> and corporate structuring, he successfully steers family offices and institutional boards toward <span className="text-[#C89B3C] font-semibold">high-yield capital growth</span> and master-planned asset allocations.
+                  Arvind Pal Singh Arora is a trusted <span className="text-[#C89B3C] font-semibold">Dubai real estate strategist</span> and visionary entrepreneur who founded <span className="text-white font-bold">Golden Legacy Real Estate</span> to champion high-end property advisory and <span className="text-[#25D366] font-semibold">luxury investment optimization</span>. Leveraging an elite background in <span className="text-[#C89B3C] font-semibold">international wealth management</span> and corporate structuring, he successfully steers family offices and institutional boards toward <span className="text-[#C89B3C] font-semibold">high-yield capital growth</span> and premium Dubai properties.
                 </p>
                 <p>
-                  Under his sophisticated stewardship, the firm guides acquisitions across <span className="text-[#C89B3C] font-semibold">Dubai's most exclusive zip codes</span>—partnering with institutional developers such as Emaar, Sobha, and DAMAC. Built upon discretion and data-driven intelligence, GOLDEN LEGACY delivers unparalleled capital appreciation, secures <span className="text-[#C89B3C] font-semibold">Golden Visa residency solutions</span>, and preserves <span className="text-[#C89B3C] font-semibold">generational wealth</span> for its elite clientele.
+                  Under his sophisticated stewardship, the firm guides acquisitions across <span className="text-[#C89B3C] font-semibold">Dubai's most exclusive communities</span>—partnering with institutional developers such as Emaar, Sobha, and DAMAC. Built upon discretion and data-driven intelligence, Golden Legacy delivers unparalleled capital appreciation, secures <span className="text-[#C89B3C] font-semibold">Golden Visa residency solutions</span> through property investment, and preserves <span className="text-[#C89B3C] font-semibold">generational wealth</span> for its elite clientele globally.
                 </p>
               </div>
 
@@ -861,34 +891,14 @@ export default function HomeSections({
                 </h2>
                 <p className="mt-4 text-xs text-zinc-500 font-sans leading-relaxed">
                   We look forward to coordinating your investment portfolio. Drop by our Business Bay office or coordinate a virtual zoom with our asset consultants.
+                  <br /><br />
+                  Business Bay Dubai United Arab Emraites<br />
+                  +971 55 474 0389 (Asset Line)<br />
+                  dxb.goldenlegacy@gmail.com
                 </p>
               </div>
 
-              <div className="space-y-4 text-xs font-sans text-zinc-700">
-                <div className="flex gap-3 items-center">
-                  <MapPin className="w-4 h-4 text-gold" />
-                  <span>Suite 4801, Capital Tower, Corporate Boulevard, Business Bay, Dubai, UAE</span>
-                </div>
-                <div className="flex gap-3 items-center">
-                  <Phone className="w-4 h-4 text-gold" />
-                  <span>+971 55 665 6007 (Asset Line)</span>
-                </div>
-                <div className="flex gap-3 items-center">
-                  <Mail className="w-4 h-4 text-gold" />
-                  <span>dxb.goldenlegacy@gmail.com</span>
-                </div>
-              </div>
 
-              {/* MOCK MAP CARD */}
-              <div className="bg-zinc-900 text-zinc-400 p-6 flex flex-col justify-between h-40">
-                <div>
-                  <span className="text-[10px] uppercase tracking-wider text-gold font-bold block mb-1">Interactive GPS Coordinates</span>
-                  <span className="text-white block text-xs">Business Bay Corporate Boulevard</span>
-                </div>
-                <div className="text-[9px] font-mono">
-                  25.1857° N, 55.2721° E • Verified DLD Office Location
-                </div>
-              </div>
             </div>
 
             {/* MESSAGE DIRECT INTAKE FORM (7 cols) */}
@@ -897,10 +907,10 @@ export default function HomeSections({
                 <h3 className="font-display text-xl text-zinc-900 font-semibold flex items-center gap-2 m-0">
                   <Mail className="w-5 h-5 text-gold" /> Coordinate Your Portfolio
                 </h3>
-                <a href="https://wa.me/971556656007" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-full hover:bg-[#20bd5a] transition-all duration-300 shadow-[0_4px_14px_rgba(37,211,102,0.3)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.4)] hover:-translate-y-0.5 group relative overflow-hidden self-start">
+                <a href="https://wa.me/971554740389" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-full hover:bg-[#20bd5a] transition-all duration-300 shadow-[0_4px_14px_rgba(37,211,102,0.3)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.4)] hover:-translate-y-0.5 group relative overflow-hidden self-start">
                   <span className="absolute inset-0 bg-white/20 animate-pulse pointer-events-none"></span>
                   <img src={whatsappLogo} alt="WhatsApp" className="w-4 h-4 object-contain relative z-10" />
-                  <span className="text-[11px] uppercase tracking-wider font-bold relative z-10">WhatsApp +971 55 665 6007</span>
+                  <span className="text-[11px] uppercase tracking-wider font-bold relative z-10">WhatsApp +971 55 474 0389</span>
                 </a>
               </div>
 
@@ -931,6 +941,16 @@ export default function HomeSections({
                       value={contactEmail}
                       onChange={(e) => setContactEmail(e.target.value)}
                       placeholder="douglas@sterlinggroup.com"
+                      className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-4 py-3 focus:outline-none"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block uppercase tracking-wider font-bold text-zinc-400 mb-2">Contact Number</label>
+                    <input
+                      type="tel"
+                      value={contactPhone}
+                      onChange={(e) => setContactPhone(e.target.value)}
+                      placeholder="+971 50 123 4567"
                       className="w-full bg-[#FAF8F4] border border-zinc-200 focus:border-gold px-4 py-3 focus:outline-none"
                     />
                   </div>
@@ -980,7 +1000,7 @@ export default function HomeSections({
                 Legacy of Trust. Future of Luxury.
               </span>
               <div className="flex gap-3 pt-4">
-                <a href="https://wa.me/971556656007" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all duration-300" aria-label="WhatsApp">
+                <a href="https://wa.me/971554740389" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all duration-300" aria-label="WhatsApp">
                   <MessageSquare className="w-3.5 h-3.5" />
                 </a>
                 <a href="#" className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-gold hover:text-zinc-950 hover:border-gold transition-all duration-300">
@@ -1025,14 +1045,21 @@ export default function HomeSections({
               <p className="text-[10px] text-zinc-500 leading-relaxed font-sans">
                 Register for private off-market allocations, pre-launch price locks, and legal updates.
               </p>
+              {ledgerSuccess && (
+                <div className="text-[10px] text-emerald-500 font-bold bg-emerald-500/10 p-2 rounded">
+                  {ledgerSuccess}
+                </div>
+              )}
               <div className="flex bg-zinc-900 border border-zinc-800 focus-within:border-gold p-1">
                 <input
                   type="email"
                   placeholder="advisor@email.com"
+                  value={ledgerEmail}
+                  onChange={(e) => setLedgerEmail(e.target.value)}
                   className="bg-transparent border-none text-[11px] px-3 py-1.5 focus:outline-none text-white flex-1"
                 />
                 <button
-                  onClick={() => alert("Subscribed! Your email has been added to our off-market mailing desk.")}
+                  onClick={handleLedgerSubmit}
                   className="bg-gold hover:bg-gold-deep text-zinc-950 hover:text-white text-[9px] uppercase tracking-widest font-bold font-sans px-3 py-1 transition-all"
                 >
                   Join

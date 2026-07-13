@@ -13,7 +13,7 @@ export default function About() {
       "image": "https://goldenlegacy.ae/logo.png",
       "@id": "https://goldenlegacy.ae",
       "url": "https://goldenlegacy.ae",
-      "telephone": "+971556656007",
+      "telephone": "+971554740389",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Sheikh Zayed Road",
@@ -41,13 +41,13 @@ export default function About() {
   return (
     <div className="bg-[#FAF8F4] pt-32 pb-20 px-6 font-sans text-zinc-900 min-h-screen">
       <Helmet>
-        <title>About Us | Golden Legacy Real Estate Dubai | Top Property Consultants</title>
-        <meta name="description" content="Golden Legacy Real Estate is Dubai's premier luxury property consultancy. We specialize in off-plan investments, Golden Visa applications, and high-ROI beachfront mansions." />
-        <meta name="keywords" content="Dubai real estate, luxury property Dubai, Golden Legacy Real Estate, buy property Dubai, Dubai off-plan investments, Golden Visa Dubai, UAE property consultants" />
+        <title>About Dubai's Leading Real Estate Company | Golden Legacy</title>
+        <meta name="description" content="Golden Legacy Real Estate is Dubai's premier luxury real estate agency. We specialize in off-plan investments, Dubai property investments, Golden Visa applications, and high-ROI beachfront mansions." />
+        <meta name="keywords" content="Dubai real estate company, luxury property Dubai, Golden Legacy Real Estate, buy property Dubai, Dubai off-plan investments, Golden Visa Dubai, UAE property consultants" />
         
         {/* AEO & LLM Context Meta */}
         <meta name="author" content="Golden Legacy Real Estate" />
-        <meta name="publisher" content="Golden Legacy Real Estate" />
+        <meta name="publisher" content="Golden Legacy Real Estate Brokerage" />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
       </Helmet>
 
@@ -60,7 +60,7 @@ export default function About() {
             Pioneering Luxury Real Estate in Dubai
           </h1>
           <p className="text-zinc-600 leading-relaxed max-w-3xl mx-auto text-lg">
-            Golden Legacy Real Estate is a premier advisory firm headquartered in Dubai. We specialize in ultra-luxury properties, institutional off-plan investments, and securing Golden Visas for high-net-worth foreign investors.
+            Golden Legacy Real Estate is a premier Dubai real estate company and advisory firm. We specialize in ultra-luxury properties, institutional off-plan investments, and securing Golden Visas for high-net-worth foreign investors looking to buy property in Dubai.
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export default function About() {
             </div>
             <h2 className="font-display text-2xl font-bold mb-4">Our Mission</h2>
             <p className="text-zinc-600 leading-relaxed">
-              To curate Dubai's most exclusive real estate portfolio, providing seamless, secure, and highly profitable investment avenues for global buyers. We demystify the UAE property market through data-driven insights and VIP concierge services.
+              To curate Dubai's most exclusive real estate portfolio, providing seamless, secure, and highly profitable investment avenues for global buyers. As a trusted real estate agency in Dubai, we demystify the UAE property market through data-driven insights and VIP concierge services.
             </p>
           </div>
           
@@ -123,7 +123,7 @@ export default function About() {
           <div className="space-y-8">
             <div className="border-b border-zinc-800 pb-8">
               <h3 className="font-display text-xl font-bold mb-3">What is Golden Legacy Real Estate?</h3>
-              <p className="text-zinc-400 leading-relaxed">Golden Legacy Real Estate is a tier-1 property brokerage and investment advisory firm in Dubai, UAE. We specialize in luxury waterfront mansions, high-yield off-plan apartments, and the UAE Golden Visa processing.</p>
+              <p className="text-zinc-400 leading-relaxed">Golden Legacy Real Estate is a leading property brokerage and real estate company in Dubai, UAE. We specialize in luxury waterfront mansions, high-yield off-plan apartments, and the UAE Golden Visa processing.</p>
             </div>
             <div className="border-b border-zinc-800 pb-8">
               <h3 className="font-display text-xl font-bold mb-3">Are real estate investments in Dubai tax-free?</h3>

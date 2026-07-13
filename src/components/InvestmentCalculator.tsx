@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Calculator, DollarSign, Award, HelpCircle, ArrowRight, ShieldCheck, CheckCircle } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Helmet } from 'react-helmet-async';
 
 export default function InvestmentCalculator() {
   const [price, setPrice] = useState<number>(12500000);
@@ -131,6 +132,11 @@ export default function InvestmentCalculator() {
 
   return (
     <div id="calculator-section" className="bg-[#FAF8F4] py-20 px-6 scroll-mt-20">
+      <Helmet>
+        <title>Dubai Real Estate Investment Calculator | Golden Legacy</title>
+        <meta name="description" content="Calculate your ROI on Dubai property investments with Golden Legacy Real Estate, a leading Dubai real estate company. Project yields and capital appreciation." />
+        <meta name="keywords" content="Dubai real estate company, Dubai property investment, ROI calculator Dubai, buy property Dubai, real estate Dubai, property calculator UAE" />
+      </Helmet>
       <div className="max-w-7xl mx-auto">
         {/* SECTION HEADER */}
         <div className="text-center max-w-3xl mx-auto mb-16">

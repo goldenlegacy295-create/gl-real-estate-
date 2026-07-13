@@ -138,15 +138,17 @@ export default function Header({ onOpenConsultation }: HeaderProps) {
                     {isActive && item.hasMegaMenu && (
                       <div className="absolute top-[calc(100%+16px)] left-1/2 -translate-x-1/2 w-max min-w-[220px] bg-[rgba(20,20,20,0.95)] backdrop-blur-[24px] backdrop-saturate-[180%] border border-[rgba(255,255,255,0.1)] shadow-[0_20px_50px_rgba(0,0,0,0.3)] rounded-2xl overflow-hidden py-5 px-6 animate-in fade-in slide-in-from-top-4 duration-300 pointer-events-auto">
                         
-                        {item.id === 'buy' && (
-                          <div className="flex flex-col gap-3">
-                            {BUY_MENU.map(link => <button key={link} onClick={() => handleNavClick(`/search?type=buy&cat=${link}`)} className="text-left text-zinc-300 hover:text-white text-[14px] font-medium transition-colors hover:translate-x-1 duration-300">{link}</button>)}
-                          </div>
-                        )}
-
-                        {item.id === 'rent' && (
-                          <div className="flex flex-col gap-3">
-                            {RENT_MENU.map(link => <button key={link} onClick={() => handleNavClick(`/search?type=rent`)} className="text-left text-zinc-300 hover:text-white text-[14px] font-medium transition-colors hover:translate-x-1 duration-300">{link}</button>)}
+                        {item.id === 'buy-rent' && (
+                          <div className="flex gap-8">
+                            <div className="flex flex-col gap-3">
+                              <h4 className="text-[11px] uppercase tracking-wider text-zinc-500 font-bold mb-1">Buy</h4>
+                              {BUY_MENU.map(link => <button key={link} onClick={() => handleNavClick(`/search?type=buy&cat=${link}`)} className="text-left text-zinc-300 hover:text-white text-[14px] font-medium transition-colors hover:translate-x-1 duration-300 whitespace-nowrap">{link}</button>)}
+                            </div>
+                            <div className="w-[1px] bg-white/10" />
+                            <div className="flex flex-col gap-3">
+                              <h4 className="text-[11px] uppercase tracking-wider text-zinc-500 font-bold mb-1">Rent</h4>
+                              {RENT_MENU.map(link => <button key={link} onClick={() => handleNavClick(`/search?type=rent&cat=${link}`)} className="text-left text-zinc-300 hover:text-white text-[14px] font-medium transition-colors hover:translate-x-1 duration-300 whitespace-nowrap">{link}</button>)}
+                            </div>
                           </div>
                         )}
 
@@ -178,9 +180,9 @@ export default function Header({ onOpenConsultation }: HeaderProps) {
           <div className="flex items-center shrink-0 justify-self-end">
             
             {/* Phone Number */}
-            <a href="https://wa.me/971556656007" target="_blank" rel="noopener noreferrer" className="flex items-center gap-[4px] text-white font-[600] text-[13px] whitespace-nowrap mr-[12px]">
+            <a href="https://wa.me/971554740389" target="_blank" rel="noopener noreferrer" className="flex items-center gap-[4px] text-white font-[600] text-[13px] whitespace-nowrap mr-[12px]">
               <img src={whatsappLogo} alt="WhatsApp" className="w-[14px] h-[14px] object-contain" />
-              +971 55 665 6007
+              +971 55 474 0389
             </a>
 
             {/* CTA */}
@@ -310,8 +312,8 @@ export default function Header({ onOpenConsultation }: HeaderProps) {
               Book Consultation
             </button>
             <div className="flex gap-4">
-              <a href="tel:+971556656007" className="flex-1 bg-white/5 text-white py-3.5 rounded-full flex items-center justify-center gap-2 text-sm font-bold border border-white/10"><Phone className="w-4 h-4"/> Call</a>
-              <a href="https://wa.me/971556656007" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 py-3.5 rounded-full flex items-center justify-center gap-2 text-sm font-bold"><img src={whatsappLogo} alt="WhatsApp" className="w-4 h-4 object-contain" /> Chat</a>
+              <a href="tel:+971554740389" className="flex-1 bg-white/5 text-white py-3.5 rounded-full flex items-center justify-center gap-2 text-sm font-bold border border-white/10"><Phone className="w-4 h-4"/> Call</a>
+              <a href="https://wa.me/971554740389" target="_blank" rel="noopener noreferrer" className="flex-1 bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 py-3.5 rounded-full flex items-center justify-center gap-2 text-sm font-bold"><img src={whatsappLogo} alt="WhatsApp" className="w-4 h-4 object-contain" /> Chat</a>
             </div>
           </div>
         </div>

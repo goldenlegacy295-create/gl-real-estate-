@@ -83,29 +83,41 @@ export function generateFAQSchema(faqs: { question: string; answer: string }[]) 
 export function generateGlobalSchema() {
   return JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'RealEstateAgent',
+    '@type': ['RealEstateAgent', 'LocalBusiness', 'Organization'],
     name: 'Golden Legacy Real Estate',
+    legalName: 'Golden Legacy Real Estate Brokerage',
+    description: 'Golden Legacy Real Estate is a leading property investment and real estate agency in Dubai, specializing in luxury apartments, off-plan projects, and waterfront properties. We guide international investors and local buyers through Dubai real estate investments, providing expert advice on the Golden Visa, high ROI properties, and premier communities like Dubai Marina, Downtown Dubai, and Palm Jumeirah.',
     image: `${SITE_URL}/assets/photos/logo.png`,
     '@id': `${SITE_URL}`,
     url: `${SITE_URL}`,
-    telephone: '+971556656007',
+    telephone: '+971554740389',
+    email: 'info@goldenlegacy.ae',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Downtown Dubai',
+      streetAddress: 'Business Bay',
       addressLocality: 'Dubai',
+      addressRegion: 'Dubai',
+      postalCode: '00000',
       addressCountry: 'AE'
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: 25.1972,
-      longitude: 55.2744
+      latitude: 25.1857,
+      longitude: 55.2721
     },
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
       opens: '09:00',
       closes: '18:00'
-    }
+    },
+    sameAs: [
+      'https://www.instagram.com/goldenlegacy',
+      'https://www.linkedin.com/company/goldenlegacy',
+      'https://twitter.com/goldenlegacy',
+      'https://www.facebook.com/goldenlegacy'
+    ],
+    priceRange: '$$$$'
   });
 }
 

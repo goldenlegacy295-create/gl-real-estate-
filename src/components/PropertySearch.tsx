@@ -4,6 +4,7 @@ import { useCurrency } from '../contexts/CurrencyContext';
 import { Property } from '../types';
 import { PropertyImageSlider } from './PropertyImageSlider';
 import whatsappLogo from '../../assets/logos/whatsapp logo.png';
+import { Helmet } from 'react-helmet-async';
 
 interface PropertySearchProps {
   properties: Property[];
@@ -105,6 +106,11 @@ export default function PropertySearch({ properties, onSelectProperty, wishlist,
 
   return (
     <div className="bg-white min-h-screen pt-28 pb-24 px-6">
+      <Helmet>
+        <title>Search Luxury Properties in Dubai | Golden Legacy</title>
+        <meta name="description" content="Explore Golden Legacy's curated inventory of ultra-luxury mansions, penthouses, and high-ROI off-plan investments from top Dubai real estate companies." />
+        <meta name="keywords" content="Dubai luxury property search, buy property Dubai, real estate Dubai, off-plan properties Dubai, Dubai real estate company, villas in Dubai" />
+      </Helmet>
       <div className="max-w-7xl mx-auto">
         
         {/* TITLE BLOCK */}

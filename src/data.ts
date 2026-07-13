@@ -8,7 +8,7 @@ export const DEVELOPERS: Developer[] = [
     seoTitle: 'EMAAR Properties | Dubai Real Estate',
     seoDescription: 'Explore signature projects and investment opportunities by EMAAR Properties.',
     logo: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=150',
-    description: 'Dubai\'s premier developer, responsible for iconic landmarks including Burj Khalifa and Dubai Mall. Known for master-planned community excellence and pristine quality standards.',
+    description: 'A key partner of Golden Legacy Real Estate, EMAAR is Dubai\'s premier developer, responsible for iconic landmarks including Burj Khalifa and Dubai Mall. Known for master-planned community excellence and pristine quality standards in Dubai luxury real estate.',
     founded: 1997,
     yearsInBusiness: 29,
     completedProjects: 105,
@@ -22,7 +22,7 @@ export const DEVELOPERS: Developer[] = [
     seoTitle: 'DAMAC Properties | Dubai Real Estate',
     seoDescription: 'Explore signature projects and investment opportunities by DAMAC Properties.',
     logo: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?q=80&w=150',
-    description: 'Provider of luxury residential, commercial and leisure properties across the Middle East. Famous for branded collaborations with Cavalli, Fendi, and Paramount.',
+    description: 'Provider of luxury residential, commercial and leisure properties across the Middle East. Partnering with Golden Legacy Real Estate, DAMAC is famous for branded collaborations with Cavalli, Fendi, and Paramount.',
     founded: 2002,
     yearsInBusiness: 24,
     completedProjects: 82,
@@ -36,7 +36,7 @@ export const DEVELOPERS: Developer[] = [
     seoTitle: 'Sobha Realty | Dubai Real Estate',
     seoDescription: 'Explore signature projects and investment opportunities by Sobha Realty.',
     logo: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=150',
-    description: 'An international luxury developer committed to redefining the art of living with sustainable, meticulously designed and backward-integrated signature communities.',
+    description: 'An international luxury developer committed to redefining the art of living with sustainable, meticulously designed and backward-integrated signature communities. Highly recommended by top Dubai real estate companies.',
     founded: 1976,
     yearsInBusiness: 50,
     completedProjects: 140,
@@ -50,7 +50,7 @@ export const DEVELOPERS: Developer[] = [
     seoTitle: 'Danube Properties | Dubai Real Estate',
     seoDescription: 'Explore signature projects and investment opportunities by Danube Properties.',
     logo: 'https://images.unsplash.com/photo-1504297342945-13c66006506e?q=80&w=150',
-    description: 'Renowned for bringing affordable luxury to Dubai. Famous for their customer-centric 1% payment plans and high-ROI premium residential townhouses and apartments.',
+    description: 'Renowned for bringing affordable luxury to Dubai real estate investors. Famous for their customer-centric 1% payment plans and high-ROI premium residential townhouses and apartments.',
     founded: 1993,
     yearsInBusiness: 33,
     completedProjects: 45,
@@ -109,7 +109,7 @@ export const COMMUNITIES: Community[] = [
     seoTitle: 'Palm Jumeirah | Dubai Real Estate',
     seoDescription: 'Explore signature projects and investment opportunities by Palm Jumeirah.',
     image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1200',
-    description: 'The world\'s largest man-made island, offering ultimate beachfront luxury, signature high-end villas, celebrity penthouses, and 5-star beachfront resorts.',
+    description: 'The world\'s largest man-made island, offering ultimate beachfront luxury properties in Dubai, signature high-end villas, celebrity penthouses, and 5-star beachfront resorts. Ideal for luxury real estate Dubai buyers.',
     avgRoi: 7.2,
     avgPriceSqft: 3400,
     notableFeatures: ['Beachfront Villas', 'Private Beach Access', 'The Pointe', 'Ultra Luxury Living']
@@ -121,7 +121,7 @@ export const COMMUNITIES: Community[] = [
     seoTitle: 'Downtown Dubai | Dubai Real Estate',
     seoDescription: 'Explore signature projects and investment opportunities by Downtown Dubai.',
     image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1200',
-    description: 'The "Centre of Now", hosting the iconic Burj Khalifa, The Dubai Fountain, and Dubai Mall. Premium high-rise penthouse living with stunning skyline views.',
+    description: 'The "Centre of Now", hosting the iconic Burj Khalifa, The Dubai Fountain, and Dubai Mall. Premium high-rise penthouse living with stunning skyline views for luxury property Dubai seekers.',
     avgRoi: 6.8,
     avgPriceSqft: 2800,
     notableFeatures: ['Burj Khalifa Views', 'Dubai Mall Access', 'Opera District', 'Cosmopolitan Vibe']
@@ -133,7 +133,7 @@ export const COMMUNITIES: Community[] = [
     seoTitle: 'Dubai Hills Estate | Dubai Real Estate',
     seoDescription: 'Explore signature projects and investment opportunities by Dubai Hills Estate.',
     image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200',
-    description: 'A serene master community centered around an 18-hole championship golf course. Vast parks, elegant family villas, and modern low-rise apartments.',
+    description: 'A serene master community centered around an 18-hole championship golf course. Vast parks, elegant family villas, and modern low-rise apartments ideal for buy property Dubai investments.',
     avgRoi: 7.5,
     avgPriceSqft: 1900,
     notableFeatures: ['Championship Golf Course', 'Dubai Hills Park', 'Dubai Hills Mall', 'Family-Friendly']
@@ -145,7 +145,7 @@ export const COMMUNITIES: Community[] = [
     seoTitle: 'Dubai Marina | Dubai Real Estate',
     seoDescription: 'Explore signature projects and investment opportunities by Dubai Marina.',
     image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1200',
-    description: 'A breathtaking waterfront community lined with glittering supertall skyscrapers, high-end yachts, waterfront dining promenades, and beach proximity.',
+    description: 'A breathtaking waterfront community lined with glittering supertall skyscrapers, high-end yachts, waterfront dining promenades, and beach proximity. A staple in the Dubai real estate market.',
     avgRoi: 7.9,
     avgPriceSqft: 1850,
     notableFeatures: ['Yacht Club', 'Marina Walk', 'Beach Proximity', 'Vibrant Nightlife']
@@ -265,7 +265,7 @@ export const PROPERTIES: Property[] = [
       '/photos/inventory/greenz%20by%20danube/greenz%20by%20danube%20(16).png',
       '/photos/inventory/greenz%20by%20danube/greenz%20by%20danube%20first%201.png'
     ],
-    description: 'Greenz by Danube is an exquisite eco-friendly residential townhouse collection located in Al Furjan, designed to offer high-yielding, premium suburban living. Features Danube\'s iconic 1% monthly payment plan, high-end specifications, sustainable solar energy networks, and beautiful community integration.',
+    description: 'Greenz by Danube is an exquisite eco-friendly residential townhouse collection located in Al Furjan, designed to offer high-yielding, premium suburban living. Features Danube\'s iconic 1% monthly payment plan, making it a top choice for off plan property Dubai investors.',
     roi: 8.5,
     completionYear: 2027,
     paymentPlan: '1% Monthly Payment Plan',
@@ -315,7 +315,7 @@ export const PROPERTIES: Property[] = [
       '/photos/inventory/Hayyan%20Villas%20&%20Townhouses/Hayyan%20Villas%20&%20Townhouses%20(5).png',
       '/photos/inventory/Hayyan%20Villas%20&%20Townhouses/Hayyan%20Villas%20&%20Townhouses%20(6).png'
     ],
-    description: 'Hayyan Villas & Townhouses is Sharjah\'s preeminent nature-inspired community. Designed around modern sustainable living and serene nature, it hosts the largest swimmable lagoon in Sharjah, a massive indoor park, organic family gardens, and maximum lifestyle privacy.',
+    description: 'Hayyan Villas & Townhouses is Sharjah\'s preeminent nature-inspired community. Designed around modern sustainable living and serene nature, it hosts the largest swimmable lagoon in Sharjah. Perfect for Golden Visa UAE property investors seeking privacy.',
     roi: 7.8,
     completionYear: 2028,
     paymentPlan: '60/40 Construction Schedule',
@@ -898,8 +898,8 @@ export const AGENTS: Agent[] = [
     experience: 18,
     propertiesSold: 420,
     email: 'arvind@goldenlegacy.ae',
-    phone: '+971 55 665 6007',
-    whatsApp: 'https://wa.me/971556656007'
+    phone: '+971 55 474 0389',
+    whatsApp: 'https://wa.me/971554740389'
   },
   {
     id: 'agent-2',
@@ -913,8 +913,8 @@ export const AGENTS: Agent[] = [
     experience: 12,
     propertiesSold: 280,
     email: 'elena@goldenlegacy.ae',
-    phone: '+971 55 665 6007',
-    whatsApp: 'https://wa.me/971556656007'                                      
+    phone: '+971 55 474 0389',
+    whatsApp: 'https://wa.me/971554740389'                                      
   },
   {                 
     id: 'agent-3',
@@ -928,8 +928,8 @@ export const AGENTS: Agent[] = [
     experience: 10,
     propertiesSold: 195,
     email: 'oshhavarora@goldenlegacy.ae',
-    phone: '+971 55 665 6007',
-    whatsApp: 'https://wa.me/971556656007'
+    phone: '+971 55 474 0389',
+    whatsApp: 'https://wa.me/971554740389'
   }
 ];
 

@@ -11,6 +11,7 @@ import { generatePropertySchema, injectSchema } from '../utils/seo';
 import { Property } from '../types';
 import { AGENTS, PROPERTIES } from '../data';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 interface PropertyDetailProps {
   property: Property;
@@ -127,6 +128,11 @@ export default function PropertyDetail({ property, onBack, onToggleWishlist, wis
 
   return (
     <div className="bg-[#FAF8F4] min-h-screen pt-28 pb-24 font-sans relative">
+      <Helmet>
+        <title>{property.seoTitle || `${property.title} | Luxury Property Dubai`}</title>
+        <meta name="description" content={property.seoDescription || property.description.substring(0, 160)} />
+        <meta name="keywords" content={`Dubai real estate company, ${property.title}, buy property Dubai, ${property.community} real estate, luxury property Dubai`} />
+      </Helmet>
       
       {/* FULLSCREEN LIGHTBOX GALLERY */}
       {lightboxOpen && (
