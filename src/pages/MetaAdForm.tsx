@@ -97,8 +97,16 @@ export default function MetaAdForm() {
         
         {/* Minimalist Header */}
         <header className="px-6 py-5 border-b border-zinc-100 flex items-center justify-between sticky top-0 bg-white/90 backdrop-blur-md z-10">
-          <div className="flex items-center">
+          <div className="flex items-center gap-3">
             <img src="/photos/logo.png" alt="Golden Legacy" className="h-8 object-contain" />
+            <div className="flex flex-col justify-center">
+              <h2 className="text-[18px] font-bold text-zinc-900 leading-none whitespace-nowrap" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
+                Golden Legacy
+              </h2>
+              <h3 className="text-[11px] italic font-medium leading-none text-[#C9A227] whitespace-nowrap mt-1" style={{ fontFamily: '"Cormorant Garamond", serif' }}>
+                Real Estate
+              </h3>
+            </div>
           </div>
           <Link to="/" className="text-zinc-400 hover:text-[#C9A227] transition-colors" title="Back to Home">
             <Home className="w-5 h-5" />
@@ -117,7 +125,7 @@ export default function MetaAdForm() {
               Book Your Private Property Consultation
             </h1>
             <p className="text-sm text-zinc-500 leading-relaxed max-w-sm mx-auto font-light">
-              Discover exclusive waterfront properties, luxury apartments, villas, and high-return investment opportunities in Dubai. Fill in your details and our property specialist will contact you shortly.
+              Discover exclusive waterfront properties, luxury apartments, villas, and high-return investment opportunities with Golden Legacy Real Estate Dubai. Fill in your details and our property specialist will contact you shortly.
             </p>
           </div>
 
