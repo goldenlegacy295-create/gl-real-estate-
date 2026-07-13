@@ -210,8 +210,7 @@ async function startServer() {
     }
   });
 
-  const portToUse = process.env.PORT ? parseInt(process.env.PORT, 10) : 0;
-  const server = app.listen(portToUse, "0.0.0.0", () => {
+  const server = app.listen(PORT, "0.0.0.0", () => {
     const address = server.address() as any;
     console.log(`Golden Legacy server online on http://localhost:${address.port}`);
   });

@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEvent } from 'react';
-import { Routes, Route, useParams, useNavigate, Navigate } from 'react-router-dom';
+import { Routes, Route, useParams, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import HomeSections from './components/HomeSections';
 import PropertySearch from './components/PropertySearch';
@@ -7,6 +7,7 @@ import PropertyDetail from './components/PropertyDetail';
 import InvestmentCalculator from './components/InvestmentCalculator';
 import GoldenVisaPortal from './components/GoldenVisaPortal';
 import AdminDashboard from './components/AdminDashboard';
+import MetaAdForm from './pages/MetaAdForm';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
 import { gsap } from 'gsap';
@@ -43,6 +44,9 @@ function PropertyDetailWrapper({ properties, wishlist, onToggleWishlist }: { pro
 }
 
 export default function App() {
+  const location = useLocation();
+  const isMetaAdForm = location.pathname === '/form';
+
   const [currentView, setView] = useState<string>('home');
   const [searchPreset, setSearchPreset] = useState<'all' | 'ready' | 'off-plan' | 'commercial'>('all');
   const [searchTermFilter, setSearchTermFilter] = useState('');
@@ -245,9 +249,11 @@ export default function App() {
     <div className="bg-[#FAF8F4] font-sans text-zinc-900 min-h-screen relative selection:bg-gold/30 selection:text-zinc-950">
       
       {/* GLOBAL HEADER HEADER */}
-      <Header
-        onOpenConsultation={() => setConsultationOpen(true)}
-      />
+      {!isMetaAdForm && (
+        <Header
+          onOpenConsultation={() => setConsultationOpen(true)}
+        />
+      )}
       {/* DYNAMIC SCREEN ROUTING */}
       <main className="transition-all duration-500 ease-in-out">
         <Routes>
@@ -267,6 +273,8 @@ export default function App() {
               }}
             />
           } />
+
+          <Route path="/form" element={<MetaAdForm />} />
 
           <Route path="/search" element={
             <PropertySearch
@@ -465,35 +473,37 @@ export default function App() {
       )}
 
       {/* GLOBAL WHATSAPP FLOATING BUTTON */}
-      <div className="fixed bottom-8 right-4 lg:bottom-12 lg:right-6 z-[90] flex flex-col items-end gap-3 pointer-events-none">
-        
-        {/* Hello Texting Bubble */}
-        <a 
-          href="https://wa.me/971556656007"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-white text-zinc-900 text-[13px] font-[600] px-4 py-2.5 rounded-[18px] rounded-br-[4px] shadow-[0_10px_25px_rgba(0,0,0,0.15)] pointer-events-auto hover:-translate-y-0.5 transition-transform origin-bottom-right animate-in fade-in zoom-in slide-in-from-bottom-4 duration-500 fill-mode-both"
-          style={{ animationDelay: '1s', animationFillMode: 'both' }}
-        >
-          <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 bg-[#25D366] rounded-full animate-pulse"></span>
-            Hello 👋
-          </span>
-        </a>
+      {!isMetaAdForm && (
+        <div className="fixed bottom-8 right-4 lg:bottom-12 lg:right-6 z-[90] flex flex-col items-end gap-3 pointer-events-none">
+          
+          {/* Hello Texting Bubble */}
+          <a 
+            href="https://wa.me/971556656007"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-white text-zinc-900 text-[13px] font-[600] px-4 py-2.5 rounded-[18px] rounded-br-[4px] shadow-[0_10px_25px_rgba(0,0,0,0.15)] pointer-events-auto hover:-translate-y-0.5 transition-transform origin-bottom-right animate-in fade-in zoom-in slide-in-from-bottom-4 duration-500 fill-mode-both"
+            style={{ animationDelay: '1s', animationFillMode: 'both' }}
+          >
+            <span className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 bg-[#25D366] rounded-full animate-pulse"></span>
+              Hello 👋
+            </span>
+          </a>
 
-        {/* WhatsApp Icon Button */}
-        <a
-          href="https://wa.me/971556656007"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-[#25D366] text-white p-4 rounded-full shadow-[0_0_20px_rgba(37,211,102,0.5)] hover:shadow-[0_0_30px_rgba(37,211,102,0.8)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center group pointer-events-auto"
-        >
-          <img src={whatsappLogo} alt="WhatsApp" className="w-7 h-7 object-contain animate-pulse group-hover:animate-none" />
-          <span className="absolute right-full mr-4 bg-zinc-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-            Chat with us
-          </span>
-        </a>
-      </div>
+          {/* WhatsApp Icon Button */}
+          <a
+            href="https://wa.me/971556656007"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#25D366] text-white p-4 rounded-full shadow-[0_0_20px_rgba(37,211,102,0.5)] hover:shadow-[0_0_30px_rgba(37,211,102,0.8)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center group pointer-events-auto"
+          >
+            <img src={whatsappLogo} alt="WhatsApp" className="w-7 h-7 object-contain animate-pulse group-hover:animate-none" />
+            <span className="absolute right-full mr-4 bg-zinc-900 text-white text-xs font-bold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+              Chat with us
+            </span>
+          </a>
+        </div>
+      )}
 
     </div>
   );
