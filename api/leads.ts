@@ -36,40 +36,41 @@ export default async function handler(req: any, res: any) {
     };
 
     // 1. Google Sheets Integration via Apps Script
-    const { APPS_SCRIPT_WEB_APP_URL } = process.env;
-    if (APPS_SCRIPT_WEB_APP_URL) {
-      try {
-        const response = await fetch(APPS_SCRIPT_WEB_APP_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newLead)
-        });
-        
-        if (response.ok) {
-          console.log(`Lead ${newLead.id} successfully added to Google Sheets via Apps Script.`);
-        } else {
-          console.error("Failed to add lead to Google Sheets. Status:", response.status);
-        }
-      } catch (sheetErr) {
-        console.error("Error connecting to Apps Script:", sheetErr);
+    const APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwBfHKwi03lnhYMpNdVqaZDrPo3iS6bukRQyqyJFxRVYmm3XHaNm6a_Kaq7jk0gphbD/exec';
+    
+    try {
+      const response = await fetch(APPS_SCRIPT_WEB_APP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newLead)
+      });
+      
+      if (response.ok) {
+        console.log(`Lead ${newLead.id} successfully added to Google Sheets via Apps Script.`);
+      } else {
+        console.error("Failed to add lead to Google Sheets. Status:", response.status);
       }
-    } else {
-      console.warn("Apps Script Web App URL is missing. Skipping Sheets integration.");
+    } catch (sheetErr) {
+      console.error("Error connecting to Apps Script:", sheetErr);
     }
 
     // 2. Send Email Notification
-    const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, ADMIN_EMAIL } = process.env;
-    if (SMTP_HOST && SMTP_USER && SMTP_PASS && ADMIN_EMAIL) {
-      try {
-        const transporter = nodemailer.createTransport({
-          host: SMTP_HOST,
-          port: parseInt(SMTP_PORT || "465", 10),
-          secure: parseInt(SMTP_PORT || "465", 10) === 465,
-          auth: {
-            user: SMTP_USER,
-            pass: SMTP_PASS,
-          },
-        });
+    const SMTP_HOST = 'smtp.gmail.com';
+    const SMTP_PORT = 465;
+    const SMTP_USER = 'leadsgoldenlegacy@gmail.com';
+    const SMTP_PASS = 'unkbgqwvrwtfgkdu';
+    const ADMIN_EMAIL = 'leadsgoldenlegacy@gmail.com';
+
+    try {
+      const transporter = nodemailer.createTransport({
+        host: SMTP_HOST,
+        port: SMTP_PORT,
+        secure: true,
+        auth: {
+          user: SMTP_USER,
+          pass: SMTP_PASS,
+        },
+      });
 
         const mailOptions = {
           from: `"Golden Legacy Portal" <${SMTP_USER}>`,
