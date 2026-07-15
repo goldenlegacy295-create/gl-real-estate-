@@ -127,10 +127,10 @@ export default function MetaAdForm() {
               Exclusive Access
             </span>
             <h1 className="font-display text-2xl md:text-3xl font-light text-zinc-900 mb-4 leading-tight">
-              Book Your Private Property Consultation
+              Book Your Dubai Property Consultation
             </h1>
             <p className="text-sm text-zinc-500 leading-relaxed max-w-sm mx-auto font-light">
-              Discover exclusive waterfront properties, luxury apartments, villas, and high-return investment opportunities with Golden Legacy Real Estate Dubai. Fill in your details and our property specialist will contact you shortly.
+              Discover premium waterfront apartments, luxury villas, townhouses, and exclusive Dubai properties with Golden Legacy Real Estate. Our experienced property consultants will help you find the right property based on your lifestyle and requirements. Fill in your details and our property specialist will contact you shortly.
             </p>
           </div>
 
@@ -145,7 +145,7 @@ export default function MetaAdForm() {
                 </div>
                 <h3 className="font-display text-xl text-zinc-900 mb-2">Thank you! Your enquiry has been received.</h3>
                 <p className="text-sm text-zinc-500 leading-relaxed">
-                  One of our property consultants will contact you shortly to discuss your investment goals.
+                  One of our property consultants will contact you shortly to discuss your property requirements.
                 </p>
               </div>
             ) : (
@@ -203,7 +203,7 @@ export default function MetaAdForm() {
                     rows={3}
                     value={clientRequirements}
                     onChange={(e) => setClientRequirements(e.target.value)}
-                    placeholder="I'm interested in a waterfront apartment, villa, off-plan investment, or luxury residence."
+                    placeholder="I'm interested in a waterfront apartment, villa, townhouse, penthouse, or luxury residence."
                     className="w-full py-4 px-4 bg-[#FAF8F4] border border-zinc-200 focus:border-[#C9A227] rounded-xl focus:outline-none focus:ring-1 focus:ring-[#C9A227] transition-all text-[15px] resize-none"
                   ></textarea>
                 </div>
