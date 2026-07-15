@@ -48,15 +48,20 @@ export default function MetaAdForm() {
     
     setIsSubmitting(true);
 
-    const formData = new FormData();
-    formData.append('name', clientName);
-    formData.append('email', clientEmail);
-    formData.append('message', `Phone: ${clientPhone}\nRequirements: ${clientRequirements}\nSource: lead from meta ad`);
+    const payload = {
+      name: clientName,
+      email: clientEmail,
+      phone: clientPhone,
+      type: "Meta Ad Lead",
+      message: `Requirements: ${clientRequirements}\nSource: lead from meta ad`
+    };
 
-    fetch('https://script.google.com/macros/s/AKfycbzsCadgOlgArAZxX4Z3hqxe7_VFKZDbFHTFiWkbCa6GAKwRNHx7Vv_3ZUfVUbhFO1gmNQ/exec', {
+    fetch('/api/leads', {
       method: 'POST',
-      body: formData,
-      mode: 'no-cors'
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
     })
       .then(() => {
         setIsSuccess(true);

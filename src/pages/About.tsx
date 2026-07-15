@@ -34,7 +34,7 @@ export default function About() {
       ],
       "priceRange": "$$$$"
     };
-    injectSchema(aboutSchema, 'about-schema');
+    injectSchema(JSON.stringify(aboutSchema), 'about-schema');
     window.scrollTo(0, 0);
   }, []);
 

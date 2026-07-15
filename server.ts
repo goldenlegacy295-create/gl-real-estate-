@@ -2,13 +2,14 @@ import express from "express";
 import path from "path";
 import fs from "fs";
 import dotenv from "dotenv";
+import nodemailer from "nodemailer";
 import { PROPERTIES, DEVELOPERS, COMMUNITIES, BLOGS } from "./src/data";
 import { generatePropertySchema, generateDeveloperSchema, generateCommunitySchema, generateGlobalSchema } from "./src/utils/seo";
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = parseInt(process.env.PORT || "3001", 10);
 
 app.use(express.json());
 
@@ -80,6 +81,75 @@ app.post("/api/leads", (req, res) => {
   };
 
   leadsStore.unshift(newLead);
+  
+  // Process Google Sheets and Email notification asynchronously
+  (async () => {
+    try {
+      // 1. Google Sheets Integration via Apps Script
+      const { APPS_SCRIPT_WEB_APP_URL } = process.env;
+      if (APPS_SCRIPT_WEB_APP_URL) {
+        try {
+          const response = await fetch(APPS_SCRIPT_WEB_APP_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newLead)
+          });
+          
+          if (response.ok) {
+            console.log(`Lead ${newLead.id} successfully added to Google Sheets via Apps Script.`);
+          } else {
+            console.error("Failed to add lead to Google Sheets. Status:", response.status);
+          }
+        } catch (sheetErr) {
+          console.error("Error connecting to Apps Script:", sheetErr);
+        }
+      } else {
+        console.warn("Apps Script Web App URL is missing. Skipping Sheets integration.");
+      }
+
+      // 2. Send Email Notification
+      const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, ADMIN_EMAIL } = process.env;
+      if (SMTP_HOST && SMTP_USER && SMTP_PASS && ADMIN_EMAIL) {
+        const port = parseInt(SMTP_PORT || '587');
+        const transporter = nodemailer.createTransport({
+          host: SMTP_HOST,
+          port: port,
+          secure: port === 465, // true for 465, false for other ports
+          auth: {
+            user: SMTP_USER,
+            pass: SMTP_PASS,
+          },
+        });
+
+        const mailOptions = {
+          from: `"Golden Legacy System" <${SMTP_USER}>`,
+          to: ADMIN_EMAIL,
+          subject: `New Lead Received: ${newLead.name} - ${newLead.type}`,
+          text: `A new lead has been submitted on the Golden Legacy website.\n\nDetails:\nName: ${newLead.name}\nEmail: ${newLead.email}\nPhone: ${newLead.phone}\nType: ${newLead.type}\nProperty ID: ${newLead.propertyId || 'N/A'}\nDate: ${newLead.date}\n\nMessage:\n${newLead.message}\n\nPlease check your Google Sheet for more details.`,
+          html: `<h3>New Lead Received</h3>
+                 <p>A new lead has been submitted on the Golden Legacy website.</p>
+                 <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse;">
+                   <tr><th style="text-align: left; padding: 5px;">Name</th><td style="padding: 5px;">${newLead.name}</td></tr>
+                   <tr><th style="text-align: left; padding: 5px;">Email</th><td style="padding: 5px;">${newLead.email}</td></tr>
+                   <tr><th style="text-align: left; padding: 5px;">Phone</th><td style="padding: 5px;">${newLead.phone}</td></tr>
+                   <tr><th style="text-align: left; padding: 5px;">Type</th><td style="padding: 5px;">${newLead.type}</td></tr>
+                   <tr><th style="text-align: left; padding: 5px;">Property ID</th><td style="padding: 5px;">${newLead.propertyId || 'N/A'}</td></tr>
+                   <tr><th style="text-align: left; padding: 5px;">Date</th><td style="padding: 5px;">${newLead.date}</td></tr>
+                   <tr><th style="text-align: left; padding: 5px;">Message</th><td style="padding: 5px;">${newLead.message}</td></tr>
+                 </table>
+                 <p>Please check your <b>Google Sheet</b> for more details.</p>`
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log(`Email notification sent to ${ADMIN_EMAIL} for lead ${newLead.id}`);
+      } else {
+        console.warn("SMTP configuration is missing in environment variables. Email notification skipped.");
+      }
+    } catch (err) {
+      console.error("Error processing Google Sheets/Email logic:", err);
+    }
+  })();
+
   res.status(201).json({ success: true, lead: newLead });
 });
 
