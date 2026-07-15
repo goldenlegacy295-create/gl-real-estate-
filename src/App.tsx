@@ -218,15 +218,20 @@ export default function App() {
     e.preventDefault();
     if (!clientName || !clientEmail) return;
 
-    const formData = new FormData();
-    formData.append('name', clientName);
-    formData.append('email', clientEmail);
-    formData.append('message', `Phone: ${clientPhone}\nBudget: ${clientBudget}\nMessage: ${clientMessage}`);
+    const payload = {
+      name: clientName,
+      email: clientEmail,
+      phone: clientPhone,
+      type: "Consultation Request",
+      message: `Budget: ${clientBudget}\nMessage: ${clientMessage}`
+    };
 
-    fetch('https://script.google.com/macros/s/AKfycbzsCadgOlgArAZxX4Z3hqxe7_VFKZDbFHTFiWkbCa6GAKwRNHx7Vv_3ZUfVUbhFO1gmNQ/exec', {
+    fetch('/api/leads', {
       method: 'POST',
-      body: formData,
-      mode: 'no-cors'
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
     })
       .then(() => {
         setModalSuccess("Inquiry Registered! Elena Rostova from our private wealth desk is coordinating your call.");

@@ -112,16 +112,20 @@ export default function HomeSections({
     e.preventDefault();
     if (!contactName || !contactEmail) return;
 
-    // Use FormData for Google Apps Script doPost
-    const formData = new FormData();
-    formData.append('name', contactName);
-    formData.append('email', contactEmail);
-    formData.append('message', `Phone: ${contactPhone || 'Not provided'}\n\nMessage:\n${contactMessage || 'General private office request.'}`);
+    const payload = {
+      name: contactName,
+      email: contactEmail,
+      phone: contactPhone || 'Not provided',
+      type: "General Enquiry",
+      message: contactMessage || 'General private office request.'
+    };
 
-    fetch(GOOGLE_SCRIPT_WEB_APP_URL, {
+    fetch('/api/leads', {
       method: 'POST',
-      body: formData,
-      mode: 'no-cors' // Required for Google Apps Script without complex CORS setup
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
     })
       .then(() => {
         setContactSuccess("Your enquiry is securely registered. Our private desk will coordinate within 15 minutes.");
@@ -140,15 +144,20 @@ export default function HomeSections({
   const handleLedgerSubmit = () => {
     if (!ledgerEmail) return;
 
-    const formData = new FormData();
-    formData.append('name', 'VVIP Subscriber');
-    formData.append('email', ledgerEmail);
-    formData.append('message', 'VVIP Private Ledger registration request.');
+    const payload = {
+      name: 'VVIP Subscriber',
+      email: ledgerEmail,
+      message: 'VVIP Private Ledger registration request.',
+      type: 'VVIP Subscription'
+    };
 
-    fetch(GOOGLE_SCRIPT_WEB_APP_URL, {
+    // Submit lead via our backend API which handles both Email and Google Sheets
+    fetch('/api/leads', {
       method: 'POST',
-      body: formData,
-      mode: 'no-cors'
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
     })
       .then(() => {
         setLedgerSuccess("Subscribed! Your email has been added to our off-market mailing desk.");

@@ -97,9 +97,6 @@ ${newLead.message}
       } catch (emailErr) {
         console.error("Error sending email notification:", emailErr);
       }
-    } else {
-      console.warn("SMTP configuration is missing. Skipping email notification.");
-    }
 
     return res.status(201).json({ success: true, lead: newLead });
   } catch (error) {
