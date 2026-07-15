@@ -894,7 +894,7 @@ export default function HomeSections({
                   <br /><br />
                   Business Bay Dubai United Arab Emraites<br />
                   +971 55 474 0389 (Asset Line)<br />
-                  dxb.goldenlegacy@gmail.com
+                  leadsgoldenlegacy@gmail.com
                 </p>
               </div>
 
