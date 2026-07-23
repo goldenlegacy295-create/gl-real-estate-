@@ -10,6 +10,7 @@ import AdminDashboard from './components/AdminDashboard';
 import MetaAdForm from './pages/MetaAdForm';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -360,6 +361,9 @@ export default function App() {
 
           {/* About Page */}
           <Route path="/about" element={<About />} />
+
+          {/* Privacy Policy */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
           {/* 404 Wildcard */}
           <Route path="*" element={<NotFound />} />

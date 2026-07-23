@@ -1045,6 +1045,7 @@ export default function HomeSections({
                 <li><span className="block">Fiduciary Safety Escrow Policy</span></li>
                 <li><span className="block">Non-Disclosure NDAs Provided</span></li>
                 <li><span className="block">Compliant with Dubai Law No. 8</span></li>
+                <li><button onClick={() => navigate('/privacy-policy')} className="hover:text-gold transition-colors text-left">Privacy Policy</button></li>
               </ul>
             </div>
 
@@ -1094,14 +1095,8 @@ export default function HomeSections({
 
           </div>
 
-          {/* COPYRIGHT */}
           <div className="border-t border-zinc-900 pt-8 flex flex-col md:flex-row justify-between items-center text-[10px] text-zinc-600 font-sans font-medium">
             <span>© 2026 Golden Legacy Real Estate PJSC. All Sovereign Rights Reserved.</span>
-            <div className="flex gap-4 mt-4 md:mt-0">
-              <span className="hover:text-gold cursor-pointer transition-colors">NDA Policy</span>
-              <span className="hover:text-gold cursor-pointer transition-colors">Fiduciary Disclosures</span>
-              <span className="hover:text-gold cursor-pointer transition-colors">DLD Approved Registries</span>
-            </div>
           </div>
 
         </div>
