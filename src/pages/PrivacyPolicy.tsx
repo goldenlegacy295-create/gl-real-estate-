@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
               Downtown Dubai, Business Bay<br />
               Dubai, United Arab Emirates<br /><br />
               <strong>Email:</strong> <a href="mailto:leadsgoldenlegacy@gmail.com" className="text-gold hover:underline">leadsgoldenlegacy@gmail.com</a><br />
-              <strong>Phone:</strong> <a href="tel:+971554740389" className="text-gold hover:underline">+971 55 474 0389</a>
+              <strong>Phone:</strong> <a href="tel:+971556656007" className="text-gold hover:underline">+971 55 665 6007</a>
             </address>
           </section>
 

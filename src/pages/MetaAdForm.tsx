@@ -236,7 +236,7 @@ export default function MetaAdForm() {
             <p className="text-xs uppercase tracking-widest font-semibold text-zinc-400 mb-4">Need Immediate Assistance?</p>
             <div className="grid grid-cols-2 gap-3">
               <a
-                href="https://wa.me/971554740389?text=Hi, I would like to speak with a property consultant regarding my investment."
+                href="https://wa.me/971556656007?text=Hi, I would like to speak with a property consultant regarding my investment."
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => handleContactClick('whatsapp')}
@@ -246,7 +246,7 @@ export default function MetaAdForm() {
                 <span className="text-xs font-semibold">WhatsApp</span>
               </a>
               <a
-                href="tel:+971554740389"
+                href="tel:+971556656007"
                 onClick={() => handleContactClick('call')}
                 className="flex flex-col items-center justify-center gap-2 py-4 bg-zinc-100 text-zinc-700 rounded-xl hover:bg-zinc-200 transition-colors"
               >

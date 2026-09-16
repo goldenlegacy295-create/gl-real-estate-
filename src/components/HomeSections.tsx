@@ -902,7 +902,7 @@ export default function HomeSections({
                   We look forward to coordinating your investment portfolio. Drop by our Business Bay office or coordinate a virtual zoom with our asset consultants.
                   <br /><br />
                   Business Bay Dubai United Arab Emraites<br />
-                  +971 55 474 0389 (Asset Line)<br />
+                  +971 55 665 6007 (Asset Line)<br />
                   leadsgoldenlegacy@gmail.com
                 </p>
               </div>
@@ -916,10 +916,10 @@ export default function HomeSections({
                 <h3 className="font-display text-xl text-zinc-900 font-semibold flex items-center gap-2 m-0">
                   <Mail className="w-5 h-5 text-gold" /> Coordinate Your Portfolio
                 </h3>
-                <a href="https://wa.me/971554740389" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-full hover:bg-[#20bd5a] transition-all duration-300 shadow-[0_4px_14px_rgba(37,211,102,0.3)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.4)] hover:-translate-y-0.5 group relative overflow-hidden self-start">
+                <a href="https://wa.me/971556656007" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-full hover:bg-[#20bd5a] transition-all duration-300 shadow-[0_4px_14px_rgba(37,211,102,0.3)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.4)] hover:-translate-y-0.5 group relative overflow-hidden self-start">
                   <span className="absolute inset-0 bg-white/20 animate-pulse pointer-events-none"></span>
                   <img src={whatsappLogo} alt="WhatsApp" className="w-4 h-4 object-contain relative z-10" />
-                  <span className="text-[11px] uppercase tracking-wider font-bold relative z-10">WhatsApp +971 55 474 0389</span>
+                  <span className="text-[11px] uppercase tracking-wider font-bold relative z-10">WhatsApp +971 55 665 6007</span>
                 </a>
               </div>
 
@@ -1009,7 +1009,7 @@ export default function HomeSections({
                 Legacy of Trust. Future of Luxury.
               </span>
               <div className="flex gap-3 pt-4">
-                <a href="https://wa.me/971554740389" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all duration-300" aria-label="WhatsApp">
+                <a href="https://wa.me/971556656007" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all duration-300" aria-label="WhatsApp">
                   <MessageSquare className="w-3.5 h-3.5" />
                 </a>
                 <a href="#" className="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:bg-gold hover:text-zinc-950 hover:border-gold transition-all duration-300">

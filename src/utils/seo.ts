@@ -90,7 +90,7 @@ export function generateGlobalSchema() {
     image: `${SITE_URL}/assets/photos/logo.png`,
     '@id': `${SITE_URL}`,
     url: `${SITE_URL}`,
-    telephone: '+971554740389',
+    telephone: '+971556656007',
     email: 'info@goldenlegacy.ae',
     address: {
       '@type': 'PostalAddress',
